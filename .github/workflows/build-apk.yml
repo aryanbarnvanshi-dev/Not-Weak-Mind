@@ -1,1 +1,54 @@
+name: Build Android APK
 
+# जैसे ही आप गिटहब पर नया कोड अपलोड (push) करेंगे, यह अपने आप शुरू हो जाएगा
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    # 1. गिटहब के सर्वर पर आपका कोड लाना
+    - name: Checkout Source Code
+      uses: actions/checkout@v4
+
+    # 2. जावा (Java) एनवायरनमेंट सेट करना (APK बनाने के लिए ज़रूरी है)
+    - name: Set up JDK 17
+      uses: actions/setup-java@v4
+      with:
+        distribution: 'zulu'
+        java-version: '17'
+
+    # 3. नोड (Node.js) सेटअप करना ताकि कैपेसिटर टूल्स चल सकें
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-size: 20
+
+    # 4. जरूरी टूल्स और कैपेसिटर इंस्टॉल करना
+    - name: Install Dependencies
+      run: |
+        npm install
+        npm install @capacitor/core @capacitor/cli @capacitor/android
+
+    # 5. स्टेटिक वेबसाइट को एंड्रॉइड प्रोजेक्ट में बदलना
+    - name: Build Android Project
+      run: |
+        npx cap init "My Pocket App" "com.pocket.app" --web-dir=.
+        npx cap add android
+        npx cap sync android
+
+    # 6. असली APK फाइल को कंपाइल (Build) करना
+    - name: Build Debug APK
+      run: |
+        cd android && ./gradlew assembleDebug
+
+    # 7. बनी हुई APK फाइल को आपके लिए डाउनलोड लिंक में बदलना
+    - name: Upload APK Download Link
+      uses: actions/upload-artifact@v4
+      with:
+        name: My-Static-Website-APK
+        path: android/app/build/outputs/apk/debug/app-debug.apk
