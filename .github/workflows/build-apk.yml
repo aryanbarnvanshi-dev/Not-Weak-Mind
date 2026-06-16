@@ -19,36 +19,34 @@ jobs:
         distribution: 'zulu'
         java-version: '17'
 
-    # यहाँ हमने 'node-size' की गलती सुधारी और नया वर्जन v24 सेट किया
     - name: Set up Node.js
       uses: actions/setup-node@v4
       with:
         node-version: '24'
 
-    # अगर आपकी रिपोजिटरी में package.json नहीं है, तो यह खुद एक बेसिक फाइल बना देगा ताकि बिल्ड क्रैश न हो
-    - name: Create package.json if missing
-      run: |
-        if [ ! -f package.json ]; then
-          npm init -y
-        fi
+    # कोर्डोवा टूल को इंस्टॉल करना
+    - name: Install Cordova
+      run: npm install -g cordova
 
-    - name: Install Dependencies
+    # एक नया एंड्रॉइड प्रोजेक्ट बनाना और आपकी वेबसाइट की फाइलों को उसमें डालना
+    - name: Create Android Project
       run: |
-        npm install
-        npm install @capacitor/core @capacitor/cli @capacitor/android
+        cordova create my-app com.pocket.app "NotWeakMind"
+        rm -rf my-app/www/*
+        cp -r * my-app/www/ 2>/dev/null || true
+        cd my-app
+        cordova platform add android
 
-    - name: Build Android Project
-      run: |
-        npx cap init "My Pocket App" "com.pocket.app" --web-dir=.
-        npx cap add android
-        npx cap sync android
-
+    # असली APK फाइल को बिल्ड (Compile) करना
     - name: Build Debug APK
       run: |
-        cd android && ./gradlew assembleDebug
+        cd my-app
+        cordova build android --debug
 
+    # बनी हुई APK फाइल को आपके लिए डाउनलोड लिंक में बदलना
     - name: Upload APK Download Link
       uses: actions/upload-artifact@v4
       with:
-        name: My-Static-Website-APK
-        path: android/app/build/outputs/apk/debug/app-debug.apk
+        name: Not-Weak-Mind-APK
+        path: my-app/platforms/android/app/build/outputs/apk/debug/app-debug.apk
+        
