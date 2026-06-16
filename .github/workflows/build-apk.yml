@@ -28,37 +28,21 @@ jobs:
     - name: Install Cordova
       run: npm install -g cordova
 
-    # Google Play Store के लिए config.xml बनाना (SDK Configuration के साथ)
-    - name: Create config.xml with SDK Configuration
-      run: |
-        cat > config.xml << 'EOF'
-        <?xml version='1.0' encoding='utf-8'?>
-        <widget id="com.pocket.app" version="1.0.0" xmlns="http://www.w3.org/ns/widgets">
-          <name>NotWeakMind</name>
-          <description>Mental Health & Wellness App</description>
-          <author email="dev@notweakmind.com" href="https://notweakmind.com/">Your Team</author>
-          
-          <!-- Android SDK Configuration for Google Play Store 2025 -->
-          <preference name="android-minSdkVersion" value="24" />
-          <preference name="android-targetSdkVersion" value="35" />
-          <preference name="android-versionCode" value="1" />
-          
-          <!-- Performance & Security Settings -->
-          <preference name="AutoHideSplashScreen" value="true" />
-          <preference name="FadeSplashScreen" value="true" />
-          <preference name="permissions" value="none" />
-        </widget>
-        EOF
-
     # एक नया एंड्रॉइड प्रोजेक्ट बनाना और आपकी वेबसाइट की फाइलों को उसमें डालना
     - name: Create Android Project
       run: |
         cordova create my-app com.pocket.app "NotWeakMind"
         rm -rf my-app/www/*
         cp -r * my-app/www/ 2>/dev/null || true
-        cp config.xml my-app/
         cd my-app
         cordova platform add android
+
+    # SDK Configuration सेट करना
+    - name: Configure Android SDK
+      run: |
+        cd my-app
+        cordova plugin add cordova-plugin-android-permissions
+        echo "32" > platforms/android/android-sdk-min-level.txt
 
     # Debug APK फाइल को बिल्ड (Compile) करना - बिना signing के
     - name: Build Debug APK (Unsigned)
