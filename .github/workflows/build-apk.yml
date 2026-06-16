@@ -1,14 +1,9 @@
-name: Build Android APK for Google Play Store
+name: Build Android APK
 
 on:
   push:
     branches:
       - main
-
-env:
-  KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
-  KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
-  KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
 
 jobs:
   build:
@@ -52,7 +47,6 @@ jobs:
           <preference name="AutoHideSplashScreen" value="true" />
           <preference name="FadeSplashScreen" value="true" />
           <preference name="permissions" value="none" />
-          <preference name="GradlePluginGoogleServicesVersion" value="4.4.0" />
         </widget>
         EOF
 
@@ -66,47 +60,17 @@ jobs:
         cd my-app
         cordova platform add android
 
-    # Keystore को सेटअप करना (Release APK के लिए)
-    - name: Setup Keystore for Release Build
-      run: |
-        if [ ! -z "${{ secrets.KEYSTORE_BASE64 }}" ]; then
-          echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 -d > my-app/release.keystore
-          echo "✓ Keystore setup successful"
-        else
-          echo "⚠ Warning: KEYSTORE_BASE64 secret not found. Skipping release build."
-        fi
-
-    # Release APK फाइल को बिल्ड (Compile) करना - Google Play Store के लिए
-    - name: Build Release APK
-      if: ${{ secrets.KEYSTORE_BASE64 != '' }}
-      run: |
-        cd my-app
-        cordova build android --release -- \
-          --keystore=./release.keystore \
-          --storePassword=$KEYSTORE_PASSWORD \
-          --alias=$KEY_ALIAS \
-          --password=$KEY_PASSWORD
-
-    # असली Debug APK फाइल को बिल्ड (Compile) करना (टेस्टिंग के लिए)
-    - name: Build Debug APK
+    # Debug APK फाइल को बिल्ड (Compile) करना - बिना signing के
+    - name: Build Debug APK (Unsigned)
       run: |
         cd my-app
         cordova build android --debug
 
-    # Release APK को आपके लिए डाउनलोड लिंक में बदलना
-    - name: Upload Release APK
-      if: ${{ secrets.KEYSTORE_BASE64 != '' }}
+    # Unsigned APK को डाउनलोड के लिए उपलब्ध करना
+    - name: Upload Unsigned Debug APK
       uses: actions/upload-artifact@v4
       with:
-        name: NotWeakMind-Release-APK
-        path: my-app/platforms/android/app/build/outputs/apk/release/app-release-signed.apk
-        retention-days: 30
-
-    # Debug APK को आपके लिए डाउनलोड लिंक में बदलना
-    - name: Upload Debug APK
-      uses: actions/upload-artifact@v4
-      with:
-        name: NotWeakMind-Debug-APK
+        name: NotWeakMind-Unsigned-APK
         path: my-app/platforms/android/app/build/outputs/apk/debug/app-debug.apk
         retention-days: 30
 
@@ -117,10 +81,14 @@ jobs:
         echo "==============================================="
         echo "✓ Android APK Build Complete"
         echo "==============================================="
-        echo "Debug APK: Available for download"
-        if [ ! -z "${{ secrets.KEYSTORE_BASE64 }}" ]; then
-          echo "Release APK: Available for download (Google Play Store)"
-        else
-          echo "⚠ Release APK: Skipped (Configure secrets to enable)"
-        fi
+        echo "📦 Unsigned Debug APK: Ready for download"
+        echo ""
+        echo "अगले Steps (अपने PC पर):"
+        echo "1. APK को download करो"
+        echo "2. अपनी keystore से sign करो"
+        echo "3. Google Play Store पर upload करो"
+        echo ""
+        echo "Signing command (PC पर):"
+        echo "jarsigner -verbose -sigalg SHA256withRSA -digestalg SHA-256"
+        echo " -keystore release.keystore app-debug.apk my-key-alias"
         echo "==============================================="
