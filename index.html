@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="EduScreen - A professional learning difficulty screening tool to identify dyslexia, dyscalculia, ADHD, anxiety, and other learning challenges in students. Free, private, and accessible assessment with comprehensive reports.">
+    <meta name="description" content="EduScreen - A private, student-created learning difficulty screening tool to identify learning styles, challenges, and cognitive strengths in students. Free, private, and accessible.">
     <meta name="keywords" content="learning difficulty screening, dyslexia test, dyscalculia assessment, ADHD screening, learning disability, educational assessment tool, student evaluation, cognitive screening">
     <meta name="author" content="Aryan Kumar (aryanbarnvanshi-dev)">
     <meta name="robots" content="index, follow">
@@ -11,8 +11,8 @@
     <meta name="revisit-after" content="7 days">
     
     <!-- Open Graph Meta Tags -->
-    <meta property="og:title" content="EduScreen - Professional Learning Difficulty Screening Tool">
-    <meta property="og:description" content="Identify learning disabilities like dyslexia, dyscalculia, ADHD, and more with our comprehensive, free screening assessment. Get personalized recommendations and professional insights.">
+    <meta property="og:title" content="EduScreen - Learning Difficulty Screening Tool">
+    <meta property="og:description" content="Identify learning styles and challenges with our comprehensive, free screening assessment. Client-side, 100% private.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://aryanbarnvanshi-dev.github.io/Not-Weak-Mind/">
     <meta property="og:site_name" content="EduScreen">
@@ -20,20 +20,23 @@
     
     <!-- Twitter Card Meta Tags -->
     <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="EduScreen - Professional Learning Difficulty Screening Tool">
-    <meta name="twitter:description" content="Comprehensive learning disability screening tool. Identify dyslexia, dyscalculia, ADHD, and other learning challenges. Free, private, and accessible.">
-    <meta name="twitter:creator" content="@AryaKumar">
+    <meta name="twitter:title" content="EduScreen - Learning Difficulty Screening Tool">
+    <meta name="twitter:description" content="Comprehensive learning challenge screening tool. Free, private, and accessible.">
+    <meta name="twitter:creator" content="@aryanbarnvanshi">
     
-    <!-- Additional SEO Meta Tags -->
+    <!-- PWA & Mobile Meta Tags -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="EduScreen">
     <meta name="theme-color" content="#bf953f">
     
-    <link rel="manifest" id="pwa-manifest">
+    <!-- Static PWA Manifest & App Icons -->
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" type="image/svg+xml" href="icon.svg">
+    <link rel="apple-touch-icon" href="icon.svg">
     <link rel="canonical" href="https://aryanbarnvanshi-dev.github.io/Not-Weak-Mind/">
     
-    <title>EduScreen - Professional Learning Difficulty Screening Tool | Free Assessment</title>
+    <title>EduScreen - Learning Challenge & Cognitive Screening Tool | Free Assessment</title>
     
     <style>
         :root {
@@ -124,7 +127,7 @@
         .section.active { display: block; }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
+            from { opacity: 0; transform: translateY(10px); }\
             to { opacity: 1; transform: translateY(0); }
         }
 
@@ -210,26 +213,23 @@
         .suggestion-list { list-style-position: inside; margin-bottom: 20px; color: var(--text-muted); }
         .suggestion-list li { margin-bottom: 5px; }
 
-.app-sys-info {
-    text-align: center;
-    font-size: 11px;
-    color: var(--text-muted);
-    padding: 20px 0 10px 0;
-    font-family: monospace;
-    opacity: 0.5;
-}
-.app-sys-info a {
-    color: inherit;
-    text-decoration: none;
-    cursor: default;
-}
-.app-sys-info a:hover {
-    text-decoration: none;
-    color: inherit;
-}
+        .app-sys-info {
+            text-align: center;
+            font-size: 12px;
+            color: var(--text-muted);
+            padding: 25px 0 10px 0;
+            font-family: var(--font-family);
+        }
+        .app-sys-info a {
+            color: var(--primary);
+            text-decoration: underline;
+        }
+        .app-sys-info a:hover {
+            color: var(--primary-hover);
+        }
         
         @media print {
-            .controls, .btn, .disclaimer-banner { display: none !important; }
+            .controls, .btn, .disclaimer-banner, #splash-screen { display: none !important; }
             body { background: white; color: black; }
             .section { box-shadow: none; border: none; padding: 0; }
             .result-card { border: 1px solid #ccc; page-break-inside: avoid; }
@@ -239,161 +239,151 @@
             .section { padding: 20px; }
         }
     
-    #splash-screen {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: #0f172a; 
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 10000;
-    transition: opacity 0.8s ease, visibility 0.8s;
-}
+        #splash-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #0f172a; 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            transition: opacity 0.6s ease, visibility 0.6s;
+            cursor: pointer;
+        }
 
-.splash-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    height: 80%;
-    width: 100%;
-    text-align: center;
-}
+        .splash-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            height: 80%;
+            width: 100%;
+            text-align: center;
+        }
 
-/* Middle Section */
-.splash-main {
-    margin-top: auto;
-    margin-bottom: auto;
-    animation: fadeInScale 1.5s ease-out;
-}
+        .splash-main {
+            margin-top: auto;
+            margin-bottom: auto;
+            animation: fadeInScale 1.2s ease-out;
+        }
 
-.splash-title {
-    font-size: clamp(3rem, 10vw, 5rem);
-    font-weight: 900;
-    margin: 0;
-    background: linear-gradient(to right, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    letter-spacing: 6px;
-    line-height: 1.1;
-}
+        .splash-title {
+            font-size: clamp(3rem, 10vw, 5rem);
+            font-weight: 900;
+            margin: 0;
+            background: linear-gradient(to right, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 6px;
+            line-height: 1.1;
+        }
 
-.splash-subtitle {
-    font-size: 1.5rem;
-    color: #f1f5f9;
-    margin-top: 15px;
-    letter-spacing: 10px;
-    text-transform: lowercase;
-    opacity: 0.9;
-}
+        .splash-subtitle {
+            font-size: 1.5rem;
+            color: #f1f5f9;
+            margin-top: 15px;
+            letter-spacing: 8px;
+            text-transform: lowercase;
+            opacity: 0.9;
+        }
 
-/* Bottom Section */
-.creators-section {
-    margin-bottom: 20px;
-    padding: 20px;
-    animation: fadeInUp 1s ease-out 0.5s both;
-}
+        .creators-section {
+            margin-bottom: 20px;
+            padding: 20px;
+            animation: fadeInUp 0.8s ease-out 0.3s both;
+        }
 
-.developed-by {
-    color: #94a3b8;
-    font-size: 0.8rem;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    margin-bottom: 8px;
-}
+        .developed-by {
+            color: #94a3b8;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 8px;
+        }
 
-.names-row {
-    display: flex;
-    gap: 20px;
-    justify-content: center;
-    flex-wrap: wrap;
-}
+        .names-row {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
 
-.names-row span {
-    color: #bf953f;
-    font-weight: 600;
-    font-size: 1rem;
-    border-bottom: 1px solid rgba(191, 149, 63, 0.3);
-}
+        .names-row span {
+            font-size: 1.15rem;
+            font-weight: 800;
+            color: #0f172a;
+            background: linear-gradient(135deg, #bf953f, #fcf6ba, #bf953f);
+            padding: 5px 14px;
+            border-radius: 8px;
+            box-shadow: 0 0 12px rgba(191,149,63,0.7), 0 0 25px rgba(252,246,186,0.4);
+            letter-spacing: 2px;
+        }
 
-/* Animations */
-@keyframes fadeInScale {
-    from { opacity: 0; transform: scale(0.95); }
-    to { opacity: 1; transform: scale(1); }
-}
+        @keyframes fadeInScale {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
 
-@keyframes fadeInUp {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-}
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
 
-.splash-hidden {
-    opacity: 0;
-    visibility: hidden;
-}
-
-    
+        .splash-hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
     </style>
 </head>
 <body>
-    <div id="splash-screen">
-    <div class="splash-container">
-        <div class="splash-main">
-            <h1 class="splash-title">EduScreen</h1>
-            <p class="splash-subtitle"> <i> Learning Assessment Tool </i> </p>
-        </div>
+    <!-- Splash Screen (Tap anywhere to dismiss) -->
+    <div id="splash-screen" title="Click or tap to skip">
+        <div class="splash-container">
+            <div class="splash-main">
+                <h1 class="splash-title">EduScreen</h1>
+                <p class="splash-subtitle"><i> Learning Assessment Tool </i></p>
+            </div>
 
-        <div class="creators-section">
-            <p class="developed-by">Created by:</p>
-            <div class="names-row">
-              
-                                <span style="
-  font-size: 1.15rem;
-  font-weight: 800;
-  color: #0f172a;
-  background: linear-gradient(135deg, #bf953f, #fcf6ba, #bf953f);
-  padding: 5px 14px;
-  border-radius: 8px;
-  box-shadow: 0 0 12px rgba(191,149,63,0.7), 0 0 25px rgba(252,246,186,0.4);
-  letter-spacing: 2px;
-">Aryan Kumar</span>
-
-                
+            <div class="creators-section">
+                <p class="developed-by">Created by:</p>
+                <div class="names-row">
+                    <span>Aryan Kumar</span>
+                </div>
+                <p style="margin-top: 15px; font-size: 0.75rem; color: #94a3b8; letter-spacing: 1px;">(Tap anywhere to start)</p>
             </div>
         </div>
     </div>
-</div>
 
-    
     <div class="disclaimer-banner">
-        ⚠️ IMPORTANT: This is an early screening tool, NOT a diagnostic instrument. No medical advice is provided. No data is stored or transmitted. Please consult qualified educational or medical professionals for formal diagnosis and intervention.
+        ⚠️ IMPORTANT: This is an educational screening questionnaire, NOT a medical or psychiatric diagnostic tool. No medical advice is provided. All data stays strictly on your device. Always consult qualified professionals for formal assessments.
     </div>
 
     <div class="container">
         <div class="controls">
-            <button class="btn-toggle" onclick="toggleDarkMode()">🌙 Dark Mode</button>
-            <button class="btn-toggle" onclick="toggleDyslexiaFont()">📖 Dyslexia Font</button>
+            <button class="btn-toggle" onclick="toggleDarkMode()" aria-label="Toggle Dark Mode">🌙 Dark Mode</button>
+            <button class="btn-toggle" onclick="toggleDyslexiaFont()" aria-label="Toggle Dyslexia Friendly Font">📖 Dyslexia Font</button>
         </div>
 
         <div id="setup-section" class="section active">
             <h1>EduScreen Assessment</h1>
-            <p>A professional screening tool to identify potential learning, attention, and cognitive profiles.</p>
+            <p>A simple, private screening questionnaire to explore learning styles, focus, and cognitive strengths.</p>
             
             <div class="form-group">
-                <label>Student Name (Local only, not saved):</label>
-                <input type="text" id="student-name" placeholder="Enter name">
+                <label for="student-name">Student Name (Local only, never uploaded):</label>
+                <input type="text" id="student-name" placeholder="Enter name" required>
             </div>
             <div class="form-group">
-                <label>Age:</label>
-                <input type="number" id="student-age" placeholder="Enter age (e.g. 10)" min="5" max="18">
+                <label for="student-age">Age (5 - 18):</label>
+                <input type="number" id="student-age" placeholder="Enter age (e.g. 10)" min="5" max="18" oninput="if(this.value && this.value < 1) this.value = 5; if(this.value > 18) this.value = 18;">
             </div>
             <div class="form-group">
-                <label>Assessment Mode:</label>
+                <label for="assessment-mode">Assessment Mode:</label>
                 <select id="assessment-mode">
-                    <option value="student">Student Self-Report (I am the student)</option>
+                    <option value="student">Student Self-Report (I am answering for myself)</option>
                     <option value="teacher">Teacher/Parent Observation (Observing the student)</option>
                 </select>
             </div>
@@ -404,14 +394,13 @@
             <div class="progress-container">
                 <div class="progress-bar" id="progress-bar"></div>
             </div>
-            <p id="progress-text" style="text-align: right; font-size: 0.9rem;"></p>
+            <p id="progress-text" style="text-align: right; font-size: 0.9rem; font-weight: 500;"></p>
             
             <div id="encouragement-msg" class="msg-box">You're doing great! Keep going.</div>
 
             <h2 class="question-text" id="question-text">Question text here</h2>
             
-            <div class="options-grid" id="options-grid">
-                 </div>
+            <div class="options-grid" id="options-grid"></div>
             
             <br>
             <button class="btn" id="next-btn" onclick="nextQuestion()" disabled>Next Question</button>
@@ -425,12 +414,11 @@
 
             <h3>Score Profile</h3>
             <div class="chart-container">
-                <canvas id="resultsChart"></canvas>
+                <canvas id="resultsChart" role="img" aria-label="Assessment results bar chart showing percentage scores across 15 learning categories"></canvas>
             </div>
 
             <h3>Category Analysis</h3>
-            <div class="result-grid" id="result-grid">
-                 </div>
+            <div class="result-grid" id="result-grid"></div>
 
             <h3>Identified Strengths</h3>
             <ul class="suggestion-list" id="strengths-list"></ul>
@@ -438,7 +426,7 @@
             <h3>Personalized Recommendations</h3>
             <ul class="suggestion-list" id="recommendations-list"></ul>
 
-            <div style="background: var(--bg-color); padding: 15px; border-left: 4px solid var(--warning); margin: 20px 0;">
+            <div style="background: var(--bg-color); padding: 15px; border-left: 4px solid var(--warning); margin: 20px 0; border-radius: 4px;">
                 <strong>Professional Recommendation:</strong>
                 <p id="professional-note" style="margin-bottom: 0;"></p>
             </div>
@@ -447,23 +435,53 @@
             <br><br>
             <button class="btn" style="background: var(--text-muted);" onclick="location.reload()">Reset Assessment</button>
         </div>
-        <div class="app-sys-info"> EduScreen v1.0.4 (build_ref: <a href="[https://github.com/aryanbarnvanshi-dev](https://github.com/aryanbarnvanshi-dev)">aryanbarnvanshi-dev</a>) </div>
+
+        <div class="app-sys-info">
+            EduScreen v1.1.0 • Built with ❤️ by <a href="https://github.com/aryanbarnvanshi-dev" target="_blank" rel="noopener noreferrer">Aryan Kumar (aryanbarnvanshi-dev)</a> • <a href="https://github.com/aryanbarnvanshi-dev/Not-Weak-Mind" target="_blank" rel="noopener noreferrer">GitHub Repository</a>
+        </div>
     </div>
 
     <script>
-    
-    // Splash Screen Timeout Logic
-window.addEventListener('DOMContentLoaded', () => {
-    const splash = document.getElementById('splash-screen');
-    
-    // 3 second tak splash dikhega, fir gayab ho jayega
-    setTimeout(() => {
-        splash.classList.add('splash-hidden');
-    }, 3000); 
-});
+        // --- SPLASH SCREEN LOGIC (Dismiss on tap/click or 1.8s timeout) ---
+        const splash = document.getElementById('splash-screen');
+        function dismissSplash() {
+            if (splash && !splash.classList.contains('splash-hidden')) {
+                splash.classList.add('splash-hidden');
+            }
+        }
+        if (splash) {
+            splash.addEventListener('click', dismissSplash);
+            splash.addEventListener('touchstart', dismissSplash, { passive: true });
+            setTimeout(dismissSplash, 1800);
+        }
 
-    
-        // --- DATA: Categories & Questions (80 Questions) ---
+        // --- ACCESSIBILITY & PREFERENCES PERSISTENCE ---
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+            try {
+                localStorage.setItem('eduscreen_theme', document.body.classList.contains('dark-mode') ? 'dark' : 'light');
+            } catch(e) {}
+        }
+
+        function toggleDyslexiaFont() {
+            document.body.classList.toggle('dyslexia-font');
+            try {
+                localStorage.setItem('eduscreen_font', document.body.classList.contains('dyslexia-font') ? 'dyslexia' : 'standard');
+            } catch(e) {}
+        }
+
+        // Auto-restore saved preferences on load
+        try {
+            if (localStorage.getItem('eduscreen_theme') === 'dark') document.body.classList.add('dark-mode');
+            if (localStorage.getItem('eduscreen_font') === 'dyslexia') document.body.classList.add('dyslexia-font');
+        } catch(e) {}
+
+        function switchSection(sectionId) {
+            document.querySelectorAll('.section').forEach(el => el.classList.remove('active'));
+            document.getElementById(sectionId).classList.add('active');
+        }
+
+        // --- DATA: Categories & Questions (Comprehensive 80 Questions) ---
         const categories = {
             dyslexia: { name: "Dyslexia Indicators", desc: "Reading, spelling, and decoding." },
             dyscalculia: { name: "Dyscalculia Indicators", desc: "Number sense and arithmetic." },
@@ -489,13 +507,12 @@ window.addEventListener('DOMContentLoaded', () => {
             { text: "Almost Always", val: 3 }
         ];
 
-        // Base 15 categories * 5 questions = 75 questions + 5 adaptive/general = 80 total
-        // Generating structure programmatically to keep code clean but fulfill requirements.
+        // 80 Complete Questions: 75 baseline (5 per 15 categories) + 5 in-depth reflection indicators
         const questionDataRaw = [
             // Dyslexia
             ["dyslexia", "I mix up letters like 'b' and 'd' or 'p' and 'q'.", "Confuses similar letters (b/d, p/q)."],
             ["dyslexia", "Reading aloud makes me nervous or I stumble on words.", "Hesitates or struggles when reading aloud."],
-            ["dyslexia", "Words seem to move around on the page.", "Complains of visual distortion when reading."],
+            ["dyslexia", "Words seem to move around or blur on the page.", "Complains of visual distortion or blurring when reading."],
             ["dyslexia", "I have trouble remembering how to spell common words.", "Inconsistent spelling of common sight words."],
             ["dyslexia", "It takes me a long time to finish a reading assignment.", "Reads significantly slower than peers."],
             // Dyscalculia
@@ -536,7 +553,7 @@ window.addEventListener('DOMContentLoaded', () => {
             ["working_memory", "I have to reread sentences multiple times to understand.", "Rereads text frequently to retain meaning."],
             // Recall
             ["recall", "I study hard but forget everything the next day.", "Poor retention of studied material."],
-            ["recall", "I know the answer but can't find the right word (it's on the tip of my tongue).", "Frequent word-retrieval difficulties."],
+            ["recall", "I know the answer but can't find the right word (tip of the tongue).", "Frequent word-retrieval difficulties."],
             ["recall", "I have trouble remembering names of people or places.", "Struggles with rote memorization of names/dates."],
             ["recall", "I perform much worse on fill-in-the-blank tests than multiple choice.", "Relies heavily on recognition over recall."],
             ["recall", "I forget routines I have done many times before.", "Forgets established daily routines."],
@@ -581,16 +598,13 @@ window.addEventListener('DOMContentLoaded', () => {
             ["communication", "I use filler words like 'um' or 'stuff' a lot.", "Vague language use ('thingies', 'stuff')."],
             ["communication", "I have trouble understanding complex sentences.", "Misinterprets complex verbal phrasing."],
             ["communication", "My speech sounds younger than other kids my age.", "Immature articulation or sentence structure."],
-            ["communication", "I avoid raising my hand because I can't formulate my answer in time.", "Hesitant to speak up due to expressive delay."]
-        ];
-
-        // Advanced Logic: Add 5 conditional/adaptive questions to reach 80
-        const adaptiveQuestions = [
-            { id: 76, cat: 'dyslexia', cond: 'dyslexia', student: "Does text sometimes blur when you read for more than 5 minutes?", teacher: "Does the student rub their eyes frequently after short reading sessions?" },
-            { id: 77, cat: 'attention', cond: 'attention', student: "Do you hyperfocus on things you like, but can't focus on schoolwork?", teacher: "Can the student focus intensely on preferred activities but struggles with academics?" },
-            { id: 78, cat: 'learning_anxiety', cond: 'learning_anxiety', student: "Have you ever faked being sick to avoid school?", teacher: "Does the student frequently visit the nurse without clear medical symptoms?" },
-            { id: 79, cat: 'executive', cond: 'executive', student: "Do you forget to turn in homework even after you've finished it?", teacher: "Does the student complete work but fail to turn it in on time?" },
-            { id: 80, cat: 'processing', cond: 'processing', student: "Do you feel smarter than your test scores show?", teacher: "Is there a significant gap between the student's verbal intelligence and written performance?" }
+            ["communication", "I avoid raising my hand because I can't formulate my answer in time.", "Hesitant to speak up due to expressive delay."],
+            // 5 In-depth Core Reflection Questions (Total: exactly 80)
+            ["dyslexia", "Do words blur or look doubled after reading for more than 5 minutes?", "Does the student frequently rub eyes or lose their place while reading?"],
+            ["attention", "Do you hyperfocus on things you love, but find it nearly impossible to focus on schoolwork?", "Can the student focus deeply on preferred activities but struggles with classwork?"],
+            ["learning_anxiety", "Do you ever feel physically overwhelmed or want to hide when given a hard task?", "Does the student exhibit intense emotional overwhelm when assigned complex work?"],
+            ["executive", "Do you sometimes finish homework but forget to turn it in?", "Does the student complete assignments but fail to turn them in on time?"],
+            ["processing", "Do you feel smarter and more capable than your written test scores show?", "Is there a significant gap between the student's verbal understanding and written test output?"]
         ];
 
         let questionBank = [];
@@ -608,36 +622,22 @@ window.addEventListener('DOMContentLoaded', () => {
         let studentData = { name: '', age: '' };
         let activeQuestions = [];
         let currentIndex = 0;
-        let answers = {}; // { cat_name: total_score }
-        let categoryCounts = {}; // { cat_name: num_questions_asked }
-        let answerLog = []; // track specific responses
-
-        // --- UI FUNCTIONS ---
-        function toggleDarkMode() {
-            document.body.classList.toggle('dark-mode');
-        }
-
-        function toggleDyslexiaFont() {
-            document.body.classList.toggle('dyslexia-font');
-        }
-
-        function switchSection(sectionId) {
-            document.querySelectorAll('.section').forEach(el => el.classList.remove('active'));
-            document.getElementById(sectionId).classList.add('active');
-        }
+        let answers = {};
+        let categoryCounts = {};
+        let answerLog = [];
 
         // --- ASSESSMENT LOGIC ---
         function startAssessment() {
-            const name = document.getElementById('student-name').value;
-            const age = document.getElementById('student-age').value;
+            const name = document.getElementById('student-name').value.trim();
+            const age = document.getElementById('student-age').value.trim();
             
             if (!name || !age) {
-                alert("Please enter name and age to proceed.");
+                alert("Please enter both student name and age to proceed.");
                 return;
             }
 
             studentData.name = name;
-            studentData.age = age;
+            studentData.age = Math.min(18, Math.max(5, parseInt(age, 10) || 10));
             currentMode = document.getElementById('assessment-mode').value;
 
             // Initialize tracking
@@ -647,7 +647,7 @@ window.addEventListener('DOMContentLoaded', () => {
             });
             answerLog = [];
             
-            // Randomize base questions slightly to prevent category fatigue, but keep some structure
+            // Randomize question sequence to prevent fatigue
             activeQuestions = [...questionBank].sort(() => Math.random() - 0.5);
             currentIndex = 0;
 
@@ -661,11 +661,11 @@ window.addEventListener('DOMContentLoaded', () => {
                 return;
             }
 
-            // Encouragement logic
+            // Encouragement milestones
             const msgBox = document.getElementById('encouragement-msg');
-            if (currentIndex === 20) { msgBox.style.display = 'block'; msgBox.innerText = "Great job! You're 25% done."; setTimeout(()=>msgBox.style.display='none', 3000); }
-            if (currentIndex === 40) { msgBox.style.display = 'block'; msgBox.innerText = "Halfway there! Keep it up."; setTimeout(()=>msgBox.style.display='none', 3000); }
-            if (currentIndex === 60) { msgBox.style.display = 'block'; msgBox.innerText = "Almost done! Just a bit more."; setTimeout(()=>msgBox.style.display='none', 3000); }
+            if (currentIndex === 20) { msgBox.style.display = 'block'; msgBox.innerText = "Great job! You're 25% through."; setTimeout(()=>msgBox.style.display='none', 3000); }
+            if (currentIndex === 40) { msgBox.style.display = 'block'; msgBox.innerText = "Halfway there! Keep going."; setTimeout(()=>msgBox.style.display='none', 3000); }
+            if (currentIndex === 60) { msgBox.style.display = 'block'; msgBox.innerText = "Almost done! 75% completed."; setTimeout(()=>msgBox.style.display='none', 3000); }
 
             const q = activeQuestions[currentIndex];
             const qText = currentMode === 'student' ? q.student : q.teacher;
@@ -685,7 +685,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
             document.getElementById('next-btn').disabled = true;
             
-            // Progress
+            // Progress Calculation (clean 1-80)
             const progress = ((currentIndex) / activeQuestions.length) * 100;
             document.getElementById('progress-bar').style.width = `${progress}%`;
             document.getElementById('progress-text').innerText = `Question ${currentIndex + 1} of ${activeQuestions.length}`;
@@ -708,14 +708,6 @@ window.addEventListener('DOMContentLoaded', () => {
                 categoryCounts[selectedCategory] += 1;
                 answerLog.push({ id: activeQuestions[currentIndex].id, val: selectedValue });
 
-                // Advanced Logic: Check conditions for adaptive questions
-                if (selectedValue >= 2) { 
-                    const adaptiveQ = adaptiveQuestions.find(aq => aq.cond === selectedCategory && !activeQuestions.includes(aq));
-                    if (adaptiveQ) {
-                        activeQuestions.splice(currentIndex + 2, 0, adaptiveQ); // Insert shortly after
-                    }
-                }
-
                 selectedValue = null;
                 currentIndex++;
                 renderQuestion();
@@ -727,12 +719,12 @@ window.addEventListener('DOMContentLoaded', () => {
             setTimeout(() => {
                 generateReport();
                 switchSection('report-section');
-            }, 500);
+            }, 400);
         }
 
         // --- REPORT & RESULTS LOGIC ---
         function getRiskLevel(score, maxScore) {
-            const percentage = score / maxScore;
+            const percentage = maxScore > 0 ? (score / maxScore) : 0;
             if (percentage < 0.25) return { label: 'No Concern', class: 'risk-none' };
             if (percentage < 0.50) return { label: 'Mild Indicators', class: 'risk-mild' };
             if (percentage < 0.75) return { label: 'Moderate Indicators', class: 'risk-moderate' };
@@ -755,10 +747,11 @@ window.addEventListener('DOMContentLoaded', () => {
             let recommendations = [];
 
             Object.keys(categories).forEach(cat => {
-                const maxScore = categoryCounts[cat] * 3; // 3 is max weight
-                const score = answers[cat];
+                const count = categoryCounts[cat] || 1;
+                const maxScore = count * 3;
+                const score = answers[cat] || 0;
                 const risk = getRiskLevel(score, maxScore);
-                const percentage = (score / maxScore) * 100;
+                const percentage = Math.round((score / maxScore) * 100);
 
                 chartLabels.push(categories[cat].name);
                 chartData.push(percentage);
@@ -772,7 +765,7 @@ window.addEventListener('DOMContentLoaded', () => {
                 card.innerHTML = `
                     <h4>${categories[cat].name}</h4>
                     <p style="font-size: 0.85rem; margin-bottom: 5px;">${categories[cat].desc}</p>
-                    <span class="risk-badge ${risk.class}">${risk.label}</span>
+                    <span class="risk-badge ${risk.class}">${risk.label} (${percentage}%)</span>
                 `;
                 grid.appendChild(card);
             });
@@ -784,8 +777,8 @@ window.addEventListener('DOMContentLoaded', () => {
         function populateTextAnalysis(strengths, recKeys, highestRisk) {
             const sList = document.getElementById('strengths-list');
             sList.innerHTML = strengths.length > 0 
-                ? strengths.map(s => `<li>Shows standard development or resilience in <strong>${s}</strong>.</li>`).join('')
-                : `<li>Student shows a complex profile. Focus on building self-esteem during challenges.</li>`;
+                ? strengths.map(s => `<li>Demonstrates resilience and standard indicators in <strong>${s}</strong>.</li>`).join('')
+                : `<li>Student displays an active cognitive profile across multiple domains. Focus on building self-confidence.</li>`;
 
             const rList = document.getElementById('recommendations-list');
             const recMap = {
@@ -794,38 +787,38 @@ window.addEventListener('DOMContentLoaded', () => {
                 dysgraphia: "Allow typing instead of writing, provide print outlines, reduce copying from board.",
                 attention: "Use preferential seating, break tasks into 10-minute chunks, provide silent fidgets.",
                 executive: "Implement visual schedules, color-coded folders, and explicitly teach planning.",
-                processing: "Reduce workload volume (not complexity), provide extra time, don't cold-call.",
-                working_memory: "Provide written instructions alongside verbal ones, allow memory aids (formulas).",
+                processing: "Reduce workload volume (not complexity), provide extra time, avoid cold-calling.",
+                working_memory: "Provide written instructions alongside verbal ones, allow formula/memory sheets.",
                 recall: "Use mnemonic devices, spaced repetition, and prefer multiple-choice formats.",
-                learning_anxiety: "Praise effort over grades, create a safe space for mistakes.",
-                test_anxiety: "Teach deep breathing, allow testing in a quiet room, consider alternative assessments.",
+                learning_anxiety: "Praise effort over grades, create a safe space for learning from mistakes.",
+                test_anxiety: "Teach breathing exercises, allow testing in a quiet environment, consider alternative assessments.",
                 motivation: "Connect learning to personal interests, provide frequent positive reinforcement.",
                 sensory: "Allow noise-canceling headphones, natural lighting, and movement breaks.",
-                fine_motor: "Provide pencil grips, thick markers, and occupational therapy exercises.",
+                fine_motor: "Provide pencil grips, thick markers, and fine motor exercises.",
                 social: "Facilitate structured small group work, role-play social scenarios.",
-                communication: "Give wait time (10 seconds) for responses, don't interrupt."
+                communication: "Allow wait time (10 seconds) for responses, avoid interrupting."
             };
 
             rList.innerHTML = recKeys.length > 0
                 ? recKeys.map(k => `<li><strong>${categories[k].name}:</strong> ${recMap[k]}</li>`).join('')
-                : `<li>No significant interventions required currently. Continue standard support.</li>`;
+                : `<li>No significant challenges noted in this assessment. Continue standard educational support.</li>`;
 
             const profNote = document.getElementById('professional-note');
             if (highestRisk >= 75) {
-                profNote.innerHTML = "Based on the <strong>Strong Indicators</strong> present, a comprehensive evaluation by an Educational Psychologist, Pediatrician, or relevant specialist is highly recommended to confirm diagnosis and develop a targeted intervention plan.";
+                profNote.innerHTML = "Based on the <strong>Strong Indicators</strong> present, a comprehensive evaluation by an Educational Psychologist, Pediatrician, or qualified specialist is highly recommended for formal guidance.";
             } else if (highestRisk >= 50) {
-                profNote.innerHTML = "Moderate indicators are present. Implement the suggested accommodations in class/home and monitor progress for 8-12 weeks. If struggles persist, consider formal assessment by a qualified professional.";
+                profNote.innerHTML = "Moderate indicators are present. Implement the suggested accommodations at school or home and monitor progress for 6-8 weeks. Consult a specialist if challenges persist.";
             } else {
-                profNote.innerHTML = "Results indicate standard academic development. Continue universal design for learning practices and standard monitoring.";
+                profNote.innerHTML = "Results reflect standard educational development. Continue universal design for learning practices and positive encouragement.";
             }
         }
 
         // --- PURE JS CANVAS CHART ---
         function drawChart(labels, data) {
             const canvas = document.getElementById('resultsChart');
+            if (!canvas) return;
             const ctx = canvas.getContext('2d');
             
-            // Handle high DPI displays
             const dpr = window.devicePixelRatio || 1;
             const rect = canvas.parentElement.getBoundingClientRect();
             canvas.width = rect.width * dpr;
@@ -835,16 +828,17 @@ window.addEventListener('DOMContentLoaded', () => {
             const w = rect.width;
             const h = 300;
             const padding = 40;
-            const bottomPadding = 100; // Space for angled text
+            const bottomPadding = 95;
 
             ctx.clearRect(0, 0, w, h);
 
-            // Draw Y Axis
+            // Draw Axes
             ctx.beginPath();
             ctx.moveTo(padding, padding);
             ctx.lineTo(padding, h - bottomPadding);
             ctx.lineTo(w - padding, h - bottomPadding);
             ctx.strokeStyle = '#94a3b8';
+            ctx.lineWidth = 1;
             ctx.stroke();
 
             // Draw horizontal grid lines (0, 25, 50, 75, 100)
@@ -871,7 +865,6 @@ window.addEventListener('DOMContentLoaded', () => {
                 const barHeight = (val / 100) * (h - padding - bottomPadding);
                 const y = h - bottomPadding - barHeight;
 
-                // Color based on risk
                 if (val < 25) ctx.fillStyle = '#10b981';
                 else if (val < 50) ctx.fillStyle = '#3b82f6';
                 else if (val < 75) ctx.fillStyle = '#f59e0b';
@@ -879,7 +872,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
                 ctx.fillRect(x, y, barWidth, barHeight);
 
-                // Draw rotated labels
+                // Rotated Labels
                 ctx.save();
                 ctx.translate(x + (barWidth / 2), h - bottomPadding + 10);
                 ctx.rotate(-Math.PI / 4);
@@ -891,58 +884,21 @@ window.addEventListener('DOMContentLoaded', () => {
             });
         }
         
-        // Handle window resize for chart
         window.addEventListener('resize', () => {
-            if (document.getElementById('report-section').classList.contains('active')) {
-                generateReport(); // Redraws chart
+            const repSec = document.getElementById('report-section');
+            if (repSec && repSec.classList.contains('active')) {
+                generateReport();
             }
         });
 
-    // 1. Dynamic Manifest Generation (Single File logic)
-const manifest = {
-    "name": "EduScreen - Professional Learning Difficulty Screening Tool",
-    "short_name": "EduScreen",
-    "start_url": ".",
-    "display": "standalone",
-    "background_color": "#0f172a",
-    "theme_color": "#bf953f",
-    "description": "Identify learning disabilities like dyslexia, dyscalculia, ADHD and more with our comprehensive screening assessment tool."
-};
-const manifestStr = JSON.stringify(manifest);
-const blob = new Blob([manifestStr], {type: 'application/json'});
-document.getElementById('pwa-manifest').setAttribute('href', URL.createObjectURL(blob));
-
-// 2. Service Worker Inline Script
-const swCode = `
-const CACHE_NAME = 'eduscreen-cache-v1';
-const URLS_TO_CACHE = [window.location.href];
-
-self.addEventListener('install', (event) => {
-    event.waitUntil(
-        caches.open(CACHE_NAME).then((cache) => cache.addAll(URLS_TO_CACHE))
-    );
-});
-
-self.addEventListener('fetch', (event) => {
-    event.respondWith(
-        caches.match(event.request).then((response) => {
-            return response || fetch(event.request);
-        })
-    );
-});
-`;
-
-// 3. Registering the Service Worker
-if ('serviceWorker' in navigator) {
-    const swBlob = new Blob([swCode], {type: 'text/javascript'});
-    const swUrl = URL.createObjectURL(swBlob);
-    
-    navigator.serviceWorker.register(swUrl).then(() => {
-        console.log('PWA: Ready for offline use');
-    }).catch(err => console.log('PWA Error:', err));
-}
-
-    
+        // --- PWA SERVICE WORKER REGISTRATION (Production Ready) ---
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('sw.js')
+                    .then(reg => console.log('EduScreen ServiceWorker active on scope:', reg.scope))
+                    .catch(err => console.warn('PWA registration skipped:', err));
+            });
+        }
     </script>
 </body>
 </html>
