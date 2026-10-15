@@ -1205,6 +1205,8 @@
 
         // --- 6. TEXT-TO-SPEECH (TTS) VIA WEB SPEECH API ---
         let isSpeaking = false;
+        let speechStopping = false;
+
         function toggleSpeech() {
             if (!('speechSynthesis' in window)) {
                 alert(currentLang === 'hi' ? 'आपका ब्राउज़र स्पीच सिंथेसिस का समर्थन नहीं करता।' : 'Speech synthesis not supported in this browser.');
@@ -1217,7 +1219,9 @@
             }
 
             const qText = document.getElementById('question-text').innerText;
-            window.speechSynthesis.cancel();
+            if ('speechSynthesis' in window && window.speechSynthesis.speaking) {
+                try { window.speechSynthesis.cancel(); } catch(e) {}
+            }
 
             const utter = new SpeechSynthesisUtterance(qText);
             utter.lang = currentLang === 'hi' ? 'hi-IN' : 'en-US';
@@ -1225,25 +1229,36 @@
 
             utter.onstart = () => {
                 isSpeaking = true;
-                document.getElementById('btn-speak').classList.add('speaking');
+                const btn = document.getElementById('btn-speak');
+                if (btn) btn.classList.add('speaking');
             };
             utter.onend = () => {
-                stopSpeech();
+                isSpeaking = false;
+                const btn = document.getElementById('btn-speak');
+                if (btn) btn.classList.remove('speaking');
             };
-            utter.onerror = () => {
-                stopSpeech();
+            utter.onerror = (e) => {
+                isSpeaking = false;
+                const btn = document.getElementById('btn-speak');
+                if (btn) btn.classList.remove('speaking');
             };
 
             window.speechSynthesis.speak(utter);
         }
 
         function stopSpeech() {
-            if ('speechSynthesis' in window) {
-                window.speechSynthesis.cancel();
-            }
+            if (speechStopping) return;
+            speechStopping = true;
             isSpeaking = false;
             const btn = document.getElementById('btn-speak');
             if (btn) btn.classList.remove('speaking');
+
+            if ('speechSynthesis' in window && window.speechSynthesis.speaking) {
+                try {
+                    window.speechSynthesis.cancel();
+                } catch(e) {}
+            }
+            speechStopping = false;
         }
 
         // --- 7. ASSESSMENT FLOW & EVENT DELEGATION ---

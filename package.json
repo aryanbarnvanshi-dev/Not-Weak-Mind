@@ -1,0 +1,28 @@
+{
+  "name": "not-weak-mind",
+  "version": "1.2.0",
+  "description": "EduScreen - Comprehensive Learning Challenge & Cognitive Screening Tool",
+  "main": "index.html",
+  "scripts": {
+    "test": "node --test tests/tier1-features/*.test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aryanbarnvanshi-dev/Not-Weak-Mind.git"
+  },
+  "keywords": [
+    "dyslexia",
+    "dyscalculia",
+    "adhd",
+    "learning-disabilities",
+    "accessibility",
+    "neurodiversity",
+    "education"
+  ],
+  "author": "Aryan Kumar (aryanbarnvanshi-dev)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/aryanbarnvanshi-dev/Not-Weak-Mind/issues"
+  },
+  "homepage": "https://aryanbarnvanshi-dev.github.io/Not-Weak-Mind/"
+}
