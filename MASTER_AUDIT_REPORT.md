@@ -63,7 +63,7 @@ A total of **28 concrete issues** were discovered across 5 functional pillars.
 ### Sprint 2: Assistive Accessibility & Bilingual Localization
 - Implement Web Speech API (`window.speechSynthesis`) for real-time Text-to-Speech audio narration with rate adjustment.
 - Implement full English / Hindi (`हिन्दी`) localization toggle covering all UI strings, questions, categories, and recommendations.
-- Add Atkinson Hyperlegible / OpenDyslexic accessible font stack with font scaling (`A-`, `A+`) and reading guide.
+- Add Atkinson Hyperlegible / OpenDyslexic accessible font stack with adjustable font-sizing (`A-`, `A+`) and reading guide.
 - Add high-contrast AAA colors for disclaimers and badges.
 
 ### Sprint 3: Visualizations & Clinical Reporting

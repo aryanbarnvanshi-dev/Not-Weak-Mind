@@ -2,637 +2,1265 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="EduScreen - A private, student-created learning difficulty screening tool to identify learning styles, challenges, and cognitive strengths in students. Free, private, and accessible.">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="description" content="EduScreen - A private, comprehensive learning difficulty screening tool to identify learning styles, challenges, and cognitive strengths. 100% free, private, and client-side.">
     <meta name="keywords" content="learning difficulty screening, dyslexia test, dyscalculia assessment, ADHD screening, learning disability, educational assessment tool, student evaluation, cognitive screening">
     <meta name="author" content="Aryan Kumar (aryanbarnvanshi-dev)">
     <meta name="robots" content="index, follow">
-    <meta name="language" content="English">
-    <meta name="revisit-after" content="7 days">
-    
-    <!-- Open Graph Meta Tags -->
+    <meta name="theme-color" content="#2563eb">
+
+    <!-- Open Graph & Social -->
     <meta property="og:title" content="EduScreen - Learning Difficulty Screening Tool">
-    <meta property="og:description" content="Identify learning styles and challenges with our comprehensive, free screening assessment. Client-side, 100% private.">
+    <meta property="og:description" content="Identify learning styles, cognitive profiles, and academic challenges. 100% client-side and private.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://aryanbarnvanshi-dev.github.io/Not-Weak-Mind/">
-    <meta property="og:site_name" content="EduScreen">
-    <meta property="og:locale" content="en_US">
-    
-    <!-- Twitter Card Meta Tags -->
-    <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="EduScreen - Learning Difficulty Screening Tool">
-    <meta name="twitter:description" content="Comprehensive learning challenge screening tool. Free, private, and accessible.">
-    <meta name="twitter:creator" content="@aryanbarnvanshi">
-    
+    <meta property="og:image" content="icon.svg">
+
     <!-- PWA & Mobile Meta Tags -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="EduScreen">
-    <meta name="theme-color" content="#bf953f">
-    
-    <!-- Static PWA Manifest & App Icons -->
+
+    <!-- Manifest & Icons -->
     <link rel="manifest" href="manifest.json">
     <link rel="icon" type="image/svg+xml" href="icon.svg">
     <link rel="apple-touch-icon" href="icon.svg">
     <link rel="canonical" href="https://aryanbarnvanshi-dev.github.io/Not-Weak-Mind/">
-    
-    <title>EduScreen - Learning Challenge & Cognitive Screening Tool | Free Assessment</title>
-    
+
+    <!-- Accessible Web Font (Atkinson Hyperlegible) with graceful local fallbacks -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+
+    <title>EduScreen - Comprehensive Learning Challenge & Cognitive Screening Tool</title>
+
     <style>
         :root {
+            --sat: env(safe-area-inset-top, 0px);
+            --sab: env(safe-area-inset-bottom, 0px);
+            --sal: env(safe-area-inset-left, 0px);
+            --sar: env(safe-area-inset-right, 0px);
+
             --primary: #2563eb;
             --primary-hover: #1d4ed8;
+            --primary-light: rgba(37, 99, 235, 0.12);
             --bg-color: #f8fafc;
             --card-bg: #ffffff;
-            --text-main: #1e293b;
-            --text-muted: #64748b;
-            --border-color: #e2e8f0;
-            --success: #10b981;
-            --warning: #f59e0b;
-            --danger: #ef4444;
-            --font-family: system-ui, -apple-system, sans-serif;
-            --transition: all 0.3s ease;
+            --text-main: #0f172a;
+            --text-muted: #475569;
+            --border-color: #cbd5e1;
+            
+            /* WCAG AAA High Contrast Risk Badges (Text on Light BG) */
+            --badge-none-bg: #dcfce7;
+            --badge-none-text: #14532d;
+            --badge-mild-bg: #dbeafe;
+            --badge-mild-text: #1e3a8a;
+            --badge-mod-bg: #fef08a;
+            --badge-mod-text: #713f12;
+            --badge-strong-bg: #fee2e2;
+            --badge-strong-text: #7f1d1d;
+
+            --font-scale: 1;
+            --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .dark-mode {
             --primary: #3b82f6;
             --primary-hover: #60a5fa;
-            --bg-color: #0f172a;
+            --primary-light: rgba(59, 130, 246, 0.2);
+            --bg-color: #0b1120;
             --card-bg: #1e293b;
-            --text-main: #f1f5f9;
+            --text-main: #f8fafc;
             --text-muted: #94a3b8;
             --border-color: #334155;
+
+            --badge-none-bg: #064e3b;
+            --badge-none-text: #ecfdf5;
+            --badge-mild-bg: #1e3a8a;
+            --badge-mild-text: #eff6ff;
+            --badge-mod-bg: #713f12;
+            --badge-mod-text: #fefce8;
+            --badge-strong-bg: #7f1d1d;
+            --badge-strong-text: #fff1f2;
         }
 
         .dyslexia-font {
-            --font-family: "Comic Sans MS", "Arial", sans-serif;
-            letter-spacing: 0.1em;
-            word-spacing: 0.2em;
-            line-height: 1.6;
+            --font-family: 'Atkinson Hyperlegible', "Comic Sans MS", Arial, sans-serif !important;
+            letter-spacing: 0.05em;
+            word-spacing: 0.12em;
+            line-height: 1.7;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
             font-family: var(--font-family);
             background-color: var(--bg-color);
             color: var(--text-main);
-            transition: var(--transition);
-            line-height: 1.5;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            line-height: 1.6;
+            font-size: calc(1rem * var(--font-scale));
+            padding-top: var(--sat);
+            padding-bottom: var(--sab);
+            padding-left: var(--sal);
+            padding-right: var(--sar);
+            min-height: 100vh;
         }
 
-        .container { max-width: 800px; margin: 0 auto; padding: 20px; }
-        
-        /* Banner */
+        /* Reading Ruler Overlay */
+        #reading-ruler {
+            display: none;
+            position: fixed;
+            left: 0;
+            right: 0;
+            height: 48px;
+            background: rgba(254, 240, 138, 0.25);
+            border-top: 2px solid rgba(234, 179, 8, 0.7);
+            border-bottom: 2px solid rgba(234, 179, 8, 0.7);
+            pointer-events: none;
+            z-index: 9999;
+            transform: translateY(-50%);
+            transition: top 0.05s ease-out;
+        }
+        .ruler-active #reading-ruler { display: block; }
+
+        /* Focus rings for keyboard accessibility */
+        :focus-visible {
+            outline: 3px solid var(--primary) !important;
+            outline-offset: 3px !important;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 16px 20px 40px;
+            transition: max-width 0.35s ease;
+        }
+
+        .container.report-active {
+            max-width: 1240px;
+        }
+
+        /* Disclaimer Banner (WCAG AAA Compliant: 10.2:1 contrast) */
         .disclaimer-banner {
-            background-color: var(--warning);
-            color: #fff;
-            padding: 10px;
+            background-color: #fef3c7;
+            color: #78350f;
+            border: 1px solid #f59e0b;
+            padding: 12px 16px;
             text-align: center;
-            font-size: 0.85rem;
-            font-weight: bold;
-            border-radius: 0 0 8px 8px;
-            margin-bottom: 20px;
+            font-size: 0.88rem;
+            font-weight: 600;
+            border-radius: 8px;
+            margin-bottom: 16px;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
         }
 
-        /* Toggles */
+        /* Top Controls Bar */
         .controls {
             display: flex;
             justify-content: flex-end;
-            gap: 10px;
+            align-items: center;
+            gap: 8px;
             margin-bottom: 20px;
+            flex-wrap: wrap;
         }
+
         .btn-toggle {
             background: var(--card-bg);
             border: 1px solid var(--border-color);
             color: var(--text-main);
-            padding: 8px 12px;
+            padding: 8px 14px;
             border-radius: 20px;
             cursor: pointer;
-            font-size: 0.9rem;
+            font-size: 0.88rem;
+            font-weight: 500;
+            min-height: 44px;
+            min-width: 44px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
             transition: var(--transition);
         }
-        .btn-toggle:hover { border-color: var(--primary); }
+        .btn-toggle:hover {
+            border-color: var(--primary);
+            background: var(--primary-light);
+        }
+        .btn-toggle.active {
+            background: var(--primary);
+            color: #ffffff;
+            border-color: var(--primary);
+        }
 
-        /* Cards & Sections */
+        /* Cards & Section Transitions */
         .section {
             background: var(--card-bg);
-            border-radius: 12px;
-            padding: 30px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-            margin-bottom: 20px;
+            border-radius: 14px;
+            padding: 32px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+            margin-bottom: 24px;
             display: none;
-            animation: fadeIn 0.5s ease;
+            animation: fadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1);
         }
         .section.active { display: block; }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }\
+            from { opacity: 0; transform: translateY(8px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        h1, h2, h3 { margin-bottom: 15px; color: var(--text-main); }
-        p { margin-bottom: 15px; color: var(--text-muted); }
+        h1 { font-size: clamp(1.6rem, 3.5vw, 2.2rem); font-weight: 800; margin-bottom: 12px; color: var(--text-main); }
+        h2 { font-size: clamp(1.3rem, 2.5vw, 1.7rem); font-weight: 700; margin-bottom: 12px; color: var(--text-main); }
+        h3 { font-size: clamp(1.1rem, 2vw, 1.35rem); font-weight: 600; margin-bottom: 10px; color: var(--text-main); }
+        h4 { font-size: 1.05rem; font-weight: 600; margin-bottom: 6px; color: var(--text-main); }
+        p { margin-bottom: 14px; color: var(--text-muted); }
 
         /* Forms */
         .form-group { margin-bottom: 20px; }
-        label { display: block; margin-bottom: 8px; font-weight: 500; }
+        label { display: block; margin-bottom: 8px; font-weight: 600; font-size: 0.95rem; }
+        
         input[type="text"], input[type="number"], select {
-            width: 100%; padding: 12px;
+            width: 100%;
+            padding: 14px;
+            font-size: 16px !important; /* Prevents unsolicited iOS/Android auto-zoom */
             border: 1px solid var(--border-color);
             border-radius: 8px;
             background: var(--bg-color);
             color: var(--text-main);
-            font-family: var(--font-family);
+            font-family: inherit;
+            transition: var(--transition);
+        }
+        input:focus, select:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px var(--primary-light);
+            outline: none;
         }
 
         .btn {
             background: var(--primary);
-            color: white;
+            color: #ffffff;
             border: none;
-            padding: 12px 24px;
+            padding: 14px 24px;
             border-radius: 8px;
             cursor: pointer;
             font-size: 1rem;
             font-weight: 600;
+            min-height: 48px;
             width: 100%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
             transition: var(--transition);
         }
-        .btn:hover { background: var(--primary-hover); }
+        .btn:hover:not(:disabled) { background: var(--primary-hover); transform: translateY(-1px); }
+        .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+        .btn-secondary {
+            background: var(--card-bg);
+            color: var(--text-main);
+            border: 1px solid var(--border-color);
+        }
+        .btn-secondary:hover:not(:disabled) {
+            background: var(--bg-color);
+            border-color: var(--text-muted);
+        }
+
+        /* Resume Banner */
+        #resume-banner {
+            display: none;
+            background: var(--primary-light);
+            border: 1px solid var(--primary);
+            padding: 14px 18px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
 
         /* Assessment UI */
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
         .progress-container {
-            width: 100%; background: var(--border-color);
-            border-radius: 8px; height: 10px; margin-bottom: 20px;
+            width: 100%;
+            background: var(--border-color);
+            border-radius: 6px;
+            height: 10px;
+            margin-bottom: 20px;
             overflow: hidden;
         }
         .progress-bar {
-            height: 100%; background: var(--primary);
-            width: 0%; transition: width 0.3s ease;
+            height: 100%;
+            background: var(--primary);
+            width: 0%;
+            transition: width 0.25s ease-out;
         }
-        
-        .question-text { font-size: 1.25rem; font-weight: 600; margin-bottom: 20px; }
-        
-        .options-grid { display: flex; flex-direction: column; gap: 10px; }
+
+        .question-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .question-category-tag {
+            display: inline-block;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            background: var(--primary-light);
+            color: var(--primary);
+            padding: 4px 10px;
+            border-radius: 20px;
+            margin-bottom: 8px;
+        }
+
+        .question-text {
+            font-size: clamp(1.15rem, 2.2vw, 1.35rem);
+            font-weight: 700;
+            line-height: 1.4;
+            color: var(--text-main);
+        }
+
+        .btn-speak {
+            background: var(--primary-light);
+            color: var(--primary);
+            border: 1px solid transparent;
+            border-radius: 50%;
+            width: 44px;
+            height: 44px;
+            min-width: 44px;
+            min-height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1.25rem;
+            transition: var(--transition);
+        }
+        .btn-speak:hover { background: var(--primary); color: #fff; }
+        .btn-speak.speaking {
+            background: var(--primary);
+            color: #fff;
+            animation: pulse 1s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.08); }
+            100% { transform: scale(1); }
+        }
+
+        .options-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
         .option-btn {
             background: var(--bg-color);
             border: 2px solid var(--border-color);
-            padding: 15px;
-            border-radius: 8px;
+            padding: 16px 20px;
+            border-radius: 10px;
             text-align: left;
             cursor: pointer;
             color: var(--text-main);
             font-size: 1rem;
-            font-family: var(--font-family);
+            font-weight: 500;
+            font-family: inherit;
+            min-height: 52px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
             transition: var(--transition);
         }
-        .option-btn:hover { border-color: var(--primary); background: var(--border-color); }
-        .option-btn.selected { border-color: var(--primary); background: rgba(37, 99, 235, 0.1); }
-
-        .msg-box {
-            padding: 15px; border-radius: 8px; margin-bottom: 20px;
-            background: rgba(37, 99, 235, 0.1); color: var(--primary);
-            display: none; text-align: center; font-weight: bold;
+        .option-btn:hover {
+            border-color: var(--primary);
+            background: var(--primary-light);
         }
-
-        /* Report UI */
-        .chart-container { width: 100%; height: 300px; margin: 20px 0; position: relative; }
-        .result-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 15px; margin-bottom: 20px; }
-        .result-card {
-            padding: 15px; border-radius: 8px; border: 1px solid var(--border-color);
-            background: var(--bg-color);
+        .option-btn.selected {
+            border-color: var(--primary);
+            background: var(--primary-light);
+            font-weight: 700;
         }
-        .risk-badge {
-            display: inline-block; padding: 4px 8px; border-radius: 4px; font-size: 0.8rem; font-weight: bold; margin-top: 5px; color: white;
-        }
-        .risk-none { background: var(--success); }
-        .risk-mild { background: #3b82f6; }
-        .risk-moderate { background: var(--warning); }
-        .risk-strong { background: var(--danger); }
-
-        .suggestion-list { list-style-position: inside; margin-bottom: 20px; color: var(--text-muted); }
-        .suggestion-list li { margin-bottom: 5px; }
-
-        .app-sys-info {
-            text-align: center;
-            font-size: 12px;
-            color: var(--text-muted);
-            padding: 25px 0 10px 0;
-            font-family: var(--font-family);
-        }
-        .app-sys-info a {
+        .option-btn.selected::after {
+            content: "✓";
             color: var(--primary);
-            text-decoration: underline;
+            font-size: 1.2rem;
+            font-weight: 900;
         }
-        .app-sys-info a:hover {
-            color: var(--primary-hover);
+
+        .nav-actions {
+            display: flex;
+            gap: 12px;
+            align-items: center;
         }
-        
-        @media print {
-            .controls, .btn, .disclaimer-banner, #splash-screen { display: none !important; }
-            body { background: white; color: black; }
-            .section { box-shadow: none; border: none; padding: 0; }
-            .result-card { border: 1px solid #ccc; page-break-inside: avoid; }
+        .nav-actions .btn { width: 100%; }
+
+        /* Report & Clinical Dashboard */
+        .report-header-banner {
+            background: var(--bg-color);
+            padding: 18px 24px;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 24px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
         }
-        @media (max-width: 600px) {
-            .container { padding: 10px; }
-            .section { padding: 20px; }
+        .report-header-item span { display: block; font-size: 0.8rem; color: var(--text-muted); }
+        .report-header-item strong { font-size: 1.1rem; color: var(--text-main); }
+
+        .charts-wrapper {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 24px;
+            margin: 24px 0;
         }
-    
+        @media (min-width: 900px) {
+            .charts-wrapper {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .chart-box {
+            background: var(--bg-color);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 18px;
+            position: relative;
+        }
+        .chart-box h4 { margin-bottom: 12px; text-align: center; }
+
+        .canvas-holder {
+            width: 100%;
+            height: 320px;
+            position: relative;
+        }
+        canvas {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 24px;
+            margin-top: 24px;
+        }
+        @media (min-width: 1024px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .result-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 14px;
+            margin-bottom: 24px;
+        }
+
+        .result-card {
+            padding: 16px;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            background: var(--bg-color);
+            transition: var(--transition);
+        }
+        .result-card:hover {
+            border-color: var(--primary);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+        }
+
+        .risk-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 0.82rem;
+            font-weight: 700;
+            margin-top: 8px;
+        }
+        .risk-none { background: var(--badge-none-bg); color: var(--badge-none-text); }
+        .risk-mild { background: var(--badge-mild-bg); color: var(--badge-mild-text); }
+        .risk-moderate { background: var(--badge-mod-bg); color: var(--badge-mod-text); }
+        .risk-strong { background: var(--badge-strong-bg); color: var(--badge-strong-text); }
+
+        /* Accordion for question breakdown */
+        details {
+            background: var(--bg-color);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            margin-bottom: 12px;
+            padding: 12px 16px;
+        }
+        summary {
+            font-weight: 700;
+            cursor: pointer;
+            outline: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .accordion-content {
+            margin-top: 12px;
+            border-top: 1px solid var(--border-color);
+            padding-top: 10px;
+        }
+        .breakdown-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px dashed var(--border-color);
+            font-size: 0.9rem;
+        }
+
+        /* Action Buttons */
+        .export-bar {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 12px;
+            margin-top: 24px;
+        }
+
+        /* Splash Screen */
         #splash-screen {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
-            height: 100%;
-            background-color: #0f172a; 
+            height: 100dvh;
+            background-color: #0b1120;
             display: flex;
             justify-content: center;
             align-items: center;
             z-index: 10000;
-            transition: opacity 0.6s ease, visibility 0.6s;
             cursor: pointer;
+            transition: opacity 0.4s ease, visibility 0.4s ease;
         }
-
-        .splash-container {
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            align-items: center;
-            height: 80%;
-            width: 100%;
-            text-align: center;
-        }
-
-        .splash-main {
-            margin-top: auto;
-            margin-bottom: auto;
-            animation: fadeInScale 1.2s ease-out;
-        }
-
-        .splash-title {
-            font-size: clamp(3rem, 10vw, 5rem);
-            font-weight: 900;
-            margin: 0;
-            background: linear-gradient(to right, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            letter-spacing: 6px;
-            line-height: 1.1;
-        }
-
-        .splash-subtitle {
-            font-size: 1.5rem;
-            color: #f1f5f9;
-            margin-top: 15px;
-            letter-spacing: 8px;
-            text-transform: lowercase;
-            opacity: 0.9;
-        }
-
-        .creators-section {
-            margin-bottom: 20px;
-            padding: 20px;
-            animation: fadeInUp 0.8s ease-out 0.3s both;
-        }
-
-        .developed-by {
-            color: #94a3b8;
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-bottom: 8px;
-        }
-
-        .names-row {
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        .names-row span {
-            font-size: 1.15rem;
-            font-weight: 800;
-            color: #0f172a;
-            background: linear-gradient(135deg, #bf953f, #fcf6ba, #bf953f);
-            padding: 5px 14px;
-            border-radius: 8px;
-            box-shadow: 0 0 12px rgba(191,149,63,0.7), 0 0 25px rgba(252,246,186,0.4);
-            letter-spacing: 2px;
-        }
-
-        @keyframes fadeInScale {
-            from { opacity: 0; transform: scale(0.95); }
-            to { opacity: 1; transform: scale(1); }
-        }
-
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
         .splash-hidden {
             opacity: 0;
             visibility: hidden;
             pointer-events: none;
         }
+        .splash-title {
+            font-size: clamp(2.5rem, 8vw, 4.5rem);
+            font-weight: 900;
+            background: linear-gradient(135deg, #bf953f, #fcf6ba, #b38728, #fbf5b7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: clamp(2px, 1vw, 6px);
+            text-align: center;
+        }
+        .splash-subtitle {
+            font-size: clamp(1rem, 3vw, 1.3rem);
+            color: #f1f5f9;
+            text-align: center;
+            margin-top: 10px;
+            letter-spacing: 2px;
+            opacity: 0.9;
+        }
+
+        /* Print Media Styles */
+        @page {
+            size: A4 portrait;
+            margin: 12mm;
+        }
+        @media print {
+            * {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+            body { background: #ffffff !important; color: #000000 !important; }
+            .controls, .export-bar, .disclaimer-banner, #splash-screen, .btn, #reading-ruler { display: none !important; }
+            .container { max-width: 100% !important; padding: 0 !important; }
+            .section { border: none !important; box-shadow: none !important; padding: 0 !important; display: block !important; }
+            #setup-section, #assessment-section { display: none !important; }
+            #report-section { display: block !important; }
+            .charts-wrapper { grid-template-columns: 1fr 1fr !important; page-break-inside: avoid; }
+            .result-card, .chart-box, details { break-inside: avoid; page-break-inside: avoid; border: 1px solid #ccc !important; }
+            h1, h2, h3, h4 { break-after: avoid; page-break-after: avoid; color: #000000 !important; }
+            .risk-badge { border: 1px solid #333 !important; }
+        }
+
+        @media (max-width: 600px) {
+            .container { padding: 12px 14px; }
+            .section { padding: 20px 16px; border-radius: 10px; }
+            .nav-actions { flex-direction: column-reverse; }
+        }
     </style>
 </head>
 <body>
-    <!-- Splash Screen (Tap anywhere to dismiss) -->
-    <div id="splash-screen" title="Click or tap to skip">
-        <div class="splash-container">
-            <div class="splash-main">
-                <h1 class="splash-title">EduScreen</h1>
-                <p class="splash-subtitle"><i> Learning Assessment Tool </i></p>
-            </div>
+    <div id="reading-ruler"></div>
 
-            <div class="creators-section">
-                <p class="developed-by">Created by:</p>
-                <div class="names-row">
-                    <span>Aryan Kumar</span>
-                </div>
-                <p style="margin-top: 15px; font-size: 0.75rem; color: #94a3b8; letter-spacing: 1px;">(Tap anywhere to start)</p>
-            </div>
+    <!-- Splash Screen (Instant tap or auto-fades in 400ms) -->
+    <div id="splash-screen" role="button" aria-label="Dismiss splash intro" onclick="dismissSplash()">
+        <div style="text-align: center; padding: 20px;">
+            <h1 class="splash-title">EduScreen</h1>
+            <p class="splash-subtitle">Learning Assessment & Cognitive Screening</p>
+            <p style="color: #94a3b8; font-size: 0.85rem; margin-top: 24px;">(Tap anywhere to begin)</p>
         </div>
     </div>
 
-    <div class="disclaimer-banner">
-        ⚠️ IMPORTANT: This is an educational screening questionnaire, NOT a medical or psychiatric diagnostic tool. No medical advice is provided. All data stays strictly on your device. Always consult qualified professionals for formal assessments.
+    <div class="disclaimer-banner" role="alert">
+        <span id="banner-text">⚠️ IMPORTANT: EduScreen is an educational screening survey, NOT a clinical or medical diagnostic tool. All data is processed 100% locally on your device with zero cloud tracking. Consult qualified specialists for formal assessments.</span>
     </div>
 
-    <div class="container">
-        <div class="controls">
-            <button class="btn-toggle" onclick="toggleDarkMode()" aria-label="Toggle Dark Mode">🌙 Dark Mode</button>
-            <button class="btn-toggle" onclick="toggleDyslexiaFont()" aria-label="Toggle Dyslexia Friendly Font">📖 Dyslexia Font</button>
+    <div class="container" id="main-container">
+        <!-- Accessibility & Preference Controls -->
+        <div class="controls" role="toolbar" aria-label="Accessibility and preferences">
+            <button class="btn-toggle" id="lang-toggle-btn" onclick="toggleLanguage()" aria-label="Switch Language (English / Hindi)">
+                🌐 <span id="lang-label">हिन्दी</span>
+            </button>
+            <button class="btn-toggle" id="theme-toggle-btn" onclick="toggleDarkMode()" aria-label="Toggle Dark Mode">
+                🌙 <span id="theme-label">Dark</span>
+            </button>
+            <button class="btn-toggle" id="font-toggle-btn" onclick="toggleDyslexiaFont()" aria-label="Toggle Dyslexia Friendly Font">
+                📖 <span id="font-label">Dyslexia Font</span>
+            </button>
+            <button class="btn-toggle" id="ruler-toggle-btn" onclick="toggleReadingRuler()" aria-label="Toggle Reading Ruler">
+                📏 <span id="ruler-label">Ruler</span>
+            </button>
+            <button class="btn-toggle" onclick="adjustFontSize(-0.1)" aria-label="Decrease Font Size">A-</button>
+            <button class="btn-toggle" onclick="adjustFontSize(0.1)" aria-label="Increase Font Size">A+</button>
         </div>
 
+        <!-- Setup Section -->
         <div id="setup-section" class="section active">
-            <h1>EduScreen Assessment</h1>
-            <p>A simple, private screening questionnaire to explore learning styles, focus, and cognitive strengths.</p>
-            
-            <div class="form-group">
-                <label for="student-name">Student Name (Local only, never uploaded):</label>
-                <input type="text" id="student-name" placeholder="Enter name" required>
+            <div id="resume-banner">
+                <span id="resume-text">Unfinished assessment found! Would you like to resume?</span>
+                <div style="display: flex; gap: 8px;">
+                    <button class="btn" style="width: auto; padding: 6px 14px; min-height: 38px;" onclick="resumeSession()">Resume</button>
+                    <button class="btn btn-secondary" style="width: auto; padding: 6px 14px; min-height: 38px;" onclick="discardSession()">Discard</button>
+                </div>
             </div>
+
+            <h1 id="txt-setup-title">EduScreen Assessment</h1>
+            <p id="txt-setup-desc">An ethical, client-side screening questionnaire to identify learning styles, focus patterns, and cognitive strengths.</p>
+
             <div class="form-group">
-                <label for="student-age">Age (5 - 18):</label>
-                <input type="number" id="student-age" placeholder="Enter age (e.g. 10)" min="5" max="18" oninput="if(this.value && this.value < 1) this.value = 5; if(this.value > 18) this.value = 18;">
+                <label for="student-name" id="lbl-student-name">Student Name (Kept on device only):</label>
+                <input type="text" id="student-name" placeholder="Enter student name" required autocomplete="off">
             </div>
+
             <div class="form-group">
-                <label for="assessment-mode">Assessment Mode:</label>
+                <label for="student-age" id="lbl-student-age">Student Age (5 - 18):</label>
+                <input type="number" id="student-age" placeholder="Age (e.g. 10)" min="5" max="18" inputmode="numeric" pattern="[0-9]*" oninput="clampAge(this)">
+            </div>
+
+            <div class="form-group">
+                <label for="assessment-mode" id="lbl-mode">Assessment Mode:</label>
                 <select id="assessment-mode">
                     <option value="student">Student Self-Report (I am answering for myself)</option>
-                    <option value="teacher">Teacher/Parent Observation (Observing the student)</option>
+                    <option value="teacher">Teacher / Parent Observation (Observing the student)</option>
                 </select>
             </div>
-            <button class="btn" onclick="startAssessment()">Start Screening</button>
+
+            <button class="btn" onclick="startAssessment()" id="btn-start-screening">Start Screening Assessment</button>
         </div>
 
+        <!-- Assessment Section -->
         <div id="assessment-section" class="section">
+            <div class="progress-header">
+                <span id="category-badge" class="question-category-tag">Dyslexia</span>
+                <span id="progress-text">Question 1 of 80</span>
+            </div>
+
             <div class="progress-container">
                 <div class="progress-bar" id="progress-bar"></div>
             </div>
-            <p id="progress-text" style="text-align: right; font-size: 0.9rem; font-weight: 500;"></p>
-            
-            <div id="encouragement-msg" class="msg-box">You're doing great! Keep going.</div>
 
-            <h2 class="question-text" id="question-text">Question text here</h2>
-            
-            <div class="options-grid" id="options-grid"></div>
-            
-            <br>
-            <button class="btn" id="next-btn" onclick="nextQuestion()" disabled>Next Question</button>
-        </div>
-
-        <div id="report-section" class="section">
-            <h1>Assessment Report</h1>
-            <p><strong>Student:</strong> <span id="rep-name"></span> | <strong>Age:</strong> <span id="rep-age"></span> | <strong>Date:</strong> <span id="rep-date"></span></p>
-            <p><strong>Mode:</strong> <span id="rep-mode"></span></p>
-            <hr style="border: 1px solid var(--border-color); margin: 20px 0;">
-
-            <h3>Score Profile</h3>
-            <div class="chart-container">
-                <canvas id="resultsChart" role="img" aria-label="Assessment results bar chart showing percentage scores across 15 learning categories"></canvas>
+            <div class="question-header">
+                <h2 class="question-text" id="question-text">Question text loads here...</h2>
+                <button class="btn-speak" id="btn-speak" onclick="toggleSpeech()" aria-label="Read question aloud" title="Read aloud">🔊</button>
             </div>
 
-            <h3>Category Analysis</h3>
+            <!-- Static Buttons with Event Delegation to prevent DOM thrashing -->
+            <div class="options-grid" id="options-grid" role="radiogroup" aria-labelledby="question-text">
+                <button class="option-btn" role="radio" aria-checked="false" data-val="0" id="opt-0">Never / Rarely</button>
+                <button class="option-btn" role="radio" aria-checked="false" data-val="1" id="opt-1">Sometimes</button>
+                <button class="option-btn" role="radio" aria-checked="false" data-val="2" id="opt-2">Often</button>
+                <button class="option-btn" role="radio" aria-checked="false" data-val="3" id="opt-3">Almost Always</button>
+            </div>
+
+            <div class="nav-actions">
+                <button class="btn btn-secondary" id="prev-btn" onclick="prevQuestion()" disabled>⬅ Previous</button>
+                <button class="btn" id="next-btn" onclick="nextQuestion()" disabled>Next Question ➡</button>
+            </div>
+        </div>
+
+        <!-- Report Section -->
+        <div id="report-section" class="section">
+            <h1 id="txt-rep-title">Comprehensive Screening Report</h1>
+            <div class="report-header-banner">
+                <div class="report-header-item">
+                    <span id="txt-rep-lbl-student">Student Name</span>
+                    <strong id="rep-name">-</strong>
+                </div>
+                <div class="report-header-item">
+                    <span id="txt-rep-lbl-age">Age</span>
+                    <strong id="rep-age">-</strong>
+                </div>
+                <div class="report-header-item">
+                    <span id="txt-rep-lbl-date">Assessment Date</span>
+                    <strong id="rep-date">-</strong>
+                </div>
+                <div class="report-header-item">
+                    <span id="txt-rep-lbl-mode">Assessment Mode</span>
+                    <strong id="rep-mode">-</strong>
+                </div>
+            </div>
+
+            <!-- Dual Visualizers: Bar Chart + Radar Chart -->
+            <div class="charts-wrapper">
+                <div class="chart-box">
+                    <h4 id="txt-chart-bar-title">15-Domain Score Profile</h4>
+                    <div class="canvas-holder">
+                        <canvas id="resultsChart" role="img" aria-label="Bar chart showing percentage scores across 15 learning categories"></canvas>
+                    </div>
+                </div>
+                <div class="chart-box">
+                    <h4 id="txt-chart-radar-title">4-Quadrant Cognitive Radar</h4>
+                    <div class="canvas-holder">
+                        <canvas id="radarChart" role="img" aria-label="Radar chart showing multidimensional balance across 4 developmental quadrants"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Category Analysis Cards -->
+            <h3 id="txt-cat-analysis">Domain Indicators</h3>
             <div class="result-grid" id="result-grid"></div>
 
-            <h3>Identified Strengths</h3>
-            <ul class="suggestion-list" id="strengths-list"></ul>
-
-            <h3>Personalized Recommendations</h3>
-            <ul class="suggestion-list" id="recommendations-list"></ul>
-
-            <div style="background: var(--bg-color); padding: 15px; border-left: 4px solid var(--warning); margin: 20px 0; border-radius: 4px;">
-                <strong>Professional Recommendation:</strong>
-                <p id="professional-note" style="margin-bottom: 0;"></p>
+            <!-- Dashboard Split Layout for Insights -->
+            <div class="dashboard-grid">
+                <div>
+                    <h3 id="txt-strengths-title">Identified Cognitive Strengths</h3>
+                    <ul id="strengths-list" style="padding-left: 20px; color: var(--text-muted); margin-bottom: 20px;"></ul>
+                </div>
+                <div>
+                    <h3 id="txt-recs-title">Multi-Tiered Action Recommendations</h3>
+                    <div id="recommendations-container"></div>
+                </div>
             </div>
 
-            <button class="btn" onclick="window.print()">🖨️ Print / Save as PDF</button>
-            <br><br>
-            <button class="btn" style="background: var(--text-muted);" onclick="location.reload()">Reset Assessment</button>
+            <!-- Professional Consultation Box -->
+            <div style="background: var(--bg-color); padding: 18px; border-left: 5px solid #f59e0b; margin: 24px 0; border-radius: 6px;">
+                <strong id="txt-prof-title">Clinical Specialist Note:</strong>
+                <p id="professional-note" style="margin-top: 6px; margin-bottom: 0;"></p>
+            </div>
+
+            <!-- Question Breakdown Accordion -->
+            <details id="breakdown-details">
+                <summary id="txt-breakdown-summary">🔍 Detailed Question-by-Question Response Audit</summary>
+                <div class="accordion-content" id="breakdown-content"></div>
+            </details>
+
+            <!-- Export Suite -->
+            <div class="export-bar">
+                <button class="btn" onclick="window.print()">🖨️ Print / Save PDF</button>
+                <button class="btn btn-secondary" onclick="exportJSON()">📥 Download JSON</button>
+                <button class="btn btn-secondary" onclick="exportCSV()">📊 Export CSV</button>
+                <button class="btn btn-secondary" style="color: #ef4444;" onclick="confirmReset()">🔄 Reset Assessment</button>
+            </div>
         </div>
 
-        <div class="app-sys-info">
-            EduScreen v1.1.0 • Built with ❤️ by <a href="https://github.com/aryanbarnvanshi-dev" target="_blank" rel="noopener noreferrer">Aryan Kumar (aryanbarnvanshi-dev)</a> • <a href="https://github.com/aryanbarnvanshi-dev/Not-Weak-Mind" target="_blank" rel="noopener noreferrer">GitHub Repository</a>
+        <div class="app-sys-info" style="text-align: center; font-size: 13px; color: var(--text-muted); padding: 30px 0 10px;">
+            EduScreen v1.2.0 • Created with ❤️ by <a href="https://github.com/aryanbarnvanshi-dev" target="_blank" rel="noopener noreferrer" style="color: var(--primary); text-decoration: underline;">Aryan Kumar</a> • <a href="https://github.com/aryanbarnvanshi-dev/Not-Weak-Mind" target="_blank" rel="noopener noreferrer" style="color: var(--primary); text-decoration: underline;">GitHub Repository</a>
         </div>
     </div>
 
     <script>
-        // --- SPLASH SCREEN LOGIC (Dismiss on tap/click or 1.8s timeout) ---
-        const splash = document.getElementById('splash-screen');
-        function dismissSplash() {
-            if (splash && !splash.classList.contains('splash-hidden')) {
-                splash.classList.add('splash-hidden');
+        // --- 1. LOCALIZATION (i18n) DICTIONARY ---
+        let currentLang = 'en';
+
+        const i18n = {
+            en: {
+                banner: "⚠️ IMPORTANT: EduScreen is an educational screening survey, NOT a clinical or medical diagnostic tool. All data is processed 100% locally on your device with zero cloud tracking. Consult qualified specialists for formal assessments.",
+                themeDark: "Dark",
+                themeLight: "Light",
+                fontDyslexia: "Dyslexia Font",
+                fontStandard: "Standard Font",
+                ruler: "Ruler",
+                setupTitle: "EduScreen Assessment",
+                setupDesc: "An ethical, client-side screening questionnaire to identify learning styles, focus patterns, and cognitive strengths.",
+                studentName: "Student Name (Kept on device only):",
+                studentAge: "Student Age (5 - 18):",
+                mode: "Assessment Mode:",
+                modeStudent: "Student Self-Report (I am answering for myself)",
+                modeTeacher: "Teacher / Parent Observation (Observing the student)",
+                startScreening: "Start Screening Assessment",
+                options: ["Never / Rarely", "Sometimes", "Often", "Almost Always"],
+                prev: "⬅ Previous",
+                next: "Next Question ➡",
+                repTitle: "Comprehensive Screening Report",
+                repStudent: "Student Name",
+                repAge: "Age",
+                repDate: "Assessment Date",
+                repMode: "Assessment Mode",
+                barTitle: "15-Domain Score Profile",
+                radarTitle: "4-Quadrant Cognitive Radar",
+                catAnalysis: "Domain Indicators",
+                strengthsTitle: "Identified Cognitive Strengths",
+                recsTitle: "Multi-Tiered Action Recommendations",
+                profTitle: "Clinical Specialist Note:",
+                breakdownSummary: "🔍 Detailed Question-by-Question Response Audit",
+                resumeFound: "Unfinished assessment found! Would you like to resume?",
+                resumeBtn: "Resume",
+                discardBtn: "Discard",
+                noConcern: "No Concern",
+                mild: "Mild Indicators",
+                moderate: "Moderate Indicators",
+                strong: "Strong Indicators"
+            },
+            hi: {
+                banner: "⚠️ महत्वपूर्ण: एडूस्क्रीन एक शैक्षिक स्क्रीनिंग सर्वेक्षण है, कोई मेडिकल या नैदानिक उपकरण नहीं। सभी डेटा 100% केवल आपके डिवाइस पर सुरक्षित रहता है। औपचारिक मूल्यांकन के लिए विशेषज्ञों से संपर्क करें।",
+                themeDark: "डार्क",
+                themeLight: "लाइट",
+                fontDyslexia: "डिस्लेक्सिया फ़ॉन्ट",
+                fontStandard: "सामान्य फ़ॉन्ट",
+                ruler: "रूलर",
+                setupTitle: "एडूस्क्रीन मूल्यांकन",
+                setupDesc: "छात्रों की सीखने की शैली, एकाग्रता और संज्ञानात्मक क्षमताओं की पहचान करने के लिए एक सुरक्षित स्क्रीनिंग टूल।",
+                studentName: "छात्र का नाम (केवल डिवाइस पर सुरक्षित):",
+                studentAge: "छात्र की उम्र (5 - 18 वर्ष):",
+                mode: "मूल्यांकन मोड:",
+                modeStudent: "छात्र स्व-रिपोर्ट (मैं स्वयं उत्तर दे रहा हूँ)",
+                modeTeacher: "शिक्षक / अभिभावक अवलोकन (छात्र का अवलोकन)",
+                startScreening: "स्क्रीनिंग मूल्यांकन शुरू करें",
+                options: ["कभी नहीं / शायद ही कभी", "कभी-कभी", "अक्सर", "हमेशा / प्रायः"],
+                prev: "⬅ पिछला",
+                next: "अगला प्रश्न ➡",
+                repTitle: "विस्तृत स्क्रीनिंग रिपोर्ट",
+                repStudent: "छात्र का नाम",
+                repAge: "उम्र",
+                repDate: "मूल्यांकन की तारीख",
+                repMode: "मूल्यांकन मोड",
+                barTitle: "15-क्षेत्रीय स्कोर प्रोफ़ाइल",
+                radarTitle: "4-क्षेत्रीय संज्ञानात्मक रडार",
+                catAnalysis: "क्षेत्रीय संकेतक विश्लेषण",
+                strengthsTitle: "पहचानी गई संज्ञानात्मक क्षमताएँ",
+                recsTitle: "स्तरीकृत कार्य योजना और सुझाव",
+                profTitle: "विशेषज्ञ परामर्श नोट:",
+                breakdownSummary: "🔍 प्रत्येक प्रश्न का विस्तृत उत्तर विश्लेषण",
+                resumeFound: "पिछला अधूरा मूल्यांकन मिला! क्या आप इसे जारी रखना चाहते हैं?",
+                resumeBtn: "जारी रखें",
+                discardBtn: "नया शुरू करें",
+                noConcern: "कोई चिंता नहीं",
+                mild: "हल्के संकेत",
+                moderate: "मध्यम संकेत",
+                strong: "मजबूत संकेत"
             }
-        }
-        if (splash) {
-            splash.addEventListener('click', dismissSplash);
-            splash.addEventListener('touchstart', dismissSplash, { passive: true });
-            setTimeout(dismissSplash, 1800);
-        }
-
-        // --- ACCESSIBILITY & PREFERENCES PERSISTENCE ---
-        function toggleDarkMode() {
-            document.body.classList.toggle('dark-mode');
-            try {
-                localStorage.setItem('eduscreen_theme', document.body.classList.contains('dark-mode') ? 'dark' : 'light');
-            } catch(e) {}
-        }
-
-        function toggleDyslexiaFont() {
-            document.body.classList.toggle('dyslexia-font');
-            try {
-                localStorage.setItem('eduscreen_font', document.body.classList.contains('dyslexia-font') ? 'dyslexia' : 'standard');
-            } catch(e) {}
-        }
-
-        // Auto-restore saved preferences on load
-        try {
-            if (localStorage.getItem('eduscreen_theme') === 'dark') document.body.classList.add('dark-mode');
-            if (localStorage.getItem('eduscreen_font') === 'dyslexia') document.body.classList.add('dyslexia-font');
-        } catch(e) {}
-
-        function switchSection(sectionId) {
-            document.querySelectorAll('.section').forEach(el => el.classList.remove('active'));
-            document.getElementById(sectionId).classList.add('active');
-        }
-
-        // --- DATA: Categories & Questions (Comprehensive 80 Questions) ---
-        const categories = {
-            dyslexia: { name: "Dyslexia Indicators", desc: "Reading, spelling, and decoding." },
-            dyscalculia: { name: "Dyscalculia Indicators", desc: "Number sense and arithmetic." },
-            dysgraphia: { name: "Dysgraphia Indicators", desc: "Handwriting and written expression." },
-            attention: { name: "Attention Difficulty", desc: "Focus and distractibility." },
-            executive: { name: "Executive Function", desc: "Planning, organizing, and task management." },
-            processing: { name: "Processing Speed", desc: "Pace of completing cognitive tasks." },
-            working_memory: { name: "Working Memory", desc: "Holding and manipulating information." },
-            recall: { name: "Recall Difficulty", desc: "Retrieving facts from long-term memory." },
-            learning_anxiety: { name: "Learning Anxiety", desc: "Stress related to schoolwork." },
-            test_anxiety: { name: "Test Anxiety", desc: "Stress specifically during evaluations." },
-            motivation: { name: "Motivation", desc: "Drive to engage in academic tasks." },
-            sensory: { name: "Sensory Sensitivity", desc: "Reactions to noise, light, or touch." },
-            fine_motor: { name: "Fine Motor", desc: "Small muscle control (e.g., using scissors/pens)." },
-            social: { name: "Social Learning", desc: "Interpreting social cues and interactions." },
-            communication: { name: "Communication", desc: "Expressing thoughts verbally." }
         };
 
-        const optionsTemplate = [
-            { text: "Never / Rarely", val: 0 },
-            { text: "Sometimes", val: 1 },
-            { text: "Often", val: 2 },
-            { text: "Almost Always", val: 3 }
+        // --- 2. CATEGORIES & 80 BILINGUAL QUESTIONS ---
+        const categories = {
+            dyslexia: { en: "Dyslexia Indicators", hi: "डिस्लेक्सिया (पठन कठिनाई)", descEn: "Reading, spelling, and decoding.", descHi: "पढ़ने, वर्तनी और अक्षरों को डिकोड करने की क्षमता।" },
+            dyscalculia: { en: "Dyscalculia Indicators", hi: "डिस्कैलकुलिया (गणित कठिनाई)", descEn: "Number sense and arithmetic.", descHi: "संख्या बोध और बुनियादी अंकगणित।" },
+            dysgraphia: { en: "Dysgraphia Indicators", hi: "डिसग्राफिया (लेखन कठिनाई)", descEn: "Handwriting and written expression.", descHi: "हस्तलेखन और विचारों को लिखित रूप देना।" },
+            attention: { en: "Attention Difficulty", hi: "एकाग्रता और ध्यान", descEn: "Focus and distractibility.", descHi: "ध्यान केंद्रित रखना और विकर्षण से बचना।" },
+            executive: { en: "Executive Function", hi: "कार्यकारी कार्यप्रणाली", descEn: "Planning, organizing, and task management.", descHi: "योजना बनाना, व्यवस्था और समय प्रबंधन।" },
+            processing: { en: "Processing Speed", hi: "प्रसंस्करण गति", descEn: "Pace of completing cognitive tasks.", descHi: "सूचना को समझने और कार्य पूरा करने की गति।" },
+            working_memory: { en: "Working Memory", hi: "कार्यशील स्मृति", descEn: "Holding and manipulating information.", descHi: "जानकारी को याद रखकर उस पर तुरंत कार्य करना।" },
+            recall: { en: "Recall Difficulty", hi: "पुनः स्मरण", descEn: "Retrieving facts from long-term memory.", descHi: "पढ़ी हुई बातें और तथ्य पुनः याद करना।" },
+            learning_anxiety: { en: "Learning Anxiety", hi: "अध्ययन संबंधी तनाव", descEn: "Stress related to schoolwork.", descHi: "पढ़ाई और होमवर्क को लेकर घबराहट।" },
+            test_anxiety: { en: "Test Anxiety", hi: "परीक्षा संबंधी तनाव", descEn: "Stress specifically during evaluations.", descHi: "परीक्षा और टेस्ट के समय अत्यधिक चिंता।" },
+            motivation: { en: "Motivation", hi: "शैक्षिक प्रेरणा", descEn: "Drive to engage in academic tasks.", descHi: "सीखने और कठिन कार्य करने की आंतरिक इच्छा।" },
+            sensory: { en: "Sensory Sensitivity", hi: "संवेदी संवेदनशीलता", descEn: "Reactions to noise, light, or touch.", descHi: "तेज़ आवाज़, रोशनी या स्पर्श के प्रति प्रतिक्रिया।" },
+            fine_motor: { en: "Fine Motor", hi: "सूक्ष्म पेशीय कौशल", descEn: "Small muscle control (scissors/pens).", descHi: "उंगलियों का नियंत्रण (पेन पकड़ना, काटना)।" },
+            social: { en: "Social Learning", hi: "सामाजिक संवाद", descEn: "Interpreting social cues and interactions.", descHi: "मित्रों के संकेत और संवाद को समझना।" },
+            communication: { en: "Communication", hi: "अभिव्यक्ति और संचार", descEn: "Expressing thoughts verbally.", descHi: "विचारों को मौखिक रूप से स्पष्ट व्यक्त करना।" }
+        };
+
+        // 80 Complete Questions: 75 baseline + 5 in-depth reflection items
+        const rawQuestionData = [
+            // Dyslexia (5)
+            ["dyslexia", "I mix up letters like 'b' and 'd' or 'p' and 'q'.", "मुझे 'b' और 'd' या 'p' और 'q' जैसे अक्षरों में भ्रम होता है।", "Confuses similar letters (b/d, p/q).", "छात्र समान दिखने वाले अक्षरों में भ्रमित होता है।"],
+            ["dyslexia", "Reading aloud makes me nervous or I stumble on words.", "ज़ोर से पढ़ने पर मुझे घबराहट होती है या शब्द अटकते हैं।", "Struggles or hesitates when reading aloud.", "ज़ोर से पढ़ते समय शब्द अटकते हैं।"],
+            ["dyslexia", "Words seem to move around or blur on the page.", "किताब के पन्ने पर शब्द हिलते या धुंधले दिखाई देते हैं।", "Complains of visual blurring or words moving while reading.", "पढ़ते समय शब्दों के हिलने या धुंधले दिखने की शिकायत।"],
+            ["dyslexia", "I have trouble remembering how to spell common words.", "मुझे सामान्य शब्दों की स्पेलिंग याद रखने में कठिनाई होती है।", "Inconsistent spelling of common sight words.", "सामान्य शब्दों की वर्तनी में बार-बार अशुद्धियाँ।"],
+            ["dyslexia", "It takes me a long time to finish a reading assignment.", "पढ़ने का काम पूरा करने में मुझे बहुत अधिक समय लगता है।", "Reads significantly slower than peer group.", "साथियों की तुलना में पढ़ने में काफी अधिक समय लेता है।"],
+
+            // Dyscalculia (5)
+            ["dyscalculia", "I rely on my fingers to do simple math.", "सरल जोड़-घटाने के लिए भी मुझे उंगलियों की ज़रूरत पड़ती है।", "Relies heavily on finger-counting for basic math.", "सरल गणनाओं के लिए उंगलियों पर अत्यधिक निर्भर है।"],
+            ["dyscalculia", "I have trouble telling time on an analog clock.", "मुझे सुई वाली घड़ी देखकर समय बताने में कठिनाई होती है।", "Struggles reading traditional analog clocks.", "पारंपरिक सुई वाली घड़ी पढ़ने में कठिनाई।"],
+            ["dyscalculia", "I mix up math symbols like + and -.", "गणित के चिन्ह जैसे + और - में मुझसे गलती हो जाती है।", "Confuses operation symbols (+, -, x).", "गणितीय संक्रिया प्रतीकों में भ्रमित होता है।"],
+            ["dyscalculia", "I find it hard to estimate costs when shopping.", "खरीदारी करते समय पैसों का अनुमान लगाना मुझे कठिन लगता है।", "Difficulty estimating quantities or monetary amounts.", "मूल्य और मात्रा का त्वरित अनुमान लगाने में परेशानी।"],
+            ["dyscalculia", "I struggle to remember multiplication tables.", "मुझे गणित के पहाड़े याद रखने में बहुत मुश्किल होती है।", "Persistent difficulty memorizing multiplication tables.", "पहाड़े और बुनियादी गणित तथ्य याद नहीं रख पाता।"],
+
+            // Dysgraphia (5)
+            ["dysgraphia", "My hand hurts when I write for a few minutes.", "कुछ मिनट लिखने के बाद ही मेरे हाथ में दर्द होने लगता है।", "Complains of hand fatigue or cramping while writing.", "लिखते समय हाथ में थकान या दर्द की शिकायत करता है।"],
+            ["dysgraphia", "My handwriting is very messy and hard to read.", "मेरी लिखावट काफी बिखरी हुई और पढ़ने में कठिन होती है।", "Illegible handwriting and poor letter spacing.", "अस्पष्ट लिखावट और अक्षरों के बीच अनियमित दूरी।"],
+            ["dysgraphia", "I mix uppercase and lowercase letters randomly.", "लिखते समय बड़े और छोटे अक्षर अनजाने में आपस में मिल जाते हैं।", "Mixes upper/lower case letters inappropriately.", "लिखते समय बड़े और छोटे अक्षरों का अनुचित मिश्रण।"],
+            ["dysgraphia", "It's much easier for me to type than to handwrite.", "हाथ से लिखने की तुलना में मुझे टाइप करना कहीं आसान लगता है।", "Marked difference between typed and handwritten output.", "लिखित कार्य की तुलना में टाइपिंग में बेहतर प्रदर्शन।"],
+            ["dysgraphia", "I struggle to get my thoughts out onto paper.", "मेरे मन में विचार होते हैं पर उन्हें कागज़ पर उतार नहीं पाता।", "Struggles translating spoken ideas into written form.", "मौखिक विचारों को लिखित रूप में संगठित करने में कठिनाई।"],
+
+            // Attention (5)
+            ["attention", "I zone out when the teacher is talking.", "शिक्षक के पढ़ाते समय मेरा ध्यान अक्सर कहीं और चला जाता है।", "Frequently daydreams or loses focus during lectures.", "कक्षा में व्याख्यान के दौरान आसानी से ध्यान खो देता है।"],
+            ["attention", "Every little noise distracts me.", "हल्की सी आवाज़ होने पर भी मेरा ध्यान तुरंत भटक जाता है।", "Easily distracted by minor ambient classroom noises.", "कमरे की हल्की सी आवाज़ से भी ध्यान भटक जाता है।"],
+            ["attention", "I make careless mistakes in my work.", "काम करते समय मुझसे अक्सर छोटी-छोटी लापरवाह गलतियाँ हो जाती हैं।", "Makes careless errors despite knowing the material.", "अवधारणा जानने के बावजूद असावधानी से गलतियाँ करता है।"],
+            ["attention", "I have trouble sitting still in my chair.", "कुर्सी पर शांत होकर बैठना मुझे बहुत मुश्किल लगता है।", "Fidgets frequently or struggles to remain seated.", "बैठने में बेचैनी महसूस करता है और बार-बार हिलता-डुलता है।"],
+            ["attention", "I interrupt others before they finish speaking.", "दूसरों की बात पूरी होने से पहले ही मैं बीच में बोल पड़ता हूँ।", "Blurts out answers or interrupts conversations.", "दूसरों की बात पूरी होने से पहले बीच में टोकता है।"],
+
+            // Executive Function (5)
+            ["executive", "I often lose my homework or school supplies.", "मेरी किताबें, पेन या होमवर्क अक्सर खो जाते हैं।", "Frequently misplaces materials necessary for tasks.", "अध्ययन के लिए ज़रूरी सामान अक्सर खो देता है।"],
+            ["executive", "I wait until the last minute to start big projects.", "बड़े प्रोजेक्ट या असाइनमेंट मैं आखिरी समय तक टालता हूँ।", "Procrastinates until the absolute deadline on tasks.", "अंतिम समय तक कार्यों को टालने की गंभीर आदत।"],
+            ["executive", "My backpack and desk are extremely messy.", "मेरा बस्ता और पढ़ने की मेज़ हमेशा बिखरी रहती है।", "Poor physical organization of bag and workspace.", "बैग और डेस्क को व्यवस्थित रखने में असमर्थ।"],
+            ["executive", "I don't know how to break big tasks into smaller steps.", "किसी बड़े काम को छोटे-छोटे चरणों में कैसे बाँटें, समझ नहीं आता।", "Overwhelmed by multi-step assignments.", "बहु-चरणीय कार्यों को देखकर घबरा जाता है।"],
+            ["executive", "I struggle to switch from recess back to classwork.", "खेल के बाद वापस पढ़ाई के मूड में आना मुझे कठिन लगता है।", "Difficulty transitioning smoothly between activities.", "एक गतिविधि से दूसरी में जाने में कठिनाई।"],
+
+            // Processing Speed (5)
+            ["processing", "I'm always the last one to finish classroom assignments.", "कक्षा में काम पूरा करने में मैं अक्सर सबसे अंत में रहता हूँ।", "Consistently takes longer to complete standard tasks.", "कक्षा के सामान्य कार्यों को पूरा करने में अधिक समय लेता है।"],
+            ["processing", "I need people to repeat instructions slowly.", "मुझे निर्देशों को धीरे-धीरे और दोबारा समझाने की ज़रूरत होती है।", "Requires spoken instructions to be slowed down and repeated.", "निर्देशों को धीमा और दोहराए जाने की आवश्यकता होती है।"],
+            ["processing", "I feel overwhelmed when a lot of information comes at once.", "एक साथ बहुत सारी बातें सुनकर मैं उलझन महसूस करता हूँ।", "Overwhelmed by rapid streams of verbal instructions.", "तेज़ गति से दी गई जानकारी से तनावग्रस्त हो जाता है।"],
+            ["processing", "It takes me a long time to copy notes from the board.", "ब्लैकबोर्ड से कॉपी में नोट्स उतारने में मुझे काफी समय लगता है।", "Slow at copying notes from the board.", "बोर्ड से कॉपी में उतारने की गति बहुत धीमी है।"],
+            ["processing", "I freeze up when asked a question unexpectedly.", "अचानक कोई सवाल पूछे जाने पर मेरा दिमाग सुन्न हो जाता है।", "Freezes or exhibits prolonged delay when called upon.", "अचानक प्रश्न पूछे जाने पर उत्तर देने में अत्यधिक समय लेता है।"],
+
+            // Working Memory (5)
+            ["working_memory", "I forget the first part of an instruction by the time I hear the end.", "लंबा निर्देश सुनते-सुनते मैं उसका पहला हिस्सा भूल जाता हूँ।", "Forgets the beginning of multi-step instructions.", "बहु-चरणीय निर्देशों का पहला हिस्सा भूल जाता है।"],
+            ["working_memory", "I lose track of what I was saying mid-sentence.", "बात करते-करते मैं भूल जाता हूँ कि मैं क्या कह रहा था।", "Loses train of thought mid-sentence.", "वाक्य के बीच में ही विचार भूल जाता है।"],
+            ["working_memory", "I struggle to do mental math.", "मन ही मन बिना लिखे हिसाब करना मुझे बहुत मुश्किल लगता है।", "Struggles to hold numbers in mind for mental arithmetic.", "मन में संख्याएँ याद रखकर हिसाब करने में परेशानी।"],
+            ["working_memory", "I read a whole page and realize I remember nothing.", "पूरा पन्ना पढ़ने के बाद लगता है कि कुछ भी याद नहीं रहा।", "Reads text but immediately fails to retain what was read.", "पढ़ने के तुरंत बाद सामग्री याद रखने में असमर्थ।"],
+            ["working_memory", "I have to reread sentences multiple times to understand.", "बात समझने के लिए मुझे एक ही वाक्य को कई बार पढ़ना पड़ता है।", "Must reread text repeatedly to grasp comprehension.", "समझने के लिए एक ही वाक्य को बार-बार पढ़ना पड़ता है।"],
+
+            // Recall (5)
+            ["recall", "I study hard but forget everything the next day.", "मेहनत से याद करने के बाद भी अगले दिन सब भूल जाता हूँ।", "Struggles with day-to-day retention of studied facts.", "याद की गई सामग्री को अगले दिन याद रखने में परेशानी।"],
+            ["recall", "I know the answer but can't find the right word.", "जवाब मुझे पता होता है पर सही शब्द ज़बान पर नहीं आता।", "Frequent word-finding or retrieval difficulty.", "सही शब्द याद करने में अक्सर समय लेता है।"],
+            ["recall", "I have trouble remembering names of people or places.", "लोगों और जगहों के नाम याद रखना मेरे लिए कठिन होता है।", "Struggles memorizing names, dates, or specific terms.", "नाम, तिथियाँ और स्थान याद रखने में कठिनाई।"],
+            ["recall", "I perform much worse on fill-in-the-blank tests than multiple choice.", "खाली स्थान भरने वाले प्रश्नों में बहुविकल्पीय से कम अंक आते हैं।", "Performs significantly worse on recall vs recognition tests.", "विकल्पों के बिना सीधे याद करके लिखने में कमज़ोर।"],
+            ["recall", "I forget routines I have done many times before.", "कई बार किए गए दैनिक नियम भी मैं कभी-कभी भूल जाता हूँ।", "Forgets established daily school routines.", "नियमित दैनिक प्रक्रियाओं को भी कभी-कभी भूल जाता है।"],
+
+            // Learning Anxiety (5)
+            ["learning_anxiety", "I feel sick to my stomach before school.", "स्कूल जाने से पहले मेरे पेट में घबराहट या दर्द महसूस होता है।", "Shows physical anxiety signs (stomach pain) before school.", "स्कूल जाने से पहले घबराहट या पेट दर्द की शिकायत।"],
+            ["learning_anxiety", "I cry or get very upset when homework is hard.", "मुश्किल होमवर्क देखकर मुझे रोना या अत्यधिक खीझ आती है।", "Becomes extremely distressed over challenging homework.", "कठिन कार्य मिलने पर अत्यधिक निराश या दुखी हो जाता है।"],
+            ["learning_anxiety", "I call myself 'stupid' when I make a mistake.", "गलती होने पर मैं खुद को मूर्ख या नालायक समझने लगता हूँ।", "Engages in harsh negative self-talk upon errors.", "गलती होने पर खुद को कमतर आँकने लगता है।"],
+            ["learning_anxiety", "I try to avoid going to school or certain classes.", "मैं स्कूल या किसी खास क्लास में जाने से बचने की कोशिश करता हूँ।", "Shows school avoidance or reluctance for specific subjects.", "कक्षा या स्कूल जाने से बचने के बहाने ढूँढता है।"],
+            ["learning_anxiety", "I worry excessively about what the teacher thinks of my work.", "टीचर मेरे काम के बारे में क्या सोचेंगे, इसकी बहुत चिंता रहती है।", "Excessively worried about negative evaluation by teachers.", "शिक्षक की राय को लेकर अत्यधिक तनाव में रहता है।"],
+
+            // Test Anxiety (5)
+            ["test_anxiety", "My mind goes blank as soon as a test starts.", "जैसे ही परीक्षा शुरू होती है, मेरा दिमाग खाली हो जाता है।", "Mind goes completely blank at the start of an exam.", "परीक्षा पत्र मिलते ही घबराहट में सब भूल जाता है।"],
+            ["test_anxiety", "My heart races when the teacher hands out a quiz.", "टेस्ट पेपर मिलते ही मेरी धड़कनें तेज़ हो जाती हैं।", "Displays physiological stress (racing heart, sweaty palms).", "टेस्ट शुरू होते ही पसीना और दिल की धड़कन तेज़ होना।"],
+            ["test_anxiety", "I rush through tests just to get them over with.", "घबराहट के कारण मैं जल्दी-जल्दी टेस्ट खत्म करने की कोशिश करता हूँ।", "Rushes through assessments to escape evaluation stress.", "तनाव से बचने के लिए बिना सोचे जल्दबाज़ी में पेपर पूरा करता है।"],
+            ["test_anxiety", "I obsess over my grades after a test.", "टेस्ट खत्म होने के बाद भी मैं नंबरों के बारे में सोचता रहता हूँ।", "Ruminates constantly over test performance and marks.", "परीक्षा के बाद अंकों को लेकर लगातार परेशान रहता है।"],
+            ["test_anxiety", "I sleep poorly the night before an exam.", "परीक्षा से एक रात पहले मुझे ठीक से नींद नहीं आती।", "Exhibits sleep difficulties before exam days.", "परीक्षा से पूर्व रात को नींद में व्यवधान।"],
+
+            // Motivation (5)
+            ["motivation", "I don't see the point in doing homework.", "मुझे होमवर्क करने का कोई खास मतलब समझ नहीं आता।", "Expresses persistent disinterest in school assignments.", "गृहकार्य और पढ़ाई के प्रति लगातार उदासीनता।"],
+            ["motivation", "I give up easily if I don't get it right the first time.", "पहली बार में सही न होने पर मैं तुरंत हार मान लेता हूँ।", "Quickly gives up when encountering initial difficulty.", "शुरुआती परेशानी आते ही प्रयास छोड़ देता है।"],
+            ["motivation", "I only do the bare minimum to get by.", "मैं सिर्फ उतना ही काम करता हूँ जिससे काम चल जाए।", "Puts forth only minimal effort required to pass.", "केवल पास होने लायक न्यूनतम प्रयास करता है।"],
+            ["motivation", "I need constant rewards or reminders to do my work.", "काम करने के लिए मुझे लगातार टोकना या लालच देना पड़ता है।", "Requires continuous external prompting to complete tasks.", "काम पूरा करने के लिए लगातार बाहरी दबाव चाहिए।"],
+            ["motivation", "I feel like no matter how hard I try, I won't succeed.", "मुझे लगता है कि चाहे कितनी भी कोशिश करूँ, सफलता नहीं मिलेगी।", "Expresses feelings of learned helplessness regarding school.", "प्रयास के बाद भी सफलता न मिलने की निराशा।"],
+
+            // Sensory (5)
+            ["sensory", "Bright lights in the classroom give me a headache.", "क्लास की तेज़ रोशनी से मेरे सिर में दर्द होने लगता है।", "Complains of headaches from bright fluorescent lighting.", "तेज़ फ्लोरोसेंट रोशनी से सिरदर्द की शिकायत।"],
+            ["sensory", "Loud noises (like the school bell) startle or hurt me.", "स्कूल की घंटी जैसी तेज़ आवाज़ मुझे डराती या चुभती है।", "Extremely startled or distressed by loud school sounds.", "तेज़ आवाज़ सुनकर कान बंद कर लेना या चौंक जाना।"],
+            ["sensory", "I hate the feeling of certain clothing tags or fabrics.", "कुछ कपड़ों के टैग या खुरदुरा कपड़ा मुझे बहुत परेशान करता है।", "Hypersensitive to clothing tags, seams, or textures.", "कपड़ों के लेबल या फैब्रिक से अत्यधिक चिड़चिड़ापन।"],
+            ["sensory", "I seek out movement, like spinning or rocking.", "पढ़ते समय मुझे झूलने या हिलते-डुलते रहने का मन करता है।", "Frequently rocks, spins, or seeks vestibular movement.", "बैठते समय बार-बार हिलना या झूलना पसंद करता है।"],
+            ["sensory", "I avoid messy activities like finger painting or clay.", "मिट्टी या गीले रंगों से हाथ गंदे होना मुझे बिल्कुल पसंद नहीं।", "Avoids sticky, messy, or tactile play materials.", "हाथ चिपचिपे या गंदे करने वाली गतिविधियों से परहेज़।"],
+
+            // Fine Motor (5)
+            ["fine_motor", "I struggle to tie my shoelaces or button my shirt.", "जूते के फीते बाँधने या कमीज़ के बटन लगाने में परेशानी होती है।", "Has difficulty with fine fasteners (buttons, laces).", "बटन लगाने या फीते बाँधने में कठिनाई।"],
+            ["fine_motor", "I have a weird or awkward grip on my pencil.", "पेंसिल पकड़ने का मेरा तरीका थोड़ा अजीब या कष्टप्रद है।", "Holds pencil with an awkward or tense grip.", "पेंसिल को अत्यधिक कसकर या असामान्य तरीके से पकड़ता है।"],
+            ["fine_motor", "I'm clumsy and often drop small objects.", "मेरे हाथ से अक्सर छोटी चीजें छूटकर गिर जाती हैं।", "Frequently drops small items or appears uncoordinated.", "अक्सर हाथों से वस्तुएं गिरा देता है।"],
+            ["fine_motor", "I have trouble using scissors accurately.", "कैंची से सीधी लाइन में काटना मेरे लिए कठिन होता है।", "Struggles with age-appropriate scissor precision.", "कागज़ काटने या कैंची चलाने में तालमेल की कमी।"],
+            ["fine_motor", "I avoid building blocks, Lego, or small puzzles.", "छोटे लेगो ब्लॉक या पज़ल जोड़ने जैसे खेल मुझे पसंद नहीं आते।", "Avoids toys requiring fine manual precision.", "सूक्ष्म उंगलियों के उपयोग वाले खेलों से बचना।"],
+
+            // Social (5)
+            ["social", "I don't understand when my friends are joking or sarcastic.", "दोस्त मज़ाक कर रहे हैं या ताना मार रहे हैं, मैं समझ नहीं पाता।", "Takes statements literally; misses sarcasm and humor.", "व्यंग्य और मज़ाक का शाब्दिक अर्थ निकालकर उलझ जाता है।"],
+            ["social", "I prefer to play alone rather than with classmates.", "कक्षा के साथियों के साथ खेलने के बजाय मैं अकेले रहना पसंद करता हूँ।", "Frequently isolates or prefers solitary play.", "समूह में खेलने के बजाय अकेले रहना पसंद करता है।"],
+            ["social", "I stand too close to people when talking to them.", "बात करते समय मैं अक्सर लोगों के बहुत पास खड़ा हो जाता हूँ।", "Unaware of personal body boundaries and space.", "व्यक्तिगत शारीरिक दूरी बनाए रखने का ध्यान नहीं रहता।"],
+            ["social", "I have trouble taking turns in games or conversations.", "खेलते या बात करते समय अपनी बारी का इंतज़ार करना कठिन लगता है।", "Struggles taking conversational or gameplay turns.", "अपनी बारी की प्रतीक्षा करने में अधीर हो जाता है।"],
+            ["social", "I easily get into arguments with peers.", "दोस्तों या साथियों से मेरा अक्सर झगड़ा हो जाता है।", "Experiences frequent interpersonal peer conflicts.", "साथियों के साथ बार-बार मतभेद या विवाद में पड़ना।"],
+
+            // Communication (5)
+            ["communication", "I struggle to explain what happened in a story.", "किसी कहानी या घटना को क्रम से समझाना मुझे कठिन लगता है।", "Difficulty sequencing narrative events clearly.", "घटनाओं को सही क्रम में सुनाने में असमर्थता।"],
+            ["communication", "I use filler words like 'um' or 'stuff' a lot.", "बोलते समय मैं 'अम्म' या 'वो चीज़' जैसे शब्दों का बहुत प्रयोग करता हूँ।", "Uses excessive filler terms when searching for words.", "बात करते समय शब्दों की जगह 'अम्म' का अत्यधिक उपयोग।"],
+            ["communication", "I have trouble understanding complex sentences.", "लंबे और घुमावदार वाक्य समझने में मुझे मुश्किल होती है।", "Misunderstands complex, multi-clause verbal phrasing.", "जटिल और लंबे वाक्यों का अर्थ समझने में भ्रमित।"],
+            ["communication", "My speech sounds younger than other kids my age.", "मेरी बोली मेरी उम्र के अन्य बच्चों से छोटी लगती है।", "Immature speech articulation or sentence patterns.", "आयु की तुलना में बोली और वाक्य रचना सरल होना।"],
+            ["communication", "I avoid raising my hand because I can't speak quickly.", "जल्दी जवाब न सोच पाने के डर से मैं क्लास में हाथ नहीं उठाता।", "Hesitant to volunteer verbal answers due to formulation delay.", "उत्तर तैयार करने में समय लगने के कारण बोलने से झिझक।"],
+
+            // 5 In-depth Core Reflection Questions (Total: 80)
+            ["dyslexia", "Do words blur or look doubled after reading for 5 minutes?", "5 मिनट से अधिक पढ़ने पर क्या शब्द धुंधले या दोहरे दिखने लगते हैं?", "Student rubs eyes or loses place after short reading.", "थोड़ी देर पढ़ने के बाद छात्र आँखें मलता है या लाइन खो देता है।"],
+            ["attention", "Do you hyperfocus on things you love, but struggle with classwork?", "पसंदीदा चीज़ों में घंटों खोए रहते हैं पर पढ़ाई में ध्यान नहीं लगता?", "Can hyperfocus on passions but struggles with standard tasks.", "पसंदीदा शौक में गहरा ध्यान, पर पढ़ाई में ध्यान लगाना कठिन।"],
+            ["learning_anxiety", "Do you ever feel physically overwhelmed or want to hide from hard work?", "कठिन काम देखकर क्या आपका दिल घबराता है या छिपने का मन करता है?", "Shows intense emotional overwhelm when assigned complex tasks.", "कठिन असाइनमेंट देखकर तीव्र भावनात्मक तनाव प्रदर्शित करता है।"],
+            ["executive", "Do you sometimes finish homework but forget to turn it in?", "क्या कभी ऐसा होता है कि होमवर्क कर लिया पर जमा करना भूल गए?", "Completes homework but frequently forgets to submit it.", "होमवर्क पूरा करने के बाद भी समय पर जमा करना भूल जाता है।"],
+            ["processing", "Do you feel smarter and more capable than written test scores show?", "क्या आपको लगता है कि आप लिखित परीक्षा के नंबरों से कहीं अधिक समझदार हैं?", "Gap between student's verbal intelligence and written output.", "छात्र की मौखिक समझ और लिखित परीक्षा के अंकों में बड़ा अंतर।"]
         ];
 
-        // 80 Complete Questions: 75 baseline (5 per 15 categories) + 5 in-depth reflection indicators
-        const questionDataRaw = [
-            // Dyslexia
-            ["dyslexia", "I mix up letters like 'b' and 'd' or 'p' and 'q'.", "Confuses similar letters (b/d, p/q)."],
-            ["dyslexia", "Reading aloud makes me nervous or I stumble on words.", "Hesitates or struggles when reading aloud."],
-            ["dyslexia", "Words seem to move around or blur on the page.", "Complains of visual distortion or blurring when reading."],
-            ["dyslexia", "I have trouble remembering how to spell common words.", "Inconsistent spelling of common sight words."],
-            ["dyslexia", "It takes me a long time to finish a reading assignment.", "Reads significantly slower than peers."],
-            // Dyscalculia
-            ["dyscalculia", "I rely on my fingers to do simple math.", "Relies heavily on finger-counting for basic math."],
-            ["dyscalculia", "I have trouble telling time on an analog clock.", "Struggles reading analog clocks."],
-            ["dyscalculia", "I mix up math symbols like + and -.", "Confuses operation symbols (+, -, x)."],
-            ["dyscalculia", "I find it hard to estimate costs when shopping.", "Difficulty estimating quantities or money."],
-            ["dyscalculia", "I struggle to remember multiplication tables.", "Inability to memorize math facts."],
-            // Dysgraphia
-            ["dysgraphia", "My hand hurts when I write for a few minutes.", "Complains of hand fatigue while writing."],
-            ["dysgraphia", "My handwriting is very messy and hard to read.", "Illegible handwriting, poor spatial planning."],
-            ["dysgraphia", "I mix uppercase and lowercase letters randomly.", "Mixes upper/lower case letters inappropriately."],
-            ["dysgraphia", "It's much easier for me to type than to handwrite.", "Significant discrepancy between typed and written work."],
-            ["dysgraphia", "I struggle to get my thoughts out onto paper.", "Difficulty translating verbal ideas into written text."],
-            // Attention
-            ["attention", "I zone out when the teacher is talking.", "Frequently daydreams or loses focus during instruction."],
-            ["attention", "Every little noise distracts me.", "Easily distracted by extraneous stimuli."],
-            ["attention", "I make careless mistakes in my work.", "Makes careless errors in schoolwork."],
-            ["attention", "I have trouble sitting still in my chair.", "Fidgets or struggles to remain seated."],
-            ["attention", "I interrupt others before they finish speaking.", "Blurts out answers or interrupts."],
-            // Executive Function
-            ["executive", "I often lose my homework or school supplies.", "Frequently misplaces materials necessary for tasks."],
-            ["executive", "I wait until the last minute to start big projects.", "Procrastinates significantly on long-term assignments."],
-            ["executive", "My backpack and desk are extremely messy.", "Poor physical organization (messy desk/bag)."],
-            ["executive", "I don't know how to break big tasks into smaller steps.", "Overwhelmed by multi-step projects."],
-            ["executive", "I struggle to switch from recess back to classwork.", "Difficulty transitioning between activities."],
-            // Processing Speed
-            ["processing", "I'm always the last one to finish classroom assignments.", "Consistently the last to complete in-class work."],
-            ["processing", "I need people to repeat instructions slowly.", "Requires instructions to be repeated or slowed down."],
-            ["processing", "I feel overwhelmed when a lot of information comes at once.", "Overwhelmed by rapid verbal information."],
-            ["processing", "It takes me a long time to copy notes from the board.", "Slow at copying from the board."],
-            ["processing", "I freeze up when asked a question unexpectedly.", "Delayed response time when called upon."],
-            // Working Memory
-            ["working_memory", "I forget the first part of an instruction by the time I hear the end.", "Forgets multi-step instructions."],
-            ["working_memory", "I lose track of what I was saying mid-sentence.", "Loses train of thought frequently."],
-            ["working_memory", "I struggle to do mental math.", "Difficulty holding numbers in head for mental math."],
-            ["working_memory", "I read a whole page and realize I remember nothing.", "Poor reading comprehension due to memory."],
-            ["working_memory", "I have to reread sentences multiple times to understand.", "Rereads text frequently to retain meaning."],
-            // Recall
-            ["recall", "I study hard but forget everything the next day.", "Poor retention of studied material."],
-            ["recall", "I know the answer but can't find the right word (tip of the tongue).", "Frequent word-retrieval difficulties."],
-            ["recall", "I have trouble remembering names of people or places.", "Struggles with rote memorization of names/dates."],
-            ["recall", "I perform much worse on fill-in-the-blank tests than multiple choice.", "Relies heavily on recognition over recall."],
-            ["recall", "I forget routines I have done many times before.", "Forgets established daily routines."],
-            // Learning Anxiety
-            ["learning_anxiety", "I feel sick to my stomach before school.", "Exhibits somatic symptoms (stomachaches) before school."],
-            ["learning_anxiety", "I cry or get very upset when homework is hard.", "Extreme emotional reaction to difficult tasks."],
-            ["learning_anxiety", "I call myself 'stupid' when I make a mistake.", "Negative self-talk regarding intelligence."],
-            ["learning_anxiety", "I try to avoid going to school or certain classes.", "School avoidance behaviors."],
-            ["learning_anxiety", "I worry excessively about what the teacher thinks of my work.", "Overly concerned with teacher approval."],
-            // Test Anxiety
-            ["test_anxiety", "My mind goes blank as soon as a test starts.", "Freezes during assessments despite preparation."],
-            ["test_anxiety", "My heart races when the teacher hands out a quiz.", "Physical signs of panic during testing."],
-            ["test_anxiety", "I rush through tests just to get them over with.", "Rushes through assessments to escape anxiety."],
-            ["test_anxiety", "I obsess over my grades after a test.", "Excessive worry about academic performance."],
-            ["test_anxiety", "I sleep poorly the night before an exam.", "Sleep disruption prior to testing."],
-            // Motivation
-            ["motivation", "I don't see the point in doing homework.", "Expresses apathy towards academic work."],
-            ["motivation", "I give up easily if I don't get it right the first time.", "Low frustration tolerance; gives up quickly."],
-            ["motivation", "I only do the bare minimum to get by.", "Exhibits minimal effort on assignments."],
-            ["motivation", "I need constant rewards or reminders to do my work.", "Requires high external motivation to complete tasks."],
-            ["motivation", "I feel like no matter how hard I try, I won't succeed.", "Displays learned helplessness."],
-            // Sensory
-            ["sensory", "Bright lights in the classroom give me a headache.", "Complains about fluorescent or bright lights."],
-            ["sensory", "Loud noises (like the school bell) startle or hurt me.", "Exaggerated startle response to loud noises."],
-            ["sensory", "I hate the feeling of certain clothing tags or fabrics.", "Distracted or irritated by clothing textures."],
-            ["sensory", "I seek out movement, like spinning or rocking.", "Engages in sensory-seeking behaviors (spinning/rocking)."],
-            ["sensory", "I avoid messy activities like finger painting or clay.", "Tactile defensiveness (avoids getting hands messy)."],
-            // Fine Motor
-            ["fine_motor", "I struggle to tie my shoelaces or button my shirt.", "Difficulty with fasteners (buttons, laces)."],
-            ["fine_motor", "I have a weird or awkward grip on my pencil.", "Atypical pencil grasp."],
-            ["fine_motor", "I'm clumsy and often drop small objects.", "Frequently drops items or appears clumsy."],
-            ["fine_motor", "I have trouble using scissors accurately.", "Poor scissor skills compared to peers."],
-            ["fine_motor", "I avoid building blocks, Lego, or small puzzles.", "Avoids tasks requiring fine manual dexterity."],
-            // Social
-            ["social", "I don't understand when my friends are joking or being sarcastic.", "Takes literal meaning, misses sarcasm/jokes."],
-            ["social", "I prefer to play alone rather than with classmates.", "Social isolates during group times."],
-            ["social", "I stand too close to people when talking to them.", "Poor understanding of personal space."],
-            ["social", "I have trouble taking turns in games or conversations.", "Monopolizes conversation or struggles sharing."],
-            ["social", "I easily get into arguments with peers.", "Frequent peer conflicts."],
-            // Communication
-            ["communication", "I struggle to explain what happened in a story.", "Difficulty sequencing events in storytelling."],
-            ["communication", "I use filler words like 'um' or 'stuff' a lot.", "Vague language use ('thingies', 'stuff')."],
-            ["communication", "I have trouble understanding complex sentences.", "Misinterprets complex verbal phrasing."],
-            ["communication", "My speech sounds younger than other kids my age.", "Immature articulation or sentence structure."],
-            ["communication", "I avoid raising my hand because I can't formulate my answer in time.", "Hesitant to speak up due to expressive delay."],
-            // 5 In-depth Core Reflection Questions (Total: exactly 80)
-            ["dyslexia", "Do words blur or look doubled after reading for more than 5 minutes?", "Does the student frequently rub eyes or lose their place while reading?"],
-            ["attention", "Do you hyperfocus on things you love, but find it nearly impossible to focus on schoolwork?", "Can the student focus deeply on preferred activities but struggles with classwork?"],
-            ["learning_anxiety", "Do you ever feel physically overwhelmed or want to hide when given a hard task?", "Does the student exhibit intense emotional overwhelm when assigned complex work?"],
-            ["executive", "Do you sometimes finish homework but forget to turn it in?", "Does the student complete assignments but fail to turn them in on time?"],
-            ["processing", "Do you feel smarter and more capable than your written test scores show?", "Is there a significant gap between the student's verbal understanding and written test output?"]
-        ];
+        // Format Question Bank
+        const questionBank = rawQuestionData.map((q, idx) => ({
+            id: idx + 1,
+            cat: q[0],
+            studentEn: q[1],
+            studentHi: q[2],
+            teacherEn: q[3],
+            teacherHi: q[4]
+        }));
 
-        let questionBank = [];
-        questionDataRaw.forEach((q, index) => {
-            questionBank.push({
-                id: index + 1,
-                cat: q[0],
-                student: q[1],
-                teacher: q[2]
-            });
-        });
-
-        // --- STATE ---
+        // --- 3. STATE & STORAGE MANAGEMENT ---
         let currentMode = 'student';
-        let studentData = { name: '', age: '' };
+        let studentData = { name: '', age: 10 };
         let activeQuestions = [];
         let currentIndex = 0;
         let answers = {};
         let categoryCounts = {};
-        let answerLog = [];
+        let answerLog = []; // Stores { id, cat, val, studentPrompt, responseText }
 
-        // --- ASSESSMENT LOGIC ---
+        const STORAGE_KEY = 'eduscreen_active_session_v12';
+
+        function saveSession() {
+            try {
+                const sessionPayload = {
+                    studentData,
+                    currentMode,
+                    currentIndex,
+                    activeQuestions,
+                    answers,
+                    categoryCounts,
+                    answerLog,
+                    timestamp: Date.now()
+                };
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(sessionPayload));
+            } catch (e) {
+                console.warn('Storage save failed:', e);
+            }
+        }
+
+        function checkExistingSession() {
+            try {
+                const raw = localStorage.getItem(STORAGE_KEY);
+                if (!raw) return;
+                const data = JSON.parse(raw);
+                if (data && data.studentData && data.studentData.name && data.currentIndex > 0 && data.currentIndex < 80) {
+                    const banner = document.getElementById('resume-banner');
+                    const text = document.getElementById('resume-text');
+                    text.innerText = currentLang === 'hi'
+                        ? `${data.studentData.name} का अधूरा मूल्यांकन मिला (प्रश्न ${data.currentIndex + 1}/80)। क्या आप इसे जारी रखना चाहते हैं?`
+                        : `Unfinished assessment for ${data.studentData.name} found (Question ${data.currentIndex + 1} of 80). Resume?`;
+                    banner.style.display = 'flex';
+                }
+            } catch (e) {}
+        }
+
+        function resumeSession() {
+            try {
+                const raw = localStorage.getItem(STORAGE_KEY);
+                if (!raw) return;
+                const data = JSON.parse(raw);
+                studentData = data.studentData;
+                currentMode = data.currentMode;
+                currentIndex = data.currentIndex;
+                activeQuestions = data.activeQuestions;
+                answers = data.answers;
+                categoryCounts = data.categoryCounts;
+                answerLog = data.answerLog || [];
+
+                document.getElementById('student-name').value = studentData.name;
+                document.getElementById('student-age').value = studentData.age;
+                document.getElementById('assessment-mode').value = currentMode;
+
+                document.getElementById('resume-banner').style.display = 'none';
+                switchSection('assessment-section');
+                renderQuestion();
+            } catch (e) {
+                discardSession();
+            }
+        }
+
+        function discardSession() {
+            try {
+                localStorage.removeItem(STORAGE_KEY);
+                document.getElementById('resume-banner').style.display = 'none';
+            } catch (e) {}
+        }
+
+        // Fisher-Yates Uniform Shuffle
+        function fisherYatesShuffle(array) {
+            const arr = [...array];
+            for (let i = arr.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [arr[i], arr[j]] = [arr[j], arr[i]];
+            }
+            return arr;
+        }
+
+        function switchSection(sectionId) {
+            document.querySelectorAll('.section').forEach(el => el.classList.remove('active'));
+            const target = document.getElementById(sectionId);
+            if (target) target.classList.add('active');
+
+            const container = document.getElementById('main-container');
+            if (sectionId === 'report-section') {
+                container.classList.add('report-active');
+            } else {
+                container.classList.remove('report-active');
+            }
+        }
+
+        // --- 4. ACCESSIBILITY, CONTRAST & RULER CONTROLS ---
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+            const isDark = document.body.classList.contains('dark-mode');
+            document.getElementById('theme-label').innerText = isDark ? (currentLang === 'hi' ? 'लाइट' : 'Light') : (currentLang === 'hi' ? 'डार्क' : 'Dark');
+            try { localStorage.setItem('eduscreen_theme', isDark ? 'dark' : 'light'); } catch(e) {}
+            // Redraw charts if on report screen
+            if (document.getElementById('report-section').classList.contains('active')) {
+                redrawCharts();
+            }
+        }
+
+        function toggleDyslexiaFont() {
+            document.body.classList.toggle('dyslexia-font');
+            const isDys = document.body.classList.contains('dyslexia-font');
+            document.getElementById('font-label').innerText = isDys ? (currentLang === 'hi' ? 'सामान्य फ़ॉन्ट' : 'Standard Font') : (currentLang === 'hi' ? 'डिस्लेक्सिया फ़ॉन्ट' : 'Dyslexia Font');
+            try { localStorage.setItem('eduscreen_font', isDys ? 'dyslexia' : 'standard'); } catch(e) {}
+        }
+
+        let fontScale = 1;
+        function adjustFontSize(delta) {
+            fontScale = Math.max(0.85, Math.min(1.4, fontScale + delta));
+            document.documentElement.style.setProperty('--font-scale', fontScale);
+        }
+
+        function toggleReadingRuler() {
+            document.body.classList.toggle('ruler-active');
+            const active = document.body.classList.contains('ruler-active');
+            document.getElementById('ruler-toggle-btn').classList.toggle('active', active);
+        }
+
+        window.addEventListener('mousemove', (e) => {
+            const ruler = document.getElementById('reading-ruler');
+            if (ruler && document.body.classList.contains('ruler-active')) {
+                ruler.style.top = `${e.clientY}px`;
+            }
+        });
+        window.addEventListener('touchmove', (e) => {
+            const ruler = document.getElementById('reading-ruler');
+            if (ruler && document.body.classList.contains('ruler-active') && e.touches[0]) {
+                ruler.style.top = `${e.touches[0].clientY}px`;
+            }
+        }, { passive: true });
+
+        // --- 5. BILINGUAL LANGUAGE SWITCHER ---
+        function toggleLanguage() {
+            currentLang = currentLang === 'en' ? 'hi' : 'en';
+            applyLanguage();
+        }
+
+        function applyLanguage() {
+            const t = i18n[currentLang];
+            document.getElementById('banner-text').innerText = t.banner;
+            document.getElementById('lang-label').innerText = currentLang === 'en' ? 'हिन्दी' : 'English';
+            document.getElementById('theme-label').innerText = document.body.classList.contains('dark-mode') ? t.themeLight : t.themeDark;
+            document.getElementById('font-label').innerText = document.body.classList.contains('dyslexia-font') ? t.fontStandard : t.fontDyslexia;
+            document.getElementById('ruler-label').innerText = t.ruler;
+
+            // Setup
+            document.getElementById('txt-setup-title').innerText = t.setupTitle;
+            document.getElementById('txt-setup-desc').innerText = t.setupDesc;
+            document.getElementById('lbl-student-name').innerText = t.studentName;
+            document.getElementById('lbl-student-age').innerText = t.studentAge;
+            document.getElementById('lbl-mode').innerText = t.mode;
+            document.getElementById('btn-start-screening').innerText = t.startScreening;
+
+            // Options labels
+            for (let i = 0; i < 4; i++) {
+                const optBtn = document.getElementById(`opt-${i}`);
+                if (optBtn) optBtn.innerText = t.options[i];
+            }
+
+            document.getElementById('prev-btn').innerText = t.prev;
+            document.getElementById('next-btn').innerText = t.next;
+
+            // If question is active, refresh question text
+            if (document.getElementById('assessment-section').classList.contains('active')) {
+                renderQuestion();
+            }
+
+            // If report is active, refresh report
+            if (document.getElementById('report-section').classList.contains('active')) {
+                generateReport();
+            }
+        }
+
+        // --- 6. TEXT-TO-SPEECH (TTS) VIA WEB SPEECH API ---
+        let isSpeaking = false;
+        function toggleSpeech() {
+            if (!('speechSynthesis' in window)) {
+                alert(currentLang === 'hi' ? 'आपका ब्राउज़र स्पीच सिंथेसिस का समर्थन नहीं करता।' : 'Speech synthesis not supported in this browser.');
+                return;
+            }
+
+            if (isSpeaking) {
+                stopSpeech();
+                return;
+            }
+
+            const qText = document.getElementById('question-text').innerText;
+            window.speechSynthesis.cancel();
+
+            const utter = new SpeechSynthesisUtterance(qText);
+            utter.lang = currentLang === 'hi' ? 'hi-IN' : 'en-US';
+            utter.rate = 0.88; // Slightly measured rate for neurodivergent auditory processing
+
+            utter.onstart = () => {
+                isSpeaking = true;
+                document.getElementById('btn-speak').classList.add('speaking');
+            };
+            utter.onend = () => {
+                stopSpeech();
+            };
+            utter.onerror = () => {
+                stopSpeech();
+            };
+
+            window.speechSynthesis.speak(utter);
+        }
+
+        function stopSpeech() {
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+            }
+            isSpeaking = false;
+            const btn = document.getElementById('btn-speak');
+            if (btn) btn.classList.remove('speaking');
+        }
+
+        // --- 7. ASSESSMENT FLOW & EVENT DELEGATION ---
+        function clampAge(el) {
+            let val = parseInt(el.value, 10);
+            if (isNaN(val)) return;
+            if (val < 5) el.value = 5;
+            if (val > 18) el.value = 18;
+        }
+
         function startAssessment() {
             const name = document.getElementById('student-name').value.trim();
             const age = document.getElementById('student-age').value.trim();
-            
-            if (!name || !age) {
-                alert("Please enter both student name and age to proceed.");
+
+            if (!name) {
+                alert(currentLang === 'hi' ? 'कृपया छात्र का नाम दर्ज करें।' : 'Please enter student name.');
+                document.getElementById('student-name').focus();
                 return;
             }
 
@@ -646,257 +1274,682 @@
                 categoryCounts[cat] = 0;
             });
             answerLog = [];
-            
-            // Randomize question sequence to prevent fatigue
-            activeQuestions = [...questionBank].sort(() => Math.random() - 0.5);
+
+            // Uniform Fisher-Yates Shuffle
+            activeQuestions = fisherYatesShuffle(questionBank);
             currentIndex = 0;
 
+            saveSession();
             switchSection('assessment-section');
             renderQuestion();
         }
 
+        // Event Delegation for zero-DOM allocation button selection
+        let selectedValue = null;
+        let selectedCategory = null;
+
+        const optionsGrid = document.getElementById('options-grid');
+        optionsGrid.addEventListener('click', (e) => {
+            const btn = e.target.closest('.option-btn');
+            if (!btn) return;
+
+            optionsGrid.querySelectorAll('.option-btn').forEach(b => {
+                b.classList.remove('selected');
+                b.setAttribute('aria-checked', 'false');
+            });
+
+            btn.classList.add('selected');
+            btn.setAttribute('aria-checked', 'true');
+
+            selectedValue = parseInt(btn.dataset.val, 10);
+            selectedCategory = activeQuestions[currentIndex].cat;
+            document.getElementById('next-btn').disabled = false;
+        });
+
         function renderQuestion() {
+            stopSpeech();
+
             if (currentIndex >= activeQuestions.length) {
                 finishAssessment();
                 return;
             }
 
-            // Encouragement milestones
-            const msgBox = document.getElementById('encouragement-msg');
-            if (currentIndex === 20) { msgBox.style.display = 'block'; msgBox.innerText = "Great job! You're 25% through."; setTimeout(()=>msgBox.style.display='none', 3000); }
-            if (currentIndex === 40) { msgBox.style.display = 'block'; msgBox.innerText = "Halfway there! Keep going."; setTimeout(()=>msgBox.style.display='none', 3000); }
-            if (currentIndex === 60) { msgBox.style.display = 'block'; msgBox.innerText = "Almost done! 75% completed."; setTimeout(()=>msgBox.style.display='none', 3000); }
-
             const q = activeQuestions[currentIndex];
-            const qText = currentMode === 'student' ? q.student : q.teacher;
-            
+            const isStudent = currentMode === 'student';
+            const qText = currentLang === 'hi' 
+                ? (isStudent ? q.studentHi : q.teacherHi)
+                : (isStudent ? q.studentEn : q.teacherEn);
+
             document.getElementById('question-text').innerText = `${currentIndex + 1}. ${qText}`;
-            
-            const optionsContainer = document.getElementById('options-grid');
-            optionsContainer.innerHTML = '';
-            
-            optionsTemplate.forEach(opt => {
-                const btn = document.createElement('button');
-                btn.className = 'option-btn';
-                btn.innerText = opt.text;
-                btn.onclick = () => selectOption(btn, opt.val, q.cat);
-                optionsContainer.appendChild(btn);
+
+            // Category badge
+            const catObj = categories[q.cat];
+            document.getElementById('category-badge').innerText = currentLang === 'hi' ? catObj.hi : catObj.en;
+
+            // Reset buttons state
+            optionsGrid.querySelectorAll('.option-btn').forEach(b => {
+                b.classList.remove('selected');
+                b.setAttribute('aria-checked', 'false');
             });
-
+            selectedValue = null;
             document.getElementById('next-btn').disabled = true;
-            
-            // Progress Calculation (clean 1-80)
-            const progress = ((currentIndex) / activeQuestions.length) * 100;
-            document.getElementById('progress-bar').style.width = `${progress}%`;
-            document.getElementById('progress-text').innerText = `Question ${currentIndex + 1} of ${activeQuestions.length}`;
-        }
 
-        let selectedValue = null;
-        let selectedCategory = null;
+            // Previous button availability
+            document.getElementById('prev-btn').disabled = (currentIndex === 0);
 
-        function selectOption(btn, val, cat) {
-            document.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
-            btn.classList.add('selected');
-            selectedValue = val;
-            selectedCategory = cat;
-            document.getElementById('next-btn').disabled = false;
+            // Progress bar
+            const pct = (currentIndex / activeQuestions.length) * 100;
+            document.getElementById('progress-bar').style.width = `${pct}%`;
+            document.getElementById('progress-text').innerText = currentLang === 'hi'
+                ? `प्रश्न ${currentIndex + 1} / ${activeQuestions.length}`
+                : `Question ${currentIndex + 1} of ${activeQuestions.length}`;
         }
 
         function nextQuestion() {
-            if (selectedValue !== null) {
-                answers[selectedCategory] += selectedValue;
-                categoryCounts[selectedCategory] += 1;
-                answerLog.push({ id: activeQuestions[currentIndex].id, val: selectedValue });
+            if (selectedValue === null) return;
 
-                selectedValue = null;
-                currentIndex++;
-                renderQuestion();
+            const q = activeQuestions[currentIndex];
+            answers[selectedCategory] = (answers[selectedCategory] || 0) + selectedValue;
+            categoryCounts[selectedCategory] = (categoryCounts[selectedCategory] || 0) + 1;
+
+            const isStudent = currentMode === 'student';
+            answerLog.push({
+                index: currentIndex,
+                id: q.id,
+                cat: q.cat,
+                val: selectedValue,
+                prompt: currentLang === 'hi' ? (isStudent ? q.studentHi : q.teacherHi) : (isStudent ? q.studentEn : q.teacherEn),
+                responseLabel: i18n[currentLang].options[selectedValue]
+            });
+
+            selectedValue = null;
+            currentIndex++;
+            saveSession();
+            renderQuestion();
+        }
+
+        function prevQuestion() {
+            if (currentIndex <= 0) return;
+
+            currentIndex--;
+            const lastLog = answerLog.pop();
+            if (lastLog) {
+                answers[lastLog.cat] = Math.max(0, (answers[lastLog.cat] || 0) - lastLog.val);
+                categoryCounts[lastLog.cat] = Math.max(0, (categoryCounts[lastLog.cat] || 0) - 1);
             }
+
+            saveSession();
+            renderQuestion();
         }
 
         function finishAssessment() {
+            stopSpeech();
             document.getElementById('progress-bar').style.width = '100%';
+            localStorage.removeItem(STORAGE_KEY); // Session complete
+
             setTimeout(() => {
-                generateReport();
                 switchSection('report-section');
-            }, 400);
+                generateReport();
+            }, 200);
         }
 
-        // --- REPORT & RESULTS LOGIC ---
+        // --- 8. CLINICAL REPORT, CANVAS CHARTS & RADAR ---
         function getRiskLevel(score, maxScore) {
-            const percentage = maxScore > 0 ? (score / maxScore) : 0;
-            if (percentage < 0.25) return { label: 'No Concern', class: 'risk-none' };
-            if (percentage < 0.50) return { label: 'Mild Indicators', class: 'risk-mild' };
-            if (percentage < 0.75) return { label: 'Moderate Indicators', class: 'risk-moderate' };
-            return { label: 'Strong Indicators', class: 'risk-strong' };
+            const ratio = maxScore > 0 ? (score / maxScore) : 0;
+            const t = i18n[currentLang];
+            if (ratio < 0.25) return { label: t.noConcern, class: 'risk-none', score: ratio };
+            if (ratio < 0.50) return { label: t.mild, class: 'risk-mild', score: ratio };
+            if (ratio < 0.75) return { label: t.moderate, class: 'risk-moderate', score: ratio };
+            return { label: t.strong, class: 'risk-strong', score: ratio };
         }
 
         function generateReport() {
+            const t = i18n[currentLang];
             document.getElementById('rep-name').innerText = studentData.name;
-            document.getElementById('rep-age').innerText = studentData.age;
+            document.getElementById('rep-age').innerText = `${studentData.age} ${currentLang === 'hi' ? 'वर्ष' : 'years'}`;
             document.getElementById('rep-date').innerText = new Date().toLocaleDateString();
-            document.getElementById('rep-mode').innerText = currentMode === 'student' ? 'Student Self-Report' : 'Teacher/Parent Observation';
+            document.getElementById('rep-mode').innerText = currentMode === 'student' ? t.modeStudent : t.modeTeacher;
 
             const grid = document.getElementById('result-grid');
             grid.innerHTML = '';
 
             let chartLabels = [];
+            let chartShortLabels = [];
             let chartData = [];
             let highestRisk = 0;
-            let strengths = [];
-            let recommendations = [];
+            let flaggedCategories = [];
+            let authenticStrengths = [];
+
+            const shortNames = {
+                dyslexia: "Dyslexia", dyscalculia: "Math", dysgraphia: "Writing",
+                attention: "Attention", executive: "Exec Func", processing: "Speed",
+                working_memory: "Memory", recall: "Recall", learning_anxiety: "Learn Anx",
+                test_anxiety: "Test Anx", motivation: "Motiv", sensory: "Sensory",
+                fine_motor: "Motor", social: "Social", communication: "Comms"
+            };
 
             Object.keys(categories).forEach(cat => {
                 const count = categoryCounts[cat] || 1;
-                const maxScore = count * 3;
+                const max = count * 3;
                 const score = answers[cat] || 0;
-                const risk = getRiskLevel(score, maxScore);
-                const percentage = Math.round((score / maxScore) * 100);
+                const risk = getRiskLevel(score, max);
+                const pct = Math.round((score / max) * 100);
 
-                chartLabels.push(categories[cat].name);
-                chartData.push(percentage);
+                const catName = currentLang === 'hi' ? categories[cat].hi : categories[cat].en;
+                const catDesc = currentLang === 'hi' ? categories[cat].descHi : categories[cat].descEn;
 
-                if (percentage < 25) strengths.push(categories[cat].name);
-                if (percentage >= 50) recommendations.push(cat);
-                if (percentage > highestRisk) highestRisk = percentage;
+                chartLabels.push(catName);
+                chartShortLabels.push(shortNames[cat] || cat);
+                chartData.push(pct);
+
+                if (pct > highestRisk) highestRisk = pct;
+                if (pct >= 50) flaggedCategories.push({ cat, pct, risk: risk.label });
+                if (pct <= 20) authenticStrengths.push(cat);
 
                 const card = document.createElement('div');
                 card.className = 'result-card';
                 card.innerHTML = `
-                    <h4>${categories[cat].name}</h4>
-                    <p style="font-size: 0.85rem; margin-bottom: 5px;">${categories[cat].desc}</p>
-                    <span class="risk-badge ${risk.class}">${risk.label} (${percentage}%)</span>
+                    <h4>${catName}</h4>
+                    <p style="font-size: 0.85rem; margin-bottom: 6px;">${catDesc}</p>
+                    <span class="risk-badge ${risk.class}">${risk.label} (${pct}%)</span>
                 `;
                 grid.appendChild(card);
             });
 
-            drawChart(chartLabels, chartData);
-            populateTextAnalysis(strengths, recommendations, highestRisk);
+            // Draw High-DPI Charts
+            drawBarChart(chartLabels, chartShortLabels, chartData);
+            drawRadarChart();
+
+            // Populate Strengths & Tiered Recommendations
+            populateAnalysis(authenticStrengths, flaggedCategories, highestRisk);
+
+            // Populate Question Breakdown Accordion
+            populateBreakdown();
         }
 
-        function populateTextAnalysis(strengths, recKeys, highestRisk) {
-            const sList = document.getElementById('strengths-list');
-            sList.innerHTML = strengths.length > 0 
-                ? strengths.map(s => `<li>Demonstrates resilience and standard indicators in <strong>${s}</strong>.</li>`).join('')
-                : `<li>Student displays an active cognitive profile across multiple domains. Focus on building self-confidence.</li>`;
-
-            const rList = document.getElementById('recommendations-list');
-            const recMap = {
-                dyslexia: "Use audiobooks, allow extra time for reading, and utilize text-to-speech tools.",
-                dyscalculia: "Provide physical manipulatives for math, allow calculators, use graph paper.",
-                dysgraphia: "Allow typing instead of writing, provide print outlines, reduce copying from board.",
-                attention: "Use preferential seating, break tasks into 10-minute chunks, provide silent fidgets.",
-                executive: "Implement visual schedules, color-coded folders, and explicitly teach planning.",
-                processing: "Reduce workload volume (not complexity), provide extra time, avoid cold-calling.",
-                working_memory: "Provide written instructions alongside verbal ones, allow formula/memory sheets.",
-                recall: "Use mnemonic devices, spaced repetition, and prefer multiple-choice formats.",
-                learning_anxiety: "Praise effort over grades, create a safe space for learning from mistakes.",
-                test_anxiety: "Teach breathing exercises, allow testing in a quiet environment, consider alternative assessments.",
-                motivation: "Connect learning to personal interests, provide frequent positive reinforcement.",
-                sensory: "Allow noise-canceling headphones, natural lighting, and movement breaks.",
-                fine_motor: "Provide pencil grips, thick markers, and fine motor exercises.",
-                social: "Facilitate structured small group work, role-play social scenarios.",
-                communication: "Allow wait time (10 seconds) for responses, avoid interrupting."
-            };
-
-            rList.innerHTML = recKeys.length > 0
-                ? recKeys.map(k => `<li><strong>${categories[k].name}:</strong> ${recMap[k]}</li>`).join('')
-                : `<li>No significant challenges noted in this assessment. Continue standard educational support.</li>`;
-
-            const profNote = document.getElementById('professional-note');
-            if (highestRisk >= 75) {
-                profNote.innerHTML = "Based on the <strong>Strong Indicators</strong> present, a comprehensive evaluation by an Educational Psychologist, Pediatrician, or qualified specialist is highly recommended for formal guidance.";
-            } else if (highestRisk >= 50) {
-                profNote.innerHTML = "Moderate indicators are present. Implement the suggested accommodations at school or home and monitor progress for 6-8 weeks. Consult a specialist if challenges persist.";
-            } else {
-                profNote.innerHTML = "Results reflect standard educational development. Continue universal design for learning practices and positive encouragement.";
-            }
-        }
-
-        // --- PURE JS CANVAS CHART ---
-        function drawChart(labels, data) {
+        // --- BAR CHART (High-DPI Sharpness & Mobile Spacing Fix) ---
+        function drawBarChart(labels, shortLabels, data) {
             const canvas = document.getElementById('resultsChart');
             if (!canvas) return;
             const ctx = canvas.getContext('2d');
-            
+
+            const container = canvas.parentElement;
+            const rect = container.getBoundingClientRect();
+            const w = rect.width || 340;
+            const h = 320;
             const dpr = window.devicePixelRatio || 1;
-            const rect = canvas.parentElement.getBoundingClientRect();
-            canvas.width = rect.width * dpr;
-            canvas.height = 300 * dpr;
+
+            canvas.style.width = `${w}px`;
+            canvas.style.height = `${h}px`;
+            canvas.width = Math.round(w * dpr);
+            canvas.height = Math.round(h * dpr);
+
+            ctx.resetTransform ? ctx.resetTransform() : ctx.setTransform(1, 0, 0, 1, 0, 0);
             ctx.scale(dpr, dpr);
-            
-            const w = rect.width;
-            const h = 300;
-            const padding = 40;
-            const bottomPadding = 95;
+
+            const isDark = document.body.classList.contains('dark-mode');
+            const paddingLeft = 36;
+            const paddingRight = 16;
+            const paddingTop = 20;
+            const paddingBottom = 88;
 
             ctx.clearRect(0, 0, w, h);
 
-            // Draw Axes
-            ctx.beginPath();
-            ctx.moveTo(padding, padding);
-            ctx.lineTo(padding, h - bottomPadding);
-            ctx.lineTo(w - padding, h - bottomPadding);
-            ctx.strokeStyle = '#94a3b8';
-            ctx.lineWidth = 1;
-            ctx.stroke();
-
-            // Draw horizontal grid lines (0, 25, 50, 75, 100)
-            ctx.fillStyle = '#64748b';
-            ctx.font = '10px system-ui';
+            // Horizontal Grid Lines & Y-Axis
+            ctx.fillStyle = isDark ? '#94a3b8' : '#64748b';
+            ctx.font = '10px sans-serif';
             ctx.textAlign = 'right';
+
             for (let i = 0; i <= 4; i++) {
-                const y = h - bottomPadding - (i * ((h - padding - bottomPadding) / 4));
-                ctx.fillText(i * 25 + '%', padding - 5, y + 4);
-                
+                const y = (h - paddingBottom) - (i * ((h - paddingTop - paddingBottom) / 4));
+                ctx.fillText(`${i * 25}%`, paddingLeft - 6, y + 3);
+
                 ctx.beginPath();
-                ctx.moveTo(padding, y);
-                ctx.lineTo(w - padding, y);
-                ctx.strokeStyle = 'rgba(148, 163, 184, 0.2)';
+                ctx.moveTo(paddingLeft, y);
+                ctx.lineTo(w - paddingRight, y);
+                ctx.strokeStyle = isDark ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.06)';
                 ctx.stroke();
             }
 
-            // Draw Bars
-            const barWidth = ((w - (padding * 2)) / data.length) * 0.7;
-            const spacing = ((w - (padding * 2)) / data.length);
+            // Bars
+            const chartAreaW = w - paddingLeft - paddingRight;
+            const spacing = chartAreaW / data.length;
+            const barWidth = Math.max(5, spacing * 0.68);
 
             data.forEach((val, i) => {
-                const x = padding + (i * spacing) + (spacing * 0.15);
-                const barHeight = (val / 100) * (h - padding - bottomPadding);
-                const y = h - bottomPadding - barHeight;
+                const x = paddingLeft + (i * spacing) + ((spacing - barWidth) / 2);
+                const barH = (val / 100) * (h - paddingTop - paddingBottom);
+                const y = h - paddingBottom - barH;
 
                 if (val < 25) ctx.fillStyle = '#10b981';
                 else if (val < 50) ctx.fillStyle = '#3b82f6';
                 else if (val < 75) ctx.fillStyle = '#f59e0b';
                 else ctx.fillStyle = '#ef4444';
 
-                ctx.fillRect(x, y, barWidth, barHeight);
+                ctx.fillRect(x, y, barWidth, barH);
 
-                // Rotated Labels
+                // Rotated Label
                 ctx.save();
-                ctx.translate(x + (barWidth / 2), h - bottomPadding + 10);
+                ctx.translate(x + (barWidth / 2), h - paddingBottom + 8);
                 ctx.rotate(-Math.PI / 4);
                 ctx.textAlign = 'right';
-                ctx.fillStyle = document.body.classList.contains('dark-mode') ? '#f1f5f9' : '#1e293b';
-                ctx.font = '10px system-ui';
-                ctx.fillText(labels[i], 0, 0);
+                ctx.fillStyle = isDark ? '#f1f5f9' : '#0f172a';
+                ctx.font = '9px sans-serif';
+                ctx.fillText(w < 480 ? shortLabels[i] : labels[i], 0, 0);
                 ctx.restore();
             });
         }
-        
-        window.addEventListener('resize', () => {
-            const repSec = document.getElementById('report-section');
-            if (repSec && repSec.classList.contains('active')) {
-                generateReport();
+
+        // --- 4-QUADRANT RADAR CHART ---
+        function drawRadarChart() {
+            const canvas = document.getElementById('radarChart');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+
+            const container = canvas.parentElement;
+            const rect = container.getBoundingClientRect();
+            const w = rect.width || 340;
+            const h = 320;
+            const dpr = window.devicePixelRatio || 1;
+
+            canvas.style.width = `${w}px`;
+            canvas.style.height = `${h}px`;
+            canvas.width = Math.round(w * dpr);
+            canvas.height = Math.round(h * dpr);
+
+            ctx.resetTransform ? ctx.resetTransform() : ctx.setTransform(1, 0, 0, 1, 0, 0);
+            ctx.scale(dpr, dpr);
+
+            const isDark = document.body.classList.contains('dark-mode');
+            const centerX = w / 2;
+            const centerY = h / 2;
+            const radius = Math.min(centerX, centerY) - 45;
+
+            ctx.clearRect(0, 0, w, h);
+
+            // 4 Quadrants: Academic, Executive, Affective, Sensorimotor
+            const quadrants = [
+                {
+                    label: currentLang === 'hi' ? "शैक्षिक/भाषा" : "Academic/Lang",
+                    keys: ["dyslexia", "dyscalculia", "dysgraphia", "communication"]
+                },
+                {
+                    label: currentLang === 'hi' ? "कार्यकारी/ध्यान" : "Executive/Focus",
+                    keys: ["attention", "executive", "working_memory", "processing"]
+                },
+                {
+                    label: currentLang === 'hi' ? "व्यवहार/तनाव" : "Affective/Emotion",
+                    keys: ["learning_anxiety", "test_anxiety", "motivation", "social"]
+                },
+                {
+                    label: currentLang === 'hi' ? "संवेदी/पेशीय" : "Sensorimotor",
+                    keys: ["sensory", "fine_motor", "recall"]
+                }
+            ];
+
+            const quadScores = quadrants.map(q => {
+                let sum = 0, count = 0;
+                q.keys.forEach(k => {
+                    const c = categoryCounts[k] || 1;
+                    sum += (answers[k] || 0) / (c * 3);
+                    count++;
+                });
+                return Math.round((sum / count) * 100);
+            });
+
+            const totalAxes = quadrants.length;
+            const angleStep = (Math.PI * 2) / totalAxes;
+
+            // Draw concentric web rings
+            for (let ring = 1; ring <= 4; ring++) {
+                const r = (radius / 4) * ring;
+                ctx.beginPath();
+                for (let i = 0; i < totalAxes; i++) {
+                    const angle = i * angleStep - (Math.PI / 2);
+                    const x = centerX + r * Math.cos(angle);
+                    const y = centerY + r * Math.sin(angle);
+                    if (i === 0) ctx.moveTo(x, y);
+                    else ctx.lineTo(x, y);
+                }
+                ctx.closePath();
+                ctx.strokeStyle = isDark ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.08)';
+                ctx.stroke();
             }
+
+            // Draw radial spokes & labels
+            quadrants.forEach((q, i) => {
+                const angle = i * angleStep - (Math.PI / 2);
+                const x = centerX + radius * Math.cos(angle);
+                const y = centerY + radius * Math.sin(angle);
+
+                ctx.beginPath();
+                ctx.moveTo(centerX, centerY);
+                ctx.lineTo(x, y);
+                ctx.strokeStyle = isDark ? 'rgba(255,255,255,0.15)' : 'rgba(0,0,0,0.12)';
+                ctx.stroke();
+
+                // Axis Label
+                const labelX = centerX + (radius + 22) * Math.cos(angle);
+                const labelY = centerY + (radius + 16) * Math.sin(angle);
+                ctx.fillStyle = isDark ? '#f1f5f9' : '#0f172a';
+                ctx.font = 'bold 11px sans-serif';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText(`${q.label} (${quadScores[i]}%)`, labelX, labelY);
+            });
+
+            // Draw filled data polygon
+            ctx.beginPath();
+            quadScores.forEach((score, i) => {
+                const r = (score / 100) * radius;
+                const angle = i * angleStep - (Math.PI / 2);
+                const x = centerX + r * Math.cos(angle);
+                const y = centerY + r * Math.sin(angle);
+                if (i === 0) ctx.moveTo(x, y);
+                else ctx.lineTo(x, y);
+            });
+            ctx.closePath();
+            ctx.fillStyle = isDark ? 'rgba(96, 165, 250, 0.4)' : 'rgba(37, 99, 235, 0.3)';
+            ctx.fill();
+            ctx.strokeStyle = isDark ? '#60a5fa' : '#2563eb';
+            ctx.lineWidth = 2.5;
+            ctx.stroke();
+        }
+
+        function redrawCharts() {
+            const chartLabels = Object.keys(categories).map(k => currentLang === 'hi' ? categories[k].hi : categories[k].en);
+            const shortLabels = Object.keys(categories).map(k => k);
+            const chartData = Object.keys(categories).map(k => {
+                const count = categoryCounts[k] || 1;
+                return Math.round(((answers[k] || 0) / (count * 3)) * 100);
+            });
+            drawBarChart(chartLabels, shortLabels, chartData);
+            drawRadarChart();
+        }
+
+        // --- 9. TIERED MTSS/RTI ACTION PLANS ---
+        const tieredPlans = {
+            dyslexia: {
+                classroom: "Provide audiobooks, allow 50% extra time on reading assessments, use speech-to-text for long essays.",
+                home: "Practice shared reading for 15 minutes daily using multi-sensory Orton-Gillingham methods.",
+                tech: "NaturalReader, Speechify, OpenDyslexic browser extensions.",
+                clinical: "Request formal phonological processing evaluation (e.g. CTOPP-2 / GORT-5) if challenges persist."
+            },
+            dyscalculia: {
+                classroom: "Provide physical manipulatives, allow four-function calculator, use graph paper for column alignment.",
+                home: "Play number sense board games (dice, Monopoly, Yahtzee) to build intuitive estimation.",
+                tech: "ModMath, Photomath, interactive number line apps.",
+                clinical: "Request comprehensive mathematical reasoning assessment (e.g. KEYMATH-3)."
+            },
+            dysgraphia: {
+                classroom: "Permit typing or voice dictation, provide printed lesson outlines, eliminate grading on handwriting neatness.",
+                home: "Engage in hand muscle strengthening (playdough, stress ball, finger exercises).",
+                tech: "Google Docs Voice Typing, Otter.ai, ergonomic pencil grips.",
+                clinical: "Consult an Occupational Therapist (OT) for fine motor and visual-motor integration assessment."
+            },
+            attention: {
+                classroom: "Preferential seating near instructor, break tasks into 10-minute micro-intervals, allow silent fidgets.",
+                home: "Implement a structured visual daily schedule and consistent homework zone free of extraneous noise.",
+                tech: "Pomodoro timers, Forest focus app, noise-dampening headphones.",
+                clinical: "Discuss behavioral rating scales (Vanderbilt / Conners-4) with a pediatrician or child psychologist."
+            },
+            executive: {
+                classroom: "Provide color-coded project checklists, teach explicit calendar scheduling, provide assignment reminders.",
+                home: "Establish a dedicated 'backpack landing pad' by the entrance; check supplies together every evening.",
+                tech: "Google Keep, Notion for Students, visual checklist apps.",
+                clinical: "Consider executive function coaching or SENCO consultation."
+            },
+            processing: {
+                classroom: "Reduce homework volume (focus on mastery over repetitive problems), allow wait time (10 seconds) for oral responses.",
+                home: "Present instructions one step at a time; avoid overwhelming verbal chains.",
+                tech: "Audio recording tools for lectures, playback speed controls.",
+                clinical: "Review cognitive processing speed indices (WISC-V PSI) with school psychologist."
+            },
+            working_memory: {
+                classroom: "Provide written formula and instruction sheets, minimize mental math requirements.",
+                home: "Use mnemonic memory devices, rhymes, and visual cue flashcards.",
+                tech: "Anki spaced repetition flashcards, Quizlet.",
+                clinical: "Incorporate Working Memory Index (WMI) testing into educational evaluation."
+            },
+            recall: {
+                classroom: "Prefer multiple-choice formats over blank recall, encourage concept mapping over rote memorization.",
+                home: "Use spaced repetition and practice retrieval quizzes rather than passive rereading.",
+                tech: "Spaced repetition apps, MindMeister concept maps.",
+                clinical: "Assess long-term retrieval and storage capabilities."
+            },
+            learning_anxiety: {
+                classroom: "Praise effort and perseverance over correctness, establish a low-stakes safe environment for making mistakes.",
+                home: "Normalize mistakes as proof of learning, practice 4-7-8 calming breathing exercises.",
+                tech: "Headspace for Kids, Smiling Mind.",
+                clinical: "Consult a school counselor or child therapist if anxiety impairs attendance."
+            },
+            test_anxiety: {
+                classroom: "Offer untimed testing in a quiet distraction-free room, provide sample practice quizzes.",
+                home: "Ensure 8-9 hours of consistent sleep before assessment days; avoid last-minute cramming.",
+                tech: "Calm app, guided progressive muscle relaxation.",
+                clinical: "Coordinate with school for formalized 504 accommodation testing plans."
+            },
+            motivation: {
+                classroom: "Connect academic assignments to student's personal hobbies, offer project format choices.",
+                home: "Celebrate incremental daily milestones with positive reinforcement and shared celebration.",
+                tech: "Habitica gamified task tracker.",
+                clinical: "Evaluate for underlying cognitive fatigue or undetected reading barriers."
+            },
+            sensory: {
+                classroom: "Seat away from buzzing fluorescent ballasts, allow noise-canceling headphones during quiet study.",
+                home: "Use warm natural lighting in study area; remove scratchy clothing labels.",
+                tech: "White noise apps, blue-light filtering glasses.",
+                clinical: "Occupational therapy sensory integration evaluation."
+            },
+            fine_motor: {
+                classroom: "Provide thick writing instruments, slant boards, and adaptive scissors.",
+                home: "Incorporate crafting, origami, beading, and Lego building to develop bilateral coordination.",
+                tech: "Stylus touch pens, adaptive keyboard accessories.",
+                clinical: "Occupational therapy fine motor evaluation."
+            },
+            social: {
+                classroom: "Structure cooperative small-group work with explicit role definitions.",
+                home: "Role-play everyday social scenarios, discuss subtle facial expressions in family movies.",
+                tech: "Social story apps, emotion recognition cards.",
+                clinical: "Social pragmatic language evaluation with a Speech-Language Pathologist (SLP)."
+            },
+            communication: {
+                classroom: "Allow 10 seconds of wait time before prompting verbal replies, encourage multi-modal responses.",
+                home: "Engage in dinner table storytelling; patiently listen without finishing their sentences.",
+                tech: "Speech-to-text apps, AAC visual board apps if needed.",
+                clinical: "Speech-Language Pathologist comprehensive expressive language evaluation."
+            }
+        };
+
+        function populateAnalysis(strengths, flagged, highestRisk) {
+            const sList = document.getElementById('strengths-list');
+            sList.innerHTML = strengths.length > 0
+                ? strengths.map(s => {
+                    const name = currentLang === 'hi' ? categories[s].hi : categories[s].en;
+                    return `<li><strong>${name}:</strong> ${currentLang === 'hi' ? 'ठोस क्षमता प्रदर्शित - इस क्षेत्र में आत्मविश्वास और प्रदर्शन बहुत मजबूत है।' : 'Demonstrates consistent strength and high resilience in this cognitive domain.'}</li>`;
+                }).join('')
+                : `<li>${currentLang === 'hi' ? 'छात्र का प्रोफ़ाइल संतुलित है। सभी क्षेत्रों में आत्मविश्वास बढ़ाने पर ध्यान दें।' : 'Balanced cognitive profile across tested domains. Focus on confidence and effort.'}</li>`;
+
+            const rContainer = document.getElementById('recommendations-container');
+            rContainer.innerHTML = '';
+
+            if (flagged.length === 0) {
+                rContainer.innerHTML = `<p style="color: var(--text-muted);">${currentLang === 'hi' ? 'इस स्क्रीनिंग में कोई गंभीर चुनौती नहीं पाई गई। मानक शैक्षिक समर्थन जारी रखें।' : 'No significant indicators flagged in this assessment. Continue universal educational practices.'}</p>`;
+            } else {
+                flagged.forEach(item => {
+                    const plan = tieredPlans[item.cat];
+                    const catName = currentLang === 'hi' ? categories[item.cat].hi : categories[item.cat].en;
+                    if (!plan) return;
+
+                    const block = document.createElement('div');
+                    block.style.cssText = 'background: var(--bg-color); border: 1px solid var(--border-color); border-radius: 8px; padding: 14px; margin-bottom: 14px;';
+                    block.innerHTML = `
+                        <h4 style="color: var(--primary);">${catName} (${item.risk})</h4>
+                        <p style="font-size: 0.88rem; margin-bottom: 4px;"><strong>🏫 ${currentLang === 'hi' ? 'कक्षा में सहायता:' : 'Classroom:'}</strong> ${plan.classroom}</p>
+                        <p style="font-size: 0.88rem; margin-bottom: 4px;"><strong>🏠 ${currentLang === 'hi' ? 'घर पर अभ्यास:' : 'At Home:'}</strong> ${plan.home}</p>
+                        <p style="font-size: 0.88rem; margin-bottom: 4px;"><strong>💻 ${currentLang === 'hi' ? 'सहायक तकनीक:' : 'Assistive Tech:'}</strong> ${plan.tech}</p>
+                        <p style="font-size: 0.88rem; margin-bottom: 0;"><strong>🩺 ${currentLang === 'hi' ? 'विशेषज्ञ जांच:' : 'Formal Evaluation:'}</strong> ${plan.clinical}</p>
+                    `;
+                    rContainer.appendChild(block);
+                });
+            }
+
+            const profNote = document.getElementById('professional-note');
+            if (highestRisk >= 75) {
+                profNote.innerHTML = currentLang === 'hi'
+                    ? "उपस्थित <strong>मजबूत संकेतकों</strong> के आधार पर, औपचारिक मार्गदर्शन और व्यक्तिगत शिक्षा योजना (IEP) के लिए एक शैक्षिक मनोवैज्ञानिक, बाल रोग विशेषज्ञ या अधिकृत विशेषज्ञ द्वारा व्यापक मूल्यांकन की अत्यधिक अनुशंसा की जाती है।"
+                    : "Based on the <strong>Strong Indicators</strong> present, a comprehensive evaluation by an Educational Psychologist, Pediatrician, or licensed specialist is strongly recommended for formal guidance and accommodation planning.";
+            } else if (highestRisk >= 50) {
+                profNote.innerHTML = currentLang === 'hi'
+                    ? "मध्यम संकेतक पाए गए हैं। कक्षा और घर पर सुझाई गई कार्य योजना को 6-8 सप्ताह तक लागू करें और छात्र की प्रगति देखें। यदि समस्या बनी रहे तो विशेषज्ञ से परामर्श लें।"
+                    : "Moderate indicators are present. Implement the suggested tiered accommodations at school and home for 6-8 weeks, monitoring progress closely. Consult a specialist if challenges persist.";
+            } else {
+                profNote.innerHTML = currentLang === 'hi'
+                    ? "परिणाम आयु-उपयुक्त सामान्य शैक्षिक विकास दर्शाते हैं। सकारात्मक प्रोत्साहन और सीखने के सार्वभौमिक तरीकों को जारी रखें।"
+                    : "Results reflect standard age-appropriate educational development. Continue positive reinforcement and universal learning practices.";
+            }
+        }
+
+        // --- 10. DETAILED BREAKDOWN ACCORDION ---
+        function populateBreakdown() {
+            const container = document.getElementById('breakdown-content');
+            container.innerHTML = '';
+
+            Object.keys(categories).forEach(catKey => {
+                const catQuestions = answerLog.filter(log => log.cat === catKey);
+                if (catQuestions.length === 0) return;
+
+                const catName = currentLang === 'hi' ? categories[catKey].hi : categories[catKey].en;
+                const score = answers[catKey] || 0;
+                const count = categoryCounts[catKey] || 1;
+                const pct = Math.round((score / (count * 3)) * 100);
+
+                const group = document.createElement('div');
+                group.style.marginBottom = '14px';
+                group.innerHTML = `<h4 style="margin-bottom: 6px; color: var(--text-main);">${catName} — ${pct}%</h4>`;
+
+                catQuestions.forEach((item, idx) => {
+                    const row = document.createElement('div');
+                    row.className = 'breakdown-row';
+                    row.innerHTML = `
+                        <span style="flex: 1; padding-right: 12px;">Q${item.index + 1}: ${item.prompt}</span>
+                        <strong style="color: var(--primary); white-space: nowrap;">${item.responseLabel} (${item.val}/3)</strong>
+                    `;
+                    group.appendChild(row);
+                });
+
+                container.appendChild(group);
+            });
+        }
+
+        // --- 11. MULTI-FORMAT EXPORTS ---
+        function exportJSON() {
+            const payload = {
+                app: "EduScreen",
+                version: "1.2.0",
+                date: new Date().toISOString(),
+                student: studentData,
+                mode: currentMode,
+                scores: answers,
+                categoryPercentages: {},
+                detailedResponses: answerLog
+            };
+
+            Object.keys(categories).forEach(k => {
+                const count = categoryCounts[k] || 1;
+                payload.categoryPercentages[k] = Math.round(((answers[k] || 0) / (count * 3)) * 100);
+            });
+
+            const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `EduScreen_${studentData.name.replace(/\s+/g, '_')}_Report.json`;
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        function exportCSV() {
+            let csv = "Domain,Score,MaxScore,Percentage,RiskLevel\n";
+            Object.keys(categories).forEach(k => {
+                const count = categoryCounts[k] || 1;
+                const max = count * 3;
+                const score = answers[k] || 0;
+                const pct = Math.round((score / max) * 100);
+                const risk = getRiskLevel(score, max).label;
+                csv += `"${categories[k].en}",${score},${max},${pct}%,"${risk}"\n`;
+            });
+
+            csv += "\nQuestionIndex,Domain,Prompt,SelectedValue,ResponseLabel\n";
+            answerLog.forEach(log => {
+                const cleanPrompt = log.prompt.replace(/"/g, '""');
+                csv += `${log.index + 1},"${categories[log.cat].en}","${cleanPrompt}",${log.val},"${log.responseLabel}"\n`;
+            });
+
+            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `EduScreen_${studentData.name.replace(/\s+/g, '_')}_Scores.csv`;
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        function confirmReset() {
+            const msg = currentLang === 'hi' 
+                ? "क्या आप निश्चित हैं कि आप इस मूल्यांकन को रीसेट करना चाहते हैं? सभी परिणाम मिट जाएंगे।"
+                : "Are you sure you want to reset? Current assessment results will be discarded.";
+            if (confirm(msg)) {
+                localStorage.removeItem(STORAGE_KEY);
+                location.reload();
+            }
+        }
+
+        // --- 12. SPLASH & INITIALIZATION ---
+        function dismissSplash() {
+            const splash = document.getElementById('splash-screen');
+            if (splash && !splash.classList.contains('splash-hidden')) {
+                splash.classList.add('splash-hidden');
+            }
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            // Restore saved user preferences
+            try {
+                if (localStorage.getItem('eduscreen_theme') === 'dark') {
+                    document.body.classList.add('dark-mode');
+                    document.getElementById('theme-label').innerText = currentLang === 'hi' ? 'लाइट' : 'Light';
+                }
+                if (localStorage.getItem('eduscreen_font') === 'dyslexia') {
+                    document.body.classList.add('dyslexia-font');
+                    document.getElementById('font-label').innerText = currentLang === 'hi' ? 'सामान्य फ़ॉन्ट' : 'Standard Font';
+                }
+            } catch (e) {}
+
+            // Auto-dismiss splash in 400ms without blocking user
+            setTimeout(dismissSplash, 400);
+
+            // Check for uncompleted session
+            checkExistingSession();
         });
 
-        // --- PWA SERVICE WORKER REGISTRATION (Production Ready) ---
-        if ('serviceWorker' in navigator) {
+        // Debounced Resize Listener for high-DPI canvas
+        let resizeTimer;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(() => {
+                if (document.getElementById('report-section').classList.contains('active')) {
+                    redrawCharts();
+                }
+            }, 150);
+        });
+
+        // PWA Service Worker Registration (Safe protocol check for Cordova compatibility)
+        if ('serviceWorker' in navigator && location.protocol.startsWith('http')) {
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('sw.js')
-                    .then(reg => console.log('EduScreen ServiceWorker active on scope:', reg.scope))
-                    .catch(err => console.warn('PWA registration skipped:', err));
+                    .then(reg => console.log('EduScreen SW active:', reg.scope))
+                    .catch(err => console.warn('SW registration skipped:', err));
             });
         }
     </script>
