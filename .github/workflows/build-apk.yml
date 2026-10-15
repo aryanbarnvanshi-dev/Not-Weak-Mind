@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+  workflow_dispatch:
 
 jobs:
   build:
@@ -22,35 +23,30 @@ jobs:
     - name: Set up Node.js
       uses: actions/setup-node@v4
       with:
-        node-version: '24'
+        node-version: '20'
 
-    # कोर्डोवा टूल को इंस्टॉल करना
     - name: Install Cordova
       run: npm install -g cordova
 
-    # एक नया एंड्रॉइड प्रोजेक्ट बनाना और आपकी वेबसाइट की फाइलों को उसमें डालना
     - name: Create Android Project
       run: |
         cordova create my-app com.pocket.app "NotWeakMind"
         rm -rf my-app/www/*
-        cp -r * my-app/www/ 2>/dev/null || true
+        cp index.html manifest.json sw.js icon.svg sitemap.xml my-app/www/ 2>/dev/null || cp index.html my-app/www/
         cd my-app
         cordova platform add android
 
-    # SDK Configuration सेट करना
     - name: Configure Android SDK
       run: |
         cd my-app
         cordova plugin add cordova-plugin-android-permissions
         echo "32" > platforms/android/android-sdk-min-level.txt
 
-    # Debug APK फाइल को बिल्ड (Compile) करना - बिना signing के
     - name: Build Debug APK (Unsigned)
       run: |
         cd my-app
         cordova build android --debug
 
-    # Unsigned APK को डाउनलोड के लिए उपलब्ध करना
     - name: Upload Unsigned Debug APK
       uses: actions/upload-artifact@v4
       with:
@@ -58,7 +54,6 @@ jobs:
         path: my-app/platforms/android/app/build/outputs/apk/debug/app-debug.apk
         retention-days: 30
 
-    # Build Summary
     - name: Build Summary
       if: always()
       run: |
@@ -66,13 +61,4 @@ jobs:
         echo "✓ Android APK Build Complete"
         echo "==============================================="
         echo "📦 Unsigned Debug APK: Ready for download"
-        echo ""
-        echo "अगले Steps (अपने PC पर):"
-        echo "1. APK को download करो"
-        echo "2. अपनी keystore से sign करो"
-        echo "3. Google Play Store पर upload करो"
-        echo ""
-        echo "Signing command (PC पर):"
-        echo "jarsigner -verbose -sigalg SHA256withRSA -digestalg SHA-256"
-        echo " -keystore release.keystore app-debug.apk my-key-alias"
         echo "==============================================="

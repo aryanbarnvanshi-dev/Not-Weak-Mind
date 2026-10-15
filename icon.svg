@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#bf953f" />
+      <stop offset="25%" stop-color="#fcf6ba" />
+      <stop offset="50%" stop-color="#b38728" />
+      <stop offset="75%" stop-color="#fbf5b7" />
+      <stop offset="100%" stop-color="#aa771c" />
+    </linearGradient>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a" />
+      <stop offset="100%" stop-color="#1e293b" />
+    </linearGradient>
+  </defs>
+  <!-- Background Circle -->
+  <rect width="512" height="512" rx="110" fill="url(#bgGrad)" />
+  <circle cx="256" cy="256" r="230" fill="none" stroke="url(#goldGrad)" stroke-width="8" opacity="0.8" />
+  
+  <!-- Brain Silhouette / Nodes (Stylized Learning Symbol) -->
+  <g fill="none" stroke="url(#goldGrad)" stroke-width="12" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Left Hemisphere -->
+    <path d="M 230 170 C 200 130 140 140 130 180 C 100 190 90 240 110 270 C 90 290 100 340 130 350 C 150 380 200 380 230 350 Z" />
+    <path d="M 130 220 C 170 230 190 200 230 210" />
+    <path d="M 115 290 C 160 280 180 320 230 300" />
+    
+    <!-- Right Hemisphere -->
+    <path d="M 282 170 C 312 130 372 140 382 180 C 412 190 422 240 402 270 C 422 290 412 340 382 350 C 362 380 312 380 282 350 Z" />
+    <path d="M 382 220 C 342 230 322 200 282 210" />
+    <path d="M 397 290 C 352 280 332 320 282 300" />
+    
+    <!-- Central Divider -->
+    <line x1="256" y1="160" x2="256" y2="360" stroke-dasharray="8 8" />
+  </g>
+  
+  <!-- Graduation Cap / Growth Crown over Brain -->
+  <path d="M 160 140 L 256 95 L 352 140 L 256 185 Z" fill="url(#goldGrad)" />
+  <path d="M 352 140 L 370 170 L 370 230" fill="none" stroke="url(#goldGrad)" stroke-width="6" stroke-linecap="round" />
+  <circle cx="370" cy="235" r="8" fill="url(#goldGrad)" />
+</svg>
