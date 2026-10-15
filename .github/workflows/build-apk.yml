@@ -25,22 +25,27 @@ jobs:
       with:
         node-version: '20'
 
+    - name: Cache Gradle & Android Dependencies
+      uses: actions/cache@v4
+      with:
+        path: |
+          ~/.gradle/caches
+          ~/.gradle/wrapper
+        key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+        restore-keys: |
+          ${{ runner.os }}-gradle-
+
     - name: Install Cordova
       run: npm install -g cordova
 
     - name: Create Android Project
       run: |
-        cordova create my-app com.pocket.app "NotWeakMind"
+        cordova create my-app dev.aryanbarnvanshi.eduscreen "EduScreen"
         rm -rf my-app/www/*
         cp index.html manifest.json sw.js icon.svg sitemap.xml my-app/www/ 2>/dev/null || cp index.html my-app/www/
         cd my-app
         cordova platform add android
-
-    - name: Configure Android SDK
-      run: |
-        cd my-app
-        cordova plugin add cordova-plugin-android-permissions
-        echo "32" > platforms/android/android-sdk-min-level.txt
+        echo "24" > platforms/android/android-sdk-min-level.txt
 
     - name: Build Debug APK (Unsigned)
       run: |
@@ -50,7 +55,7 @@ jobs:
     - name: Upload Unsigned Debug APK
       uses: actions/upload-artifact@v4
       with:
-        name: NotWeakMind-Unsigned-APK
+        name: EduScreen-Unsigned-APK
         path: my-app/platforms/android/app/build/outputs/apk/debug/app-debug.apk
         retention-days: 30
 
@@ -58,7 +63,7 @@ jobs:
       if: always()
       run: |
         echo "==============================================="
-        echo "✓ Android APK Build Complete"
+        echo "✓ EduScreen Android APK Build Complete"
         echo "==============================================="
-        echo "📦 Unsigned Debug APK: Ready for download"
+        echo "📦 Min Android SDK: API 24 (Android 7.0+ Supported)"
         echo "==============================================="
