@@ -1,32 +1,29 @@
-// EduScreen Service Worker v1.1.0 - Full Offline Caching
-const CACHE_NAME = 'eduscreen-v1.1.0';
-const ASSETS_TO_CACHE = [
+// EduScreen Service Worker v1.2.0 - Optimized Offline-First PWA
+const CACHE_NAME = 'eduscreen-v1.2.0';
+const STATIC_ASSETS = [
     './',
     './index.html',
     './manifest.json',
-    './icon.svg',
-    './sitemap.xml',
-    './AUDIT_AND_FIXES.md',
-    './README.md'
+    './icon.svg'
 ];
 
-// Install Event: Pre-cache essential static assets
+// Pre-cache essential static assets
 self.addEventListener('install', (event) => {
     event.waitUntil(
         caches.open(CACHE_NAME).then((cache) => {
-            return cache.addAll(ASSETS_TO_CACHE);
+            return cache.addAll(STATIC_ASSETS);
         }).then(() => self.skipWaiting())
     );
 });
 
-// Activate Event: Purge older caches on version update
+// Purge obsolete caches on activation
 self.addEventListener('activate', (event) => {
     event.waitUntil(
-        caches.keys().then((cacheNames) => {
+        caches.keys().then((keys) => {
             return Promise.all(
-                cacheNames.map((cacheName) => {
-                    if (cacheName !== CACHE_NAME) {
-                        return caches.delete(cacheName);
+                keys.map((key) => {
+                    if (key !== CACHE_NAME) {
+                        return caches.delete(key);
                     }
                 })
             );
@@ -34,40 +31,52 @@ self.addEventListener('activate', (event) => {
     );
 });
 
-// Fetch Event: Stale-While-Revalidate Strategy for offline resilience
+// Robust Fetch Strategy:
+// 1. Navigation requests: Network-First with Cache fallback (ensures latest app version)
+// 2. Static Assets: Cache-First with Network background refresh
 self.addEventListener('fetch', (event) => {
     if (event.request.method !== 'GET') return;
 
-    event.respondWith(
-        caches.match(event.request).then((cachedResponse) => {
-            if (cachedResponse) {
-                // Return cached version immediately and update cache in background
-                fetch(event.request).then((networkResponse) => {
-                    if (networkResponse && networkResponse.status === 200) {
-                        caches.open(CACHE_NAME).then((cache) => {
-                            cache.put(event.request, networkResponse);
-                        });
-                    }
-                }).catch(() => {/* Offline - use cached */});
-                return cachedResponse;
-            }
+    const url = new URL(event.request.url);
 
-            // If not in cache, fetch from network and cache for next time
-            return fetch(event.request).then((networkResponse) => {
-                if (!networkResponse || networkResponse.status !== 200 || networkResponse.type !== 'basic') {
+    // Network-First for HTML navigation
+    if (event.request.mode === 'navigate') {
+        event.respondWith(
+            fetch(event.request)
+                .then((networkResponse) => {
+                    if (networkResponse && networkResponse.status === 200) {
+                        const copy = networkResponse.clone();
+                        caches.open(CACHE_NAME).then((cache) => cache.put(event.request, copy));
+                    }
                     return networkResponse;
+                })
+                .catch(() => {
+                    return caches.match('./index.html') || caches.match('./');
+                })
+        );
+        return;
+    }
+
+    // Cache-First for same-origin static assets
+    if (url.origin === self.location.origin) {
+        event.respondWith(
+            caches.match(event.request).then((cachedResponse) => {
+                if (cachedResponse) {
+                    return cachedResponse;
                 }
-                const responseToCache = networkResponse.clone();
-                caches.open(CACHE_NAME).then((cache) => {
-                    cache.put(event.request, responseToCache);
+
+                return fetch(event.request).then((networkResponse) => {
+                    if (!networkResponse || networkResponse.status !== 200 || networkResponse.type !== 'basic') {
+                        return networkResponse;
+                    }
+                    const copy = networkResponse.clone();
+                    caches.open(CACHE_NAME).then((cache) => cache.put(event.request, copy));
+                    return networkResponse;
+                }).catch(() => {
+                    // Safe fallback without throwing TypeError
+                    return new Response('', { status: 408, statusText: 'Offline Asset Unavailable' });
                 });
-                return networkResponse;
-            }).catch(() => {
-                // If offline and requesting navigation, return index.html
-                if (event.request.mode === 'navigate') {
-                    return caches.match('./index.html');
-                }
-            });
-        })
-    );
+            })
+        );
+    }
 });
