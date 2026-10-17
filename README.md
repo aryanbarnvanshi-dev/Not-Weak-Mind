@@ -73,13 +73,34 @@ Provides actionable, practical interventions across 4 levels:
 
 ---
 
-## ⚠️ Important Educational Disclaimer
+## ⚠️ Important Educational Disclaimer & Legal Safe Harbor
 
-> **EduScreen is an educational awareness screening survey, NOT a formal medical, psychiatric, or diagnostic evaluation.**
+> **EduScreen is an educational awareness screening survey, NOT a formal medical, psychiatric, or clinical diagnostic evaluation.**
 
-* **What it is:** A structured psychometric questionnaire designed to identify cognitive patterns, stimulate constructive discussions between parents and teachers, and guide supportive classroom accommodations.
-* **What it is NOT:** A medical diagnosis or psychological certification. It does not replace comprehensive evaluation by licensed clinicians (such as Clinical Psychologists, Developmental Pediatricians, or Certified Special Educators).
-* If high risk indicators (≥50%) are consistently flagged, we strongly recommend seeking a formal psycho-educational assessment.
+* **What it is:** A structured observational survey designed to identify cognitive learning patterns, stimulate constructive discussions between parents and educators, and guide supportive classroom accommodations (Tier 1 MTSS).
+* **What it is NOT:** A clinical diagnosis or psychological certification. It does not replace comprehensive evaluation by licensed clinicians (such as Clinical Psychologists, Developmental Pediatricians, or Certified Special Educators).
+* **Statutory Immunity:** In full accordance with the **National Medical Commission (NMC) Act 2019**, the **Mental Healthcare Act 2017**, and the **Digital Personal Data Protection (DPDP) Act 2023**, EduScreen does not constitute medical practice, forms no doctor-patient relationship, and collects zero personal data on remote servers.
+* **Fair Dealing & Fair Use:** Academic construct citations are made under **Section 52(1)(a) of the Indian Copyright Act, 1957** and **Section 107 of the US Copyright Act** for educational research and review. All 80 behavioral prompts are original works independently authored in vernacular language by Aryan Kumar with zero verbatim derivation from commercial psychometric batteries.
+* **Trademark Disclaimers:** DSM-5® is a trademark of the American Psychiatric Association (APA). WISC® and Beery™ VMI are trademarks of Pearson Education. Conners 3® is a trademark of MHS. Their citation is purely nominative for academic taxonomy cross-referencing.
+
+---
+
+## 🔬 Scientific Grounding across 15 Cognitive Domains
+
+All 15 domains assessed by EduScreen map directly to established, public-domain cognitive science constructs and peer-reviewed educational literature:
+* **Dyslexia:** Phonological Deficit Model (*International Dyslexia Association*, Shaywitz, 2003; Lyon et al., 2003)
+* **Dyscalculia:** Numerical Cognition & Approximate Number System (*Butterworth*, 2010; *Geary*, 2004)
+* **Dysgraphia:** Simple View of Writing & Graphomotor Integration (*Berninger & Amtmann*, 2009; *Graham*, 1996)
+* **Attention:** Behavioral Inhibition & Sustained Vigilance (*Barkley*, 1997; *DSM-5 Observational Criteria*)
+* **Executive Function:** Goal-Directed Cognitive Control (*Diamond*, 2013; *Baddeley*, 1996)
+* **Processing Speed:** Cattell-Horn-Carroll Gs Factor (*Kail*, 1991; *McGrew*, 2005)
+* **Working Memory:** Multi-Component Model (*Baddeley & Hitch*, 1974; *Alloway*, 2009)
+* **Recall & Retrieval:** Long-Term Retrieval Glr & Episodic Memory (*Tulving*, 1972)
+* **Learning & Test Anxiety:** Cognitive Interference & Evaluative Threat (*Cassady & Johnson*, 2002; *Spielberger*, 1983)
+* **Academic Motivation:** Self-Determination Theory & Mindset (*Deci & Ryan*, 2000; *Dweck*, 2006)
+* **Sensory Sensitivity:** Dunn's Sensory Processing Framework (*Dunn*, 1997)
+* **Fine Motor Skills:** Visual-Motor Integration Framework (*Beery VMI Framework*, 2010)
+* **Social Learning & Communication:** Theory of Mind & Pragmatic Language (*Baron-Cohen et al.*, 1985; *Bishop*, 2006)
 
 ---
 
@@ -92,7 +113,7 @@ Provides actionable, practical interventions across 4 levels:
   * Reading ruler tracking guide.
   * Contrast ratios exceeding 7:1 across all risk badges and disclaimers.
   * High-visibility `:focus-visible` indicators and WAI-ARIA `radiogroup`/`radio` attributes.
-* **Automated CI Test Suite:** 27 integration tests running on native Node.js 24 test runner (`node --test tests/tier1-features/*.test.js`) executed automatically on every push via GitHub Actions.
+* **Automated CI Test Suite:** 37 integration tests running on native Node.js 24 test runner (`node --test tests/tier1-features/*.test.js`) executed automatically on every push via GitHub Actions.
 
 ---
 

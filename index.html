@@ -582,6 +582,134 @@
             opacity: 0.9;
         }
 
+        /* Scientific References & Legal Safe Harbor Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.65);
+            backdrop-filter: blur(4px);
+            z-index: 9999;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+            box-sizing: border-box;
+        }
+        .modal-overlay.active {
+            display: flex;
+        }
+        .modal-container {
+            background: var(--card-bg);
+            color: var(--text-main);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            max-width: 920px;
+            width: 100%;
+            max-height: 90vh;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.4);
+            overflow: hidden;
+            animation: modalFadeIn 0.2s ease-out;
+        }
+        @keyframes modalFadeIn {
+            from { opacity: 0; transform: translateY(12px) scale(0.98); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        .modal-header {
+            padding: 16px 22px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            background: var(--bg-color);
+        }
+        .modal-header h3 {
+            margin: 0;
+            font-size: 1.15rem;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .modal-close-btn {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            line-height: 1;
+            cursor: pointer;
+            color: var(--text-muted);
+            padding: 4px 10px;
+            border-radius: 6px;
+            transition: var(--transition);
+        }
+        .modal-close-btn:hover {
+            color: var(--text-main);
+            background: var(--border-color);
+        }
+        .modal-body {
+            padding: 22px;
+            overflow-y: auto;
+            flex: 1;
+            font-size: 0.92rem;
+            line-height: 1.6;
+        }
+        .ref-section {
+            margin-bottom: 22px;
+        }
+        .ref-section h4 {
+            color: var(--primary);
+            font-size: 1.05rem;
+            margin-top: 0;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .legal-notice-box {
+            background: var(--primary-light);
+            border-left: 4px solid var(--primary);
+            padding: 14px 18px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+        }
+        .ref-table-wrapper {
+            overflow-x: auto;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            margin: 14px 0;
+        }
+        .ref-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.85rem;
+            text-align: left;
+        }
+        .ref-table th, .ref-table td {
+            padding: 10px 12px;
+            border-bottom: 1px solid var(--border-color);
+            vertical-align: top;
+        }
+        .ref-table th {
+            background: var(--bg-color);
+            font-weight: 600;
+            color: var(--text-main);
+        }
+        .ref-table tr:last-child td {
+            border-bottom: none;
+        }
+        .ref-table tr:hover td {
+            background: rgba(0, 0, 0, 0.02);
+        }
+        .dark-mode .ref-table tr:hover td {
+            background: rgba(255, 255, 255, 0.03);
+        }
+
         /* Print Media Styles */
         @page {
             size: A4 portrait;
@@ -593,7 +721,7 @@
                 print-color-adjust: exact !important;
             }
             body { background: #ffffff !important; color: #000000 !important; }
-            .controls, .export-bar, .disclaimer-banner, #splash-screen, .btn, #reading-ruler { display: none !important; }
+            .controls, .export-bar, .disclaimer-banner, #splash-screen, .btn, #reading-ruler, #references-modal { display: none !important; }
             .container { max-width: 100% !important; padding: 0 !important; }
             .section { border: none !important; box-shadow: none !important; padding: 0 !important; display: block !important; }
             #setup-section, #assessment-section { display: none !important; }
@@ -644,6 +772,9 @@
             </button>
             <button class="btn-toggle" onclick="adjustFontSize(-0.1)" aria-label="Decrease Font Size">A-</button>
             <button class="btn-toggle" onclick="adjustFontSize(0.1)" aria-label="Increase Font Size">A+</button>
+            <button class="btn-toggle" id="ref-toggle-btn" onclick="openReferencesModal()" aria-label="View Scientific Framework and Legal Notice">
+                📚 <span id="ref-label">References</span>
+            </button>
         </div>
 
         <!-- Setup Section -->
@@ -787,6 +918,13 @@
                 <div class="accordion-content" id="breakdown-content"></div>
             </details>
 
+            <!-- Academic References & Legal Safe Harbor Trigger -->
+            <div style="text-align: center; margin: 20px 0 14px;">
+                <button class="btn btn-secondary" id="btn-view-evidence" onclick="openReferencesModal()" style="font-size: 14px; padding: 10px 18px; border: 1.5px solid var(--primary); color: var(--primary);">
+                    📚 <span id="txt-evidence-btn">View Academic References & Legal Notice</span>
+                </button>
+            </div>
+
             <!-- Export Suite -->
             <div class="export-bar">
                 <button class="btn" onclick="window.print()">🖨️ Print / Save PDF</button>
@@ -846,7 +984,11 @@
                 lblLength: "Assessment Depth:",
                 optLengthComprehensive: "🔬 Comprehensive Assessment (Full 80 Questions — In-Depth Diagnostic)",
                 optLengthRapid: "⚡ Rapid Screener (15 Questions — 1 per domain, ~2 mins)",
-                btnPreviewDemo: "📊 Preview Sample Profile (Instant Demo)"
+                btnPreviewDemo: "📊 Preview Sample Profile (Instant Demo)",
+                refBtn: "References",
+                refModalTitle: "📚 Scientific Framework, Academic Sources & Legal Safe Harbor",
+                btnViewEvidence: "View Academic References & Legal Notice",
+                modalClose: "Close"
             },
             hi: {
                 banner: "⚠️ महत्वपूर्ण: एडूस्क्रीन एक शैक्षिक स्क्रीनिंग सर्वेक्षण है, कोई मेडिकल या नैदानिक उपकरण नहीं। सभी डेटा 100% केवल आपके डिवाइस पर सुरक्षित रहता है। औपचारिक मूल्यांकन के लिए विशेषज्ञों से संपर्क करें।",
@@ -888,7 +1030,11 @@
                 lblLength: "मूल्यांकन की गहराई:",
                 optLengthComprehensive: "🔬 व्यापक मूल्यांकन (कुल 80 प्रश्न — विस्तृत प्रोफ़ाइल)",
                 optLengthRapid: "⚡ त्वरित स्क्रीनिंग (15 प्रश्न — प्रति डोमेन 1 प्रश्न, ~2 मिनट)",
-                btnPreviewDemo: "📊 नमूना प्रोफ़ाइल देखें (तुरंत डेमो)"
+                btnPreviewDemo: "📊 नमूना प्रोफ़ाइल देखें (तुरंत डेमो)",
+                refBtn: "संदर्भ/प्रमाण",
+                refModalTitle: "📚 वैज्ञानिक आधार, शैक्षिक स्रोत एवं विधिक अस्वीकरण",
+                btnViewEvidence: "अकादमिक संदर्भ, स्रोत एवं विधिक सूचना देखें",
+                modalClose: "बंद करें"
             }
         };
 
@@ -1214,6 +1360,16 @@
 
             document.getElementById('prev-btn').innerText = t.prev;
             document.getElementById('next-btn').innerText = t.next;
+
+            // References & Evidence
+            if (document.getElementById('ref-label')) document.getElementById('ref-label').innerText = t.refBtn;
+            if (document.getElementById('txt-evidence-btn')) document.getElementById('txt-evidence-btn').innerText = t.btnViewEvidence;
+            if (document.getElementById('modal-ref-title')) document.getElementById('modal-ref-title').innerText = t.refModalTitle;
+            if (document.getElementById('modal-close-bottom-btn')) document.getElementById('modal-close-bottom-btn').innerText = t.modalClose || 'Close';
+            const refModal = document.getElementById('references-modal');
+            if (refModal && refModal.classList.contains('active')) {
+                renderReferencesModalContent();
+            }
 
             // If question is active, refresh question text
             if (document.getElementById('assessment-section').classList.contains('active')) {
@@ -2081,6 +2237,327 @@
                     .catch(err => console.warn('SW registration skipped:', err));
             });
         }
+
+        // --- 13. SCIENTIFIC REFERENCES, STATUTORY SAFE HARBOR & EVIDENCE SUITE ---
+        const referencesData = {
+            en: {
+                safeHarborTitle: "🛡️ Statutory Safe Harbor & Non-Clinical Declarations",
+                safeHarborText: [
+                    "<strong>Educational Screening Survey (Non-Clinical):</strong> EduScreen is an open-source educational awareness and screening questionnaire designed solely for educators and parents. It is <strong>NOT</strong> a clinical diagnostic instrument, psychiatric evaluation, or medical device. It does not constitute medical practice under the <strong>National Medical Commission (NMC) Act 2019</strong> (repealed Indian Medical Council Act 1956) or psychological practice under the <strong>Mental Healthcare Act 2017</strong>.",
+                    "<strong>No Medical Claims or Diagnosis:</strong> EduScreen does not generate official medical diagnoses, clinical disability percentage certificates, or formal therapeutic prescriptions. It functions strictly as an observational profile (Tier 1 MTSS) to assist parents and teachers in understanding learning patterns and seeking formal evaluation from licensed clinicians (e.g. Clinical Psychologists, Developmental Pediatricians, Certified Special Educators).",
+                    "<strong>100% Client-Side Privacy (DPDP Act 2023 & GDPR Compliance):</strong> In strict compliance with India's Digital Personal Data Protection (DPDP) Act 2023, zero personal, psychological, or behavioral data is collected, transmitted, or stored on external servers. All processing occurs 100% locally in your device's browser memory.",
+                    "<strong>Non-Commercial Open Source:</strong> EduScreen is completely free of charge and licensed under the permissive MIT Open Source License. No financial transactions, paid tiers, or monetized data practices exist."
+                ],
+                fairDealingTitle: "⚖️ Fair Dealing, Fair Use & Trademark Disclaimers",
+                fairDealingText: [
+                    "<strong>Fair Dealing under Indian Law:</strong> Pursuant to <strong>Section 52(1)(a) of the Indian Copyright Act, 1957</strong>, all references to academic cognitive theories, developmental models, and published research are made strictly under statutory Fair Dealing for private study, non-commercial educational research, and review.",
+                    "<strong>Fair Use (International):</strong> Pursuant to <strong>Section 107 of the US Copyright Act</strong>, scholarly citations and cognitive frameworks are utilized for non-profit educational and research purposes.",
+                    "<strong>100% Independent Authorship (Zero Infringement):</strong> All 80 behavioral observation prompts are original works independently authored in vernacular language by Aryan Kumar. <strong>Zero questions are copied, translated, or derived verbatim from any proprietary commercial psychological test batteries</strong> (such as WISC-V, WAIS-IV, Stanford-Binet 5, Conners-3, Beery VMI, Woodcock-Johnson IV, or DIBELS).",
+                    "<strong>Trademark Notices:</strong> DSM-5® is a registered trademark of the American Psychiatric Association (APA). WISC®, WAIS®, and Beery™ VMI are registered trademarks of Pearson Education, Inc. Conners 3® is a trademark of Multi-Health Systems Inc. (MHS). Mention of these terms is strictly nominative fair use for scholarly taxonomy cross-referencing and does not imply affiliation, sponsorship, or endorsement."
+                ],
+                domainsTitle: "🔬 15 Cognitive Domains: Theoretical Grounding & Citations",
+                domainsIntro: "Every domain assessed by EduScreen maps directly to established public-domain cognitive science constructs and peer-reviewed educational literature:",
+                mtssTitle: "🏛️ Multi-Tiered System of Supports (MTSS / RTI) Alignment",
+                mtssTiers: [
+                    "<strong>Tier 1 (Universal Screening & Classroom Accommodation):</strong> EduScreen operates exclusively at Tier 1. It provides immediate observational insights, universal design for learning (UDL) adaptations, and multi-sensory supports without clinical labeling.",
+                    "<strong>Tier 2 (Targeted Support):</strong> Focused small-group instruction, structured phonics, visual organizers, and extended assignment time.",
+                    "<strong>Tier 3 (Intensive Formal Evaluation):</strong> Comprehensive multi-battery psychometric evaluation performed by licensed clinical psychologists, hospitals, or accredited child guidance clinics."
+                ],
+                tableHeaders: ["Cognitive Domain", "Underlying Scientific Construct", "Academic Citations", "Observable Behavioral Indicators"]
+            },
+            hi: {
+                safeHarborTitle: "🛡️ विधिक सुरक्षा एवं गैर-चिकित्सीय घोषणा (Statutory Safe Harbor)",
+                safeHarborText: [
+                    "<strong>शैक्षिक जागरूकता सर्वेक्षण (गैर-चिकित्सीय):</strong> एडूस्क्रीन एक खुला शैक्षिक अवलोकन सर्वेक्षण (Educational Screening Questionnaire) है, जो केवल अभिभावकों और शिक्षकों के लिए बनाया गया है। यह कोई मेडिकल, मानसिक या नैदानिक (Clinical) उपकरण नहीं है। यह <strong>राष्ट्रीय चिकित्सा आयोग (NMC) अधिनियम 2019</strong> या <strong>मानसिक स्वास्थ्य देखभाल अधिनियम 2017 (Mental Healthcare Act 2017)</strong> के अंतर्गत कोई चिकित्सकीय या मनोवैज्ञानिक अभ्यास नहीं है।",
+                    "<strong>कोई चिकित्सकीय दावा नहीं:</strong> एडूस्क्रीन कोई मेडिकल डायग्नोसिस, दिव्यांगता प्रतिशत या क्लिनिकल प्रमाणपत्र जारी नहीं करता। इसका उद्देश्य केवल अध्ययन व्यवहार को समझना और आवश्यकता पड़ने पर लाइसेंस प्राप्त नैदानिक मनोवैज्ञानिक (Clinical Psychologist) या बाल रोग विशेषज्ञ (Developmental Pediatrician) से सलाह लेने में मदद करना है।",
+                    "<strong>100% डेटा गोपनीयता (DPDP Act 2023 अनुपालन):</strong> डिजिटल व्यक्तिगत डेटा संरक्षण अधिनियम 2023 के पूर्ण अनुपालन में, किसी भी छात्र का डेटा किसी सर्वर पर नहीं भेजा जाता। सारा विश्लेषण 100% केवल आपके फ़ोन या कंप्यूटर की लोकल मेमोरी में होता है।",
+                    "<strong>गैर-व्यावसायिक खुला स्रोत (MIT License):</strong> यह उपकरण पूर्णतः निःशुल्क और एमआईटी ओपन सोर्स लाइसेंस के तहत उपलब्ध है। इसमें कोई वित्तीय लेनदेन, शुल्क या डेटा बिक्री नहीं है।"
+                ],
+                fairDealingTitle: "⚖️ फेयर डीलिंग, फेयर यूज़ एवं ट्रेडमार्क अस्वीकरण",
+                fairDealingText: [
+                    "<strong>भारतीय कॉपीराइट कानून के तहत फेयर डीलिंग:</strong> <strong>भारतीय कॉपीराइट अधिनियम 1957 की धारा 52(1)(a)</strong> के अनुसार, संज्ञानात्मक सिद्धांतों और अकादमिक साहित्य के सभी संदर्भ गैर-व्यावसायिक अध्ययन, शोध और समीक्षा (Fair Dealing) के कानूनी अधिकारों के तहत दिए गए हैं।",
+                    "<strong>100% मौलिक प्रश्न (Zero Infringement):</strong> सभी 80 प्रश्न आर्यन कुमार द्वारा दैनिक व्यवहारिक अवलोकन के आधार पर स्वतंत्र रूप से लिखे गए हैं। किसी भी व्यावसायिक या कॉपीराइट वाली विदेशी टेस्ट बैटरी (जैसे WISC, Conners, Beery VMI आदि) से कोई भी प्रश्न या वाक्य नकल नहीं किया गया है।",
+                    "<strong>ट्रेडमार्क सूचना:</strong> DSM-5® अमेरिकन साइकियाट्रिक एसोसिएशन का, WISC®/Beery™ पियर्सन का, और Conners® MHS का पंजीकृत ट्रेडमार्क है। इनका उल्लेख केवल अकादमिक वर्गीकरण के संदर्भ में किया गया है, किसी संबद्धता या अनुमोदन के रूप में नहीं।"
+                ],
+                domainsTitle: "🔬 15 संज्ञानात्मक क्षेत्र: वैज्ञानिक आधार एवं शोध संदर्भ",
+                domainsIntro: "एडूस्क्रीन द्वारा विश्लेषित प्रत्येक क्षेत्र स्थापित संज्ञानात्मक विज्ञान मॉडल और सहकर्मी-समीक्षित शोध पत्रों पर आधारित है:",
+                mtssTitle: "🏛️ एमटीएसएस (MTSS / RTI) बहु-स्तरीय समर्थन प्रणाली",
+                mtssTiers: [
+                    "<strong>टियर 1 (सार्वभौमिक स्क्रीनिंग एवं कक्षा सहायता):</strong> एडूस्क्रीन पूरी तरह टियर 1 स्तर पर कार्य करता है। यह बिना किसी चिकित्सकीय लेबल के कक्षा में सीखने में सहायता और अवलोकन प्रदान करता है।",
+                    "<strong>टियर 2 (लक्षित समूह सहायता):</strong> छोटे समूहों में बहु-संवेदी शिक्षण, दृश्य आयोजक (visual aids), और अतिरिक्त समय।",
+                    "<strong>टियर 3 (विशेषज्ञ नैदानिक मूल्यांकन):</strong> अस्पताल या लाइसेंस प्राप्त मनोवैज्ञानिकों द्वारा व्यापक साइकोमेट्रिक एवं न्यूरोलॉजिकल मूल्यांकन।"
+                ],
+                tableHeaders: ["संज्ञानात्मक क्षेत्र", "अंतर्निहित वैज्ञानिक सिद्धांत", "अकादमिक संदर्भ / शोध", "दैनिक व्यवहारिक संकेतक"]
+            }
+        };
+
+        const domainEvidence = [
+            {
+                id: "dyslexia",
+                nameEn: "Dyslexia Indicators",
+                nameHi: "डिस्लेक्सिया (पठन कठिनाई)",
+                constructEn: "Phonological Processing & Orthographic Decoding Deficit Model",
+                constructHi: "ध्वन्यात्मक प्रसंस्करण एवं आर्थोग्राफ़िक डिकोडिंग मॉडल",
+                citations: "International Dyslexia Association (IDA, 2020); Shaywitz, S. (2003) Overcoming Dyslexia; Lyon et al. (2003) Annals of Dyslexia.",
+                indicatorEn: "Letter reversal (b/d, p/q), oral reading dysfluency, sight-word spelling inconsistency.",
+                indicatorHi: "समान अक्षरों में भ्रम (b/d, p/q), ज़ोर से पढ़ने में हिचकिचाहट, वर्तनी की अनियमित अशुद्धियाँ।"
+            },
+            {
+                id: "dyscalculia",
+                nameEn: "Dyscalculia Indicators",
+                nameHi: "डिस्कैलकुलिया (गणित कठिनाई)",
+                constructEn: "Core Numerical Cognition & Approximate Number System (ANS) Deficit",
+                constructHi: "मूल संख्या बोध एवं अनुमान प्रणाली (ANS) मॉडल",
+                citations: "Butterworth, B. (2010) Trends in Cognitive Sciences; Geary, D. C. (2004) Journal of Learning Disabilities.",
+                indicatorEn: "Persistent finger-counting for single-digit math, analog clock reading difficulty, symbol confusion (+/-).",
+                indicatorHi: "सरल जोड़ के लिए उंगलियों पर निर्भरता, सुई वाली घड़ी पढ़ने में कठिनाई, गणितीय चिन्हों में भ्रम।"
+            },
+            {
+                id: "dysgraphia",
+                nameEn: "Dysgraphia Indicators",
+                nameHi: "डिसग्राफिया (लेखन कठिनाई)",
+                constructEn: "Simple View of Writing — Graphomotor & Orthographic Motor Integration",
+                constructHi: "ग्राफ़ोमोटर एवं आर्थोग्राफ़िक मोटर समन्वय सिद्धांत",
+                citations: "Berninger, V. W. & Amtmann, D. (2009); Graham, S. & Weintraub, N. (1996) Educational Psychology Review.",
+                indicatorEn: "Rapid hand fatigue, cramped pencil grip, irregular letter sizing/spacing, discrepancy between spoken and written output.",
+                indicatorHi: "लिखते समय हाथ में दर्द, अनियमित अक्षर आकार व दूरी, मौखिक और लिखित क्षमता में बड़ा अंतर।"
+            },
+            {
+                id: "attention",
+                nameEn: "Attention Difficulty",
+                nameHi: "एकाग्रता और ध्यान",
+                constructEn: "Behavioral Inhibition & Sustained Vigilance Framework",
+                constructHi: "व्यवहार निषेध एवं निरंतर सतर्कता ढांचा",
+                citations: "Barkley, R. A. (1997) ADHD and the Nature of Self-Control; APA DSM-5 Observational Criteria (2013).",
+                indicatorEn: "High distractibility to ambient classroom noise, careless computational mistakes, physical restlessness.",
+                indicatorHi: "हल्की आवाज़ से ध्यान भटकना, असावधानी से होने वाली गलतियाँ, बैठने में बेचैनी।"
+            },
+            {
+                id: "executive",
+                nameEn: "Executive Function",
+                nameHi: "कार्यकारी कार्यप्रणाली",
+                constructEn: "Goal-Directed Cognitive Control & Metacognitive Regulation",
+                constructHi: "लक्ष्य-उन्मुख संज्ञानात्मक नियंत्रण एवं स्व-नियमन",
+                citations: "Diamond, A. (2013) Annual Review of Psychology; Baddeley, A. (1996) Q. J. Exp. Psychol.",
+                indicatorEn: "Frequent misplacement of school materials, chronic procrastination, difficulty decomposing multi-step assignments.",
+                indicatorHi: "किताबें-सामान खो जाना, कार्यों को अंतिम समय तक टालना, बहु-चरणीय कार्यों में उलझन।"
+            },
+            {
+                id: "processing",
+                nameEn: "Processing Speed",
+                nameHi: "प्रसंस्करण गति",
+                constructEn: "Cattell-Horn-Carroll (CHC) Cognitive Speed (Gs Factor)",
+                constructHi: "कैटेल-हॉर्न-कैरोल (CHC) संज्ञानात्मक गति (Gs फ़ैक्टर)",
+                citations: "Kail, R. (1991) Psychological Bulletin; McGrew, K. S. (2005) Contemporary Intellectual Assessment.",
+                indicatorEn: "Extended response latency to verbal prompts, slow board-copying speed, cognitive overload from rapid instruction.",
+                indicatorHi: "अचानक सवाल पर सुन्न होना, ब्लैकबोर्ड से नोट्स उतारने में अधिक समय, तेज़ी से समझाने पर उलझन।"
+            },
+            {
+                id: "working_memory",
+                nameEn: "Working Memory",
+                nameHi: "कार्यशील स्मृति",
+                constructEn: "Multi-Component Working Memory (Phonological Loop & Visuo-Spatial Sketchpad)",
+                constructHi: "बहु-घटक कार्यशील स्मृति (ध्वन्यात्मक लूप एवं दृश्य-स्थानिक स्केचपैड)",
+                citations: "Baddeley, A. D. & Hitch, G. (1974); Alloway, T. P. (2009) Journal of Experimental Child Psychology.",
+                indicatorEn: "Forgetting the beginning of multi-step verbal instructions, losing train of thought mid-sentence, mental math difficulty.",
+                indicatorHi: "लंबे निर्देश का पहला भाग भूलना, वाक्य के बीच में बात भूलना, मन में गणना न कर पाना।"
+            },
+            {
+                id: "recall",
+                nameEn: "Recall Difficulty",
+                nameHi: "पुनः स्मरण",
+                constructEn: "Long-Term Retrieval (Glr) & Episodic-Semantic Memory Distinction",
+                constructHi: "दीर्घकालिक स्मृति पुनर्प्राप्ति (Glr) एवं पुनः स्मरण क्षमता",
+                citations: "Tulving, E. (1972) Organization of Memory; Schneider & McGrew (2018).",
+                indicatorEn: "Word-finding delays ('tip-of-the-tongue'), disparity between fill-in-the-blank vs multiple-choice performance.",
+                indicatorHi: "सही शब्द ज़बान पर न आना, याद की हुई बात अगले दिन भूलना, खाली स्थान भरने में कठिनाई।"
+            },
+            {
+                id: "learning_anxiety",
+                nameEn: "Learning Anxiety",
+                nameHi: "अध्ययन संबंधी तनाव",
+                constructEn: "Academic Self-Efficacy & Cognitive Interference Theory",
+                constructHi: "शैक्षिक स्व-प्रभावकारिता एवं संज्ञानात्मक हस्तक्षेप सिद्धांत",
+                citations: "Cassady, J. C. & Johnson, R. E. (2002) Contemp. Educ. Psychol.; Bandura, A. (1997).",
+                indicatorEn: "Somatic distress (stomach aches) before school, catastrophic negative self-talk upon errors, task avoidance.",
+                indicatorHi: "स्कूल से पहले पेट दर्द/घबराहट, गलती पर खुद को कमतर समझना, पढ़ाई से बचने की कोशिश।"
+            },
+            {
+                id: "test_anxiety",
+                nameEn: "Test Anxiety",
+                nameHi: "परीक्षा संबंधी तनाव",
+                constructEn: "State-Trait Evaluation Anxiety & Working Memory Depletion",
+                constructHi: "मूल्यांकन चिंता एवं कार्यशील स्मृति क्षय सिद्धांत",
+                citations: "Spielberger, C. D. (1983); Zeidner, M. (1998) Test Anxiety: The State of the Art.",
+                indicatorEn: "Acute blanking at exam distribution, physiological stress symptoms (racing heart, sweaty palms), rushing to exit.",
+                indicatorHi: "परीक्षा शुरू होते ही दिमाग खाली होना, धड़कनें तेज़ होना, घबराहट में जल्दबाज़ी करना।"
+            },
+            {
+                id: "motivation",
+                nameEn: "Motivation",
+                nameHi: "शैक्षिक प्रेरणा",
+                constructEn: "Self-Determination Theory (SDT) & Learned Helplessness",
+                constructHi: "आत्म-निर्णय सिद्धांत (SDT) एवं विवशता की भावना",
+                citations: "Ryan, R. M. & Deci, E. L. (2000) American Psychologist; Dweck, C. S. (2006) Mindset.",
+                indicatorEn: "Premature task abandonment at initial friction, reliance on external reward prompts, fatalistic effort beliefs.",
+                indicatorHi: "कठिनाई आते ही प्रयास छोड़ना, निरंतर बाहरी टोकने की आवश्यकता, 'कोशिश का कोई फायदा नहीं' सोचना।"
+            },
+            {
+                id: "sensory",
+                nameEn: "Sensory Sensitivity",
+                nameHi: "संवेदी संवेदनशीलता",
+                constructEn: "Dunn's Sensory Processing Framework — Neurological Thresholds",
+                constructHi: "डन का संवेदी प्रसंस्करण ढांचा (तंत्रिका थ्रेसहोल्ड)",
+                citations: "Dunn, W. (1997) Am. J. Occup. Ther.; Bogdashina, O. (2016).",
+                indicatorEn: "Aversion to fluorescent lighting flicker, sensitivity to sudden loud school bells, tactile discomfort with clothing seams.",
+                indicatorHi: "तेज़ रोशनी से परेशानी, अचानक शोर से घबराहट, कपड़ों के टैग या स्पर्श से असहजता।"
+            },
+            {
+                id: "fine_motor",
+                nameEn: "Fine Motor",
+                nameHi: "सूक्ष्म पेशीय कौशल",
+                constructEn: "Visual-Motor Integration & Kinematic Hand Control",
+                constructHi: "दृश्य-पेशीय समन्वय एवं हस्त गतिशीलता नियंत्रण",
+                citations: "Beery, K. E. et al. (2010) Beery VMI Framework; Case-Smith, J. (2002).",
+                indicatorEn: "Difficulty with small classroom tools (scissors, compass, glue), excessive paper tear pressure, awkward grasp.",
+                indicatorHi: "कैंची या पेन पर कमजोर पकड़, कागज़ फटने जितना दबाव, सूक्ष्म वस्तुओं को संभालने में परेशानी।"
+            },
+            {
+                id: "social",
+                nameEn: "Social Learning",
+                nameHi: "सामाजिक संवाद",
+                constructEn: "Theory of Mind (ToM) & Social-Emotional Reciprocity",
+                constructHi: "माइंड थ्योरी (ToM) एवं सामाजिक-भावनात्मक पारस्परिकता",
+                citations: "Baron-Cohen, S. et al. (1985) Cognition; APA DSM-5 Social Communication Criteria (2013).",
+                indicatorEn: "Difficulty interpreting subtle non-verbal social cues, literal interpretation of idioms/jokes, parallel play.",
+                indicatorHi: "साथियों के चेहरे के भाव न समझ पाना, मुहावरों का शाब्दिक अर्थ लेना, समूह गतिविधियों में झिझक।"
+            },
+            {
+                id: "communication",
+                nameEn: "Communication",
+                nameHi: "अभिव्यक्ति और संचार",
+                constructEn: "Expressive & Pragmatic Language Competence",
+                constructHi: "अभिव्यंजक एवं व्यावहारिक भाषा क्षमता",
+                citations: "Bishop, D. V. (2006) Curr. Dir. Psychol. Sci.; Paul, R. & Norbury, C. (2012).",
+                indicatorEn: "Hesitation in oral sentence formulation, circumlocution, difficulty narrating sequential personal stories.",
+                indicatorHi: "विचारों को बोलकर व्यक्त करने में समय लेना, शब्दों के जाल में उलझना, क्रमबद्ध घटनाएँ बताने में कठिनाई।"
+            }
+        ];
+
+        function renderReferencesModalContent() {
+            const data = referencesData[currentLang] || referencesData.en;
+            const container = document.getElementById('modal-ref-content');
+            if (!container) return;
+
+            let html = `
+                <div class="legal-notice-box">
+                    <strong>⚖️ ${currentLang === 'hi' ? 'वैधानिक घोषणा एवं शून्य उत्तरदायित्व:' : 'Statutory Safe Harbor Declaration:'}</strong>
+                    <p style="margin: 6px 0 0 0; font-size: 0.88rem;">
+                        ${currentLang === 'hi' 
+                            ? 'एडूस्क्रीन एक गैर-व्यावसायिक शैक्षिक जागरूकता सर्वेक्षण है। यह राष्ट्रीय चिकित्सा आयोग (NMC) अधिनियम 2019 अथवा मानसिक स्वास्थ्य देखभाल अधिनियम 2017 के तहत कोई मेडिकल या नैदानिक (Diagnostic) उपकरण नहीं है। सभी 80 प्रश्न मूल एवं स्वतंत्र रूप से लिखे गए हैं। किसी भी व्यावसायिक टेस्ट बैटरी से कोई प्रश्न या सामग्री नहीं ली गई है।' 
+                            : 'EduScreen is an open-source educational screening questionnaire, NOT a medical or clinical diagnostic instrument under the NMC Act 2019 or Mental Healthcare Act 2017. All 80 items are original vernacular observation descriptors independently authored by Aryan Kumar. Zero questions are derived from proprietary commercial test batteries.'}
+                    </p>
+                </div>
+
+                <div class="ref-section">
+                    <h4>${data.safeHarborTitle}</h4>
+                    <ul>
+                        ${data.safeHarborText.map(t => `<li style="margin-bottom: 8px;">${t}</li>`).join('')}
+                    </ul>
+                </div>
+
+                <div class="ref-section">
+                    <h4>${data.fairDealingTitle}</h4>
+                    <ul>
+                        ${data.fairDealingText.map(t => `<li style="margin-bottom: 8px;">${t}</li>`).join('')}
+                    </ul>
+                </div>
+
+                <div class="ref-section">
+                    <h4>${data.domainsTitle}</h4>
+                    <p style="color: var(--text-muted); margin-bottom: 12px;">${data.domainsIntro}</p>
+                    <div class="ref-table-wrapper">
+                        <table class="ref-table">
+                            <thead>
+                                <tr>
+                                    <th>${data.tableHeaders[0]}</th>
+                                    <th>${data.tableHeaders[1]}</th>
+                                    <th>${data.tableHeaders[2]}</th>
+                                    <th>${data.tableHeaders[3]}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${domainEvidence.map(d => `
+                                    <tr>
+                                        <td><strong>${currentLang === 'hi' ? d.nameHi : d.nameEn}</strong></td>
+                                        <td>${currentLang === 'hi' ? d.constructHi : d.constructEn}</td>
+                                        <td><em>${d.citations}</em></td>
+                                        <td>${currentLang === 'hi' ? d.indicatorHi : d.indicatorEn}</td>
+                                    </tr>
+                                `).join('')}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="ref-section">
+                    <h4>${data.mtssTitle}</h4>
+                    <ul>
+                        ${data.mtssTiers.map(t => `<li style="margin-bottom: 8px;">${t}</li>`).join('')}
+                    </ul>
+                </div>
+            `;
+
+            container.innerHTML = html;
+        }
+
+        function openReferencesModal() {
+            renderReferencesModalContent();
+            const modal = document.getElementById('references-modal');
+            if (modal) {
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+        }
+
+        function closeReferencesModal() {
+            const modal = document.getElementById('references-modal');
+            if (modal) {
+                modal.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        }
+
+        function handleModalOverlayClick(e) {
+            if (e.target && e.target.id === 'references-modal') {
+                closeReferencesModal();
+            }
+        }
+
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                const modal = document.getElementById('references-modal');
+                if (modal && modal.classList.contains('active')) {
+                    closeReferencesModal();
+                }
+            }
+        });
     </script>
+
+    <!-- Scientific Framework, References & Legal Safe Harbor Modal -->
+    <div id="references-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-ref-title" onclick="handleModalOverlayClick(event)">
+        <div class="modal-container" role="document">
+            <div class="modal-header">
+                <h3 id="modal-ref-title">📚 Scientific Framework, Academic Sources & Legal Safe Harbor</h3>
+                <button class="modal-close-btn" onclick="closeReferencesModal()" aria-label="Close references modal">✕</button>
+            </div>
+            <div class="modal-body" id="modal-ref-content">
+                <!-- Dynamically populated by renderReferencesModalContent() -->
+            </div>
+            <div style="padding: 12px 24px; border-top: 1px solid var(--border-color); background: var(--bg-color); display: flex; justify-content: flex-end;">
+                <button class="btn btn-secondary" onclick="closeReferencesModal()" style="padding: 8px 16px; font-size: 0.9rem;" id="modal-close-bottom-btn">Close</button>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

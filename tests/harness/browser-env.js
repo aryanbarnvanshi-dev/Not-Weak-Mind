@@ -809,6 +809,27 @@ function createBrowserEnvironment(options = {}) {
             get: () => selectedCategory,
             set: (v) => { selectedCategory = v; }
         });
+        const _capturedDomainEvidence = typeof domainEvidence !== 'undefined' ? domainEvidence : [];
+        const _capturedReferencesData = typeof referencesData !== 'undefined' ? referencesData : {};
+        const _capturedRawQuestionData = typeof rawQuestionData !== 'undefined' ? rawQuestionData : [];
+        const _capturedOpenReferencesModal = typeof openReferencesModal !== 'undefined' ? openReferencesModal : () => {};
+        const _capturedCloseReferencesModal = typeof closeReferencesModal !== 'undefined' ? closeReferencesModal : () => {};
+
+        Object.defineProperty(globalThis, 'domainEvidence', {
+            get: () => _capturedDomainEvidence
+        });
+        Object.defineProperty(globalThis, 'referencesData', {
+            get: () => _capturedReferencesData
+        });
+        Object.defineProperty(globalThis, 'rawQuestionData', {
+            get: () => _capturedRawQuestionData
+        });
+        Object.defineProperty(globalThis, 'openReferencesModal', {
+            get: () => _capturedOpenReferencesModal
+        });
+        Object.defineProperty(globalThis, 'closeReferencesModal', {
+            get: () => _capturedCloseReferencesModal
+        });
     `;
 
     vm.createContext(sandbox);
