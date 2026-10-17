@@ -170,6 +170,14 @@ class DOMElement {
 
     appendChild(child) {
         if (!child) return;
+        if (child.tagName === 'FRAGMENT') {
+            while (child.children.length > 0) {
+                const c = child.children.shift();
+                c.parentElement = this;
+                this.children.push(c);
+            }
+            return child;
+        }
         child.parentElement = this;
         this.children.push(child);
         return child;
@@ -587,6 +595,9 @@ function createBrowserEnvironment(options = {}) {
             const el = new DOMElement(tagName, this);
             this.allElements.push(el);
             return el;
+        },
+        createDocumentFragment() {
+            return new DOMElement('fragment', this);
         }
     };
     document.body.ownerDocument = document;
@@ -640,6 +651,8 @@ function createBrowserEnvironment(options = {}) {
         clearTimeout,
         setInterval,
         clearInterval,
+        requestAnimationFrame: (cb) => setTimeout(cb, 0),
+        cancelAnimationFrame: (id) => clearTimeout(id),
         Date,
         Math,
         JSON,

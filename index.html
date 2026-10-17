@@ -677,7 +677,18 @@
                 </select>
             </div>
 
-            <button class="btn" onclick="startAssessment()" id="btn-start-screening">Start Screening Assessment</button>
+            <div class="form-group">
+                <label for="assessment-length" id="lbl-length">Assessment Depth:</label>
+                <select id="assessment-length">
+                    <option value="80" selected id="opt-len-comp">🔬 Comprehensive Assessment (Full 80 Questions — In-Depth Diagnostic)</option>
+                    <option value="15" id="opt-len-rapid">⚡ Rapid Screener (15 Questions — 1 per domain, ~2 mins)</option>
+                </select>
+            </div>
+
+            <div style="display: flex; gap: 10px; margin-top: 16px; flex-wrap: wrap;">
+                <button class="btn" style="flex: 1; min-width: 200px;" onclick="startAssessment()" id="btn-start-screening">Start Screening Assessment</button>
+                <button class="btn btn-secondary" style="flex: 1; min-width: 200px;" onclick="previewSampleProfile()" id="btn-preview-demo" type="button">📊 Preview Sample Profile</button>
+            </div>
         </div>
 
         <!-- Assessment Section -->
@@ -831,7 +842,11 @@
                 noConcern: "No Concern",
                 mild: "Mild Indicators",
                 moderate: "Moderate Indicators",
-                strong: "Strong Indicators"
+                strong: "Strong Indicators",
+                lblLength: "Assessment Depth:",
+                optLengthComprehensive: "🔬 Comprehensive Assessment (Full 80 Questions — In-Depth Diagnostic)",
+                optLengthRapid: "⚡ Rapid Screener (15 Questions — 1 per domain, ~2 mins)",
+                btnPreviewDemo: "📊 Preview Sample Profile (Instant Demo)"
             },
             hi: {
                 banner: "⚠️ महत्वपूर्ण: एडूस्क्रीन एक शैक्षिक स्क्रीनिंग सर्वेक्षण है, कोई मेडिकल या नैदानिक उपकरण नहीं। सभी डेटा 100% केवल आपके डिवाइस पर सुरक्षित रहता है। औपचारिक मूल्यांकन के लिए विशेषज्ञों से संपर्क करें।",
@@ -869,7 +884,11 @@
                 noConcern: "कोई चिंता नहीं",
                 mild: "हल्के संकेत",
                 moderate: "मध्यम संकेत",
-                strong: "मजबूत संकेत"
+                strong: "मजबूत संकेत",
+                lblLength: "मूल्यांकन की गहराई:",
+                optLengthComprehensive: "🔬 व्यापक मूल्यांकन (कुल 80 प्रश्न — विस्तृत प्रोफ़ाइल)",
+                optLengthRapid: "⚡ त्वरित स्क्रीनिंग (15 प्रश्न — प्रति डोमेन 1 प्रश्न, ~2 मिनट)",
+                btnPreviewDemo: "📊 नमूना प्रोफ़ाइल देखें (तुरंत डेमो)"
             }
         };
 
@@ -1182,6 +1201,10 @@
             document.getElementById('lbl-student-age').innerText = t.studentAge;
             document.getElementById('lbl-mode').innerText = t.mode;
             document.getElementById('btn-start-screening').innerText = t.startScreening;
+            if (document.getElementById('lbl-length')) document.getElementById('lbl-length').innerText = t.lblLength;
+            if (document.getElementById('opt-len-comp')) document.getElementById('opt-len-comp').innerText = t.optLengthComprehensive;
+            if (document.getElementById('opt-len-rapid')) document.getElementById('opt-len-rapid').innerText = t.optLengthRapid;
+            if (document.getElementById('btn-preview-demo')) document.getElementById('btn-preview-demo').innerText = t.btnPreviewDemo;
 
             // Options labels
             for (let i = 0; i < 4; i++) {
@@ -1269,6 +1292,69 @@
             if (val > 18) el.value = 18;
         }
 
+        function getRapidQuestionSet() {
+            const selected = [];
+            const usedCategories = new Set();
+            const shuffled = fisherYatesShuffle([...questionBank]);
+            for (const q of shuffled) {
+                if (!usedCategories.has(q.cat)) {
+                    usedCategories.add(q.cat);
+                    selected.push(q);
+                }
+                if (selected.length === 15) break;
+            }
+            return fisherYatesShuffle(selected);
+        }
+
+        function previewSampleProfile() {
+            stopSpeech();
+            studentData.name = currentLang === 'hi' ? 'नमूना छात्र (डेमो)' : 'Sample Student (Demo)';
+            studentData.age = 10;
+            currentMode = 'student';
+
+            // Realistic multi-domain cognitive profile
+            const sampleDistribution = {
+                dyslexia: { score: 11, count: 5 },       // 73% Strong Indicator
+                dyscalculia: { score: 4, count: 5 },     // 27% Mild
+                dysgraphia: { score: 10, count: 5 },     // 67% Moderate
+                attention: { score: 12, count: 5 },      // 80% Strong Indicator
+                executive: { score: 9, count: 5 },       // 60% Moderate
+                processing: { score: 8, count: 5 },      // 53% Moderate
+                working_memory: { score: 10, count: 5 },  // 67% Moderate
+                recall: { score: 5, count: 5 },          // 33% Mild
+                learning_anxiety: { score: 11, count: 5 },// 73% Strong
+                test_anxiety: { score: 12, count: 5 },   // 80% Strong
+                motivation: { score: 6, count: 5 },      // 40% Mild
+                sensory: { score: 3, count: 5 },         // 20% Strength
+                fine_motor: { score: 4, count: 5 },      // 27% Mild
+                social: { score: 2, count: 5 },          // 13% Strength
+                communication: { score: 2, count: 5 }    // 13% Strength
+            };
+
+            Object.keys(categories).forEach(cat => {
+                const sample = sampleDistribution[cat] || { score: 5, count: 5 };
+                answers[cat] = sample.score;
+                categoryCounts[cat] = sample.count;
+            });
+
+            answerLog = [];
+            Object.keys(categories).forEach((cat, idx) => {
+                const sample = sampleDistribution[cat] || { score: 5, count: 5 };
+                const sampleVal = Math.min(3, Math.max(0, Math.round(sample.score / sample.count)));
+                answerLog.push({
+                    index: idx,
+                    id: idx + 1,
+                    cat: cat,
+                    val: sampleVal,
+                    prompt: currentLang === 'hi' ? `[नमूना संकेतक] ${categories[cat].hi}` : `[Sample Indicator] ${categories[cat].en}`,
+                    responseLabel: i18n[currentLang].options[sampleVal]
+                });
+            });
+
+            switchSection('report-section');
+            generateReport();
+        }
+
         function startAssessment() {
             const name = document.getElementById('student-name').value.trim();
             const age = document.getElementById('student-age').value.trim();
@@ -1290,8 +1376,15 @@
             });
             answerLog = [];
 
-            // Uniform Fisher-Yates Shuffle
-            activeQuestions = fisherYatesShuffle(questionBank);
+            // Assessment Depth Selection: 15 (Rapid) vs 80 (Comprehensive)
+            const lenEl = document.getElementById('assessment-length');
+            const chosenLength = lenEl ? parseInt(lenEl.value, 10) : 80;
+
+            if (chosenLength === 15) {
+                activeQuestions = getRapidQuestionSet();
+            } else {
+                activeQuestions = fisherYatesShuffle(questionBank);
+            }
             currentIndex = 0;
 
             saveSession();
@@ -1397,15 +1490,15 @@
             renderQuestion();
         }
 
+        let breakdownRendered = false;
+
         function finishAssessment() {
             stopSpeech();
             document.getElementById('progress-bar').style.width = '100%';
             localStorage.removeItem(STORAGE_KEY); // Session complete
 
-            setTimeout(() => {
-                switchSection('report-section');
-                generateReport();
-            }, 200);
+            switchSection('report-section');
+            generateReport();
         }
 
         // --- 8. CLINICAL REPORT, CANVAS CHARTS & RADAR ---
@@ -1420,13 +1513,14 @@
 
         function generateReport() {
             const t = i18n[currentLang];
-            document.getElementById('rep-name').innerText = studentData.name;
-            document.getElementById('rep-age').innerText = `${studentData.age} ${currentLang === 'hi' ? 'वर्ष' : 'years'}`;
+            document.getElementById('rep-name').innerText = studentData.name || (currentLang === 'hi' ? 'अनाम छात्र' : 'Student');
+            document.getElementById('rep-age').innerText = `${studentData.age || 10} ${currentLang === 'hi' ? 'वर्ष' : 'years'}`;
             document.getElementById('rep-date').innerText = new Date().toLocaleDateString();
             document.getElementById('rep-mode').innerText = currentMode === 'student' ? t.modeStudent : t.modeTeacher;
 
             const grid = document.getElementById('result-grid');
             grid.innerHTML = '';
+            const frag = (typeof document.createDocumentFragment === 'function') ? document.createDocumentFragment() : null;
 
             let chartLabels = [];
             let chartShortLabels = [];
@@ -1468,18 +1562,38 @@
                     <p style="font-size: 0.85rem; margin-bottom: 6px;">${catDesc}</p>
                     <span class="risk-badge ${risk.class}">${risk.label} (${pct}%)</span>
                 `;
-                grid.appendChild(card);
+                if (frag) {
+                    frag.appendChild(card);
+                } else {
+                    grid.appendChild(card);
+                }
             });
+            if (frag) grid.appendChild(frag);
 
-            // Draw High-DPI Charts
+            // Draw High-DPI Charts immediately with zero lag
             drawBarChart(chartLabels, chartShortLabels, chartData);
             drawRadarChart();
 
             // Populate Strengths & Tiered Recommendations
             populateAnalysis(authenticStrengths, flaggedCategories, highestRisk);
 
-            // Populate Question Breakdown Accordion
-            populateBreakdown();
+            // Lazy Breakdown Accordion to prevent rendering 80 DOM nodes up-front
+            breakdownRendered = false;
+            const detailsEl = document.getElementById('breakdown-details');
+            if (detailsEl) {
+                if (detailsEl.open) {
+                    populateBreakdown();
+                    breakdownRendered = true;
+                } else if (!detailsEl.dataset.bound) {
+                    detailsEl.dataset.bound = 'true';
+                    detailsEl.addEventListener('toggle', () => {
+                        if (detailsEl.open && !breakdownRendered) {
+                            populateBreakdown();
+                            breakdownRendered = true;
+                        }
+                    });
+                }
+            }
         }
 
         // --- BAR CHART (High-DPI Sharpness & Mobile Spacing Fix) ---
@@ -1489,8 +1603,8 @@
             const ctx = canvas.getContext('2d');
 
             const container = canvas.parentElement;
-            const rect = container.getBoundingClientRect();
-            const w = rect.width || 340;
+            const rect = container ? container.getBoundingClientRect() : null;
+            const w = Math.max(280, (rect && rect.width) ? rect.width : (container ? container.clientWidth : 0) || 340);
             const h = 320;
             const dpr = window.devicePixelRatio || 1;
 
@@ -1562,8 +1676,8 @@
             const ctx = canvas.getContext('2d');
 
             const container = canvas.parentElement;
-            const rect = container.getBoundingClientRect();
-            const w = rect.width || 340;
+            const rect = container ? container.getBoundingClientRect() : null;
+            const w = Math.max(280, (rect && rect.width) ? rect.width : (container ? container.clientWidth : 0) || 340);
             const h = 320;
             const dpr = window.devicePixelRatio || 1;
 
