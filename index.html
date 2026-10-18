@@ -3,18 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <meta name="description" content="EduScreen - A private, comprehensive learning difficulty screening tool to identify learning styles, challenges, and cognitive strengths. 100% free, private, and client-side.">
-    <meta name="keywords" content="learning difficulty screening, dyslexia test, dyscalculia assessment, ADHD screening, learning disability, educational assessment tool, student evaluation, cognitive screening">
+    <meta name="description" content="EduScreen - Private, client-side educational screening questionnaire and cognitive activity drills for dyslexia, ADHD, dyscalculia, and learning differences. 100% free and on-device.">
+    <meta name="keywords" content="learning difficulty screening, dyslexia test in hindi, adhd screening tool, dyscalculia assessment, learning disability test hindi, learning disability test india, cognitive drills, educational assessment tool, student evaluation, bacho ki padhai me problem">
     <meta name="author" content="Aryan Kumar (aryanbarnvanshi-dev)">
     <meta name="robots" content="index, follow">
     <meta name="theme-color" content="#2563eb">
 
-    <!-- Open Graph & Social -->
-    <meta property="og:title" content="EduScreen - Learning Difficulty Screening Tool">
-    <meta property="og:description" content="Identify learning styles, cognitive profiles, and academic challenges. 100% client-side and private.">
+    <!-- Open Graph & Social Cards -->
+    <meta property="og:title" content="EduScreen - Learning Screener & Cognitive Activity Lab">
+    <meta property="og:description" content="100% free, private educational screening survey & interactive drills for dyslexia, ADHD, and cognitive differences. No data leaves your device.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://aryanbarnvanshi-dev.github.io/Not-Weak-Mind/">
-    <meta property="og:image" content="icon.svg">
+    <meta property="og:image" content="https://aryanbarnvanshi-dev.github.io/Not-Weak-Mind/icon.svg">
+
+    <!-- Twitter Cards -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="EduScreen - Learning Screener & Cognitive Activity Lab">
+    <meta name="twitter:description" content="100% free, private educational screening survey & interactive drills for dyslexia, ADHD, and cognitive differences.">
+    <meta name="twitter:image" content="https://aryanbarnvanshi-dev.github.io/Not-Weak-Mind/icon.svg">
+
+    <!-- Schema.org EducationalApplication JSON-LD -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "EducationalApplication",
+      "name": "EduScreen",
+      "alternateName": "एडूस्क्रीन - सीखने की क्षमता एवं डिस्लेक्सिया स्क्रीनिंग टूल",
+      "applicationCategory": "EducationalApplication",
+      "operatingSystem": "All (Web, Android PWA, Offline)",
+      "url": "https://aryanbarnvanshi-dev.github.io/Not-Weak-Mind/",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "INR"
+      },
+      "description": "Private, client-side educational awareness screener and interactive cognitive drills for dyslexia, dyscalculia, ADHD, and working memory. 100% on-device processing.",
+      "educationalUse": ["Cognitive Screening", "Interactive Drills"],
+      "inLanguage": ["en", "hi"],
+      "author": {
+        "@type": "Person",
+        "name": "Aryan Kumar",
+        "url": "https://github.com/aryanbarnvanshi-dev"
+      }
+    }
+    </script>
 
     <!-- PWA & Mobile Meta Tags -->
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -710,6 +742,178 @@
             background: rgba(255, 255, 255, 0.03);
         }
 
+        /* Activity Lab Modal & Interactive Components */
+        .lab-tabs {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            padding-bottom: 8px;
+            margin-bottom: 18px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .lab-tab-btn {
+            background: var(--card-bg);
+            color: var(--text-muted);
+            border: 1px solid var(--border-color);
+            padding: 8px 14px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.88rem;
+            white-space: nowrap;
+            transition: var(--transition);
+        }
+        .lab-tab-btn:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+        .lab-tab-btn.active {
+            background: var(--primary);
+            color: #ffffff;
+            border-color: var(--primary);
+        }
+        .lab-game-pane {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        .lab-game-pane.active {
+            display: flex;
+        }
+        .lab-header-bar {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 14px;
+            background: var(--bg-color);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            margin-bottom: 14px;
+            font-weight: 600;
+            font-size: 0.92rem;
+            box-sizing: border-box;
+        }
+        .letter-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            max-width: 360px;
+            width: 100%;
+            margin: 16px auto;
+        }
+        .letter-tile {
+            aspect-ratio: 1;
+            font-size: 1.7rem;
+            font-weight: 700;
+            background: var(--bg-color);
+            color: var(--text-main);
+            border: 2px solid var(--border-color);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .letter-tile:hover {
+            border-color: var(--primary);
+            transform: scale(1.04);
+        }
+        .letter-tile.correct {
+            background: rgba(16, 185, 129, 0.2);
+            border-color: #10b981;
+            color: #10b981;
+        }
+        .letter-tile.incorrect {
+            background: rgba(239, 68, 68, 0.2);
+            border-color: #ef4444;
+            color: #ef4444;
+        }
+        .focus-stimulus-box {
+            width: 170px;
+            height: 170px;
+            border-radius: 50%;
+            margin: 20px auto;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #ffffff;
+            transition: transform 0.08s ease;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+            user-select: none;
+            -webkit-user-select: none;
+        }
+        .focus-stimulus-box:active {
+            transform: scale(0.95);
+        }
+        .focus-stimulus-box.stimulus-wait {
+            background: #94a3b8;
+            border-radius: 14px;
+        }
+        .focus-stimulus-box.stimulus-go {
+            background: #10b981;
+            border-radius: 50%;
+        }
+        .focus-stimulus-box.stimulus-nogo {
+            background: #ef4444;
+            border-radius: 12px;
+        }
+        .memory-pads-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 14px;
+            max-width: 280px;
+            width: 100%;
+            margin: 18px auto;
+        }
+        .memory-pad {
+            aspect-ratio: 1;
+            border-radius: 14px;
+            border: 3px solid transparent;
+            cursor: pointer;
+            transition: transform 0.1s ease, filter 0.1s ease;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: rgba(255, 255, 255, 0.95);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            user-select: none;
+        }
+        .memory-pad:active, .memory-pad.lit {
+            filter: brightness(1.6);
+            transform: scale(0.96);
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
+        }
+        .pad-red { background: #ef4444; }
+        .pad-blue { background: #3b82f6; }
+        .pad-green { background: #10b981; }
+        .pad-yellow { background: #f59e0b; }
+        .drill-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-main);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .drill-badge:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+            transform: translateY(-1px);
+        }
+
         /* Print Media Styles */
         @page {
             size: A4 portrait;
@@ -721,7 +925,7 @@
                 print-color-adjust: exact !important;
             }
             body { background: #ffffff !important; color: #000000 !important; }
-            .controls, .export-bar, .disclaimer-banner, #splash-screen, .btn, #reading-ruler, #references-modal { display: none !important; }
+            .controls, .export-bar, .disclaimer-banner, #splash-screen, .btn, #reading-ruler, #references-modal, #activity-lab-modal { display: none !important; }
             .container { max-width: 100% !important; padding: 0 !important; }
             .section { border: none !important; box-shadow: none !important; padding: 0 !important; display: block !important; }
             #setup-section, #assessment-section { display: none !important; }
@@ -774,6 +978,9 @@
             <button class="btn-toggle" onclick="adjustFontSize(0.1)" aria-label="Increase Font Size">A+</button>
             <button class="btn-toggle" id="ref-toggle-btn" onclick="openReferencesModal()" aria-label="View Scientific Framework and Legal Notice">
                 📚 <span id="ref-label">References</span>
+            </button>
+            <button class="btn-toggle" id="lab-toggle-btn" onclick="openActivityLabModal()" aria-label="Open Cognitive Activity Lab">
+                🎮 <span id="lab-label">Activity Lab</span>
             </button>
         </div>
 
@@ -918,6 +1125,20 @@
                 <div class="accordion-content" id="breakdown-content"></div>
             </details>
 
+            <!-- Targeted Brain Drills Recommendation Card -->
+            <div id="targeted-drills-card" style="background: var(--primary-light); border: 1.5px solid var(--primary); padding: 18px 20px; border-radius: 10px; margin: 24px 0;">
+                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+                    <div>
+                        <strong style="font-size: 1.05rem; color: var(--text-main);" id="txt-drills-title">🎮 Targeted Cognitive Drills Recommended</strong>
+                        <p style="margin: 4px 0 0; font-size: 0.9rem; color: var(--text-muted);" id="txt-drills-desc">Practice 30-second interactive exercises tailored to this student's profile.</p>
+                    </div>
+                    <button class="btn" onclick="openActivityLabModal()" style="width: auto; padding: 8px 18px; font-size: 0.9rem;" id="btn-launch-drills">
+                        Launch Activity Lab ➡
+                    </button>
+                </div>
+                <div id="targeted-drills-list" style="margin-top: 14px; display: flex; gap: 10px; flex-wrap: wrap;"></div>
+            </div>
+
             <!-- Academic References & Legal Safe Harbor Trigger -->
             <div style="text-align: center; margin: 20px 0 14px;">
                 <button class="btn btn-secondary" id="btn-view-evidence" onclick="openReferencesModal()" style="font-size: 14px; padding: 10px 18px; border: 1.5px solid var(--primary); color: var(--primary);">
@@ -935,7 +1156,7 @@
         </div>
 
         <div class="app-sys-info" style="text-align: center; font-size: 13px; color: var(--text-muted); padding: 30px 0 10px;">
-            EduScreen v1.2.0 • Created with ❤️ by <a href="https://github.com/aryanbarnvanshi-dev" target="_blank" rel="noopener noreferrer" style="color: var(--primary); text-decoration: underline;">Aryan Kumar</a> • <a href="https://github.com/aryanbarnvanshi-dev/Not-Weak-Mind" target="_blank" rel="noopener noreferrer" style="color: var(--primary); text-decoration: underline;">GitHub Repository</a>
+            EduScreen v1.3.0 • Created with ❤️ by <a href="https://github.com/aryanbarnvanshi-dev" target="_blank" rel="noopener noreferrer" style="color: var(--primary); text-decoration: underline;">Aryan Kumar</a> • <a href="https://github.com/aryanbarnvanshi-dev/Not-Weak-Mind" target="_blank" rel="noopener noreferrer" style="color: var(--primary); text-decoration: underline;">GitHub Repository</a>
         </div>
     </div>
 
@@ -988,7 +1209,24 @@
                 refBtn: "References",
                 refModalTitle: "📚 Scientific Framework, Academic Sources & Legal Safe Harbor",
                 btnViewEvidence: "View Academic References & Legal Notice",
-                modalClose: "Close"
+                modalClose: "Close",
+                labBtn: "Activity Lab",
+                labModalTitle: "🎮 Cognitive Activity Lab — 30-Second Brain Drills",
+                tabLetter: "🔤 Letter Mirror",
+                tabFocus: "🎯 Go / No-Go Focus",
+                tabMemory: "🔢 Memory Echo",
+                drillsTitle: "🎮 Targeted Cognitive Drills Recommended",
+                drillsDesc: "Practice 30-second interactive exercises tailored to this student's profile.",
+                btnLaunchDrills: "Launch Activity Lab ➡",
+                labStart: "Start Drill",
+                labStop: "Stop Drill",
+                labHits: "Hits",
+                labMisses: "Misses",
+                labTime: "Time Left",
+                labLatency: "Avg Latency",
+                labFalseAlarms: "False Alarms",
+                labSpan: "Max Span",
+                labRound: "Round"
             },
             hi: {
                 banner: "⚠️ महत्वपूर्ण: एडूस्क्रीन एक शैक्षिक स्क्रीनिंग सर्वेक्षण है, कोई मेडिकल या नैदानिक उपकरण नहीं। सभी डेटा 100% केवल आपके डिवाइस पर सुरक्षित रहता है। औपचारिक मूल्यांकन के लिए विशेषज्ञों से संपर्क करें।",
@@ -1034,7 +1272,24 @@
                 refBtn: "संदर्भ/प्रमाण",
                 refModalTitle: "📚 वैज्ञानिक आधार, शैक्षिक स्रोत एवं विधिक अस्वीकरण",
                 btnViewEvidence: "अकादमिक संदर्भ, स्रोत एवं विधिक सूचना देखें",
-                modalClose: "बंद करें"
+                modalClose: "बंद करें",
+                labBtn: "एक्टिविटी लैब",
+                labModalTitle: "🎮 कॉग्निटिव एक्टिविटी लैब — 30-सेकंड ब्रेन ड्रिल्स",
+                tabLetter: "🔤 लेटर मिरर (अक्षर भ्रम)",
+                tabFocus: "🎯 गो / नो-गो एकाग्रता",
+                tabMemory: "🔢 मेमोरी इको (स्मृति)",
+                drillsTitle: "🎮 लक्षित कॉग्निटिव ड्रिल्स (अभ्यास)",
+                drillsDesc: "छात्र की आवश्यकताओं के अनुसार 30-सेकंड के इंटरैक्टिव अभ्यास।",
+                btnLaunchDrills: "एक्टिविटी लैब शुरू करें ➡",
+                labStart: "ड्रिल शुरू करें",
+                labStop: "ड्रिल समाप्त",
+                labHits: "सटीक उत्तर",
+                labMisses: "गलतियाँ",
+                labTime: "शेष समय",
+                labLatency: "प्रतिक्रिया गति",
+                labFalseAlarms: "जल्दबाज़ी त्रुटियाँ",
+                labSpan: "अधिकतम स्मृति",
+                labRound: "राउंड"
             }
         };
 
@@ -1370,6 +1625,17 @@
             if (refModal && refModal.classList.contains('active')) {
                 renderReferencesModalContent();
             }
+
+            // Activity Lab
+            if (document.getElementById('lab-label')) document.getElementById('lab-label').innerText = t.labBtn;
+            if (document.getElementById('modal-lab-title')) document.getElementById('modal-lab-title').innerText = t.labModalTitle;
+            if (document.getElementById('tab-btn-letter')) document.getElementById('tab-btn-letter').innerText = t.tabLetter;
+            if (document.getElementById('tab-btn-focus')) document.getElementById('tab-btn-focus').innerText = t.tabFocus;
+            if (document.getElementById('tab-btn-memory')) document.getElementById('tab-btn-memory').innerText = t.tabMemory;
+            if (document.getElementById('txt-drills-title')) document.getElementById('txt-drills-title').innerText = t.drillsTitle;
+            if (document.getElementById('txt-drills-desc')) document.getElementById('txt-drills-desc').innerText = t.drillsDesc;
+            if (document.getElementById('btn-launch-drills')) document.getElementById('btn-launch-drills').innerText = t.btnLaunchDrills;
+            if (document.getElementById('modal-lab-close-btn')) document.getElementById('modal-lab-close-btn').innerText = t.modalClose || 'Close';
 
             // If question is active, refresh question text
             if (document.getElementById('assessment-section').classList.contains('active')) {
@@ -1732,6 +1998,9 @@
 
             // Populate Strengths & Tiered Recommendations
             populateAnalysis(authenticStrengths, flaggedCategories, highestRisk);
+
+            // Populate Targeted Cognitive Drills Recommendation Card
+            updateTargetedDrillsUI(flaggedCategories);
 
             // Lazy Breakdown Accordion to prevent rendering 80 DOM nodes up-front
             breakdownRendered = false;
@@ -2540,8 +2809,614 @@
                 if (modal && modal.classList.contains('active')) {
                     closeReferencesModal();
                 }
+                const labModal = document.getElementById('activity-lab-modal');
+                if (labModal && labModal.classList.contains('active')) {
+                    closeActivityLabModal();
+                }
             }
         });
+
+        // --- 14. COGNITIVE ACTIVITY LAB ENGINE ---
+        let labAudioCtx = null;
+        function playLabTone(freq, durationMs = 120, type = 'sine') {
+            try {
+                const AudioCtxClass = window.AudioContext || window.webkitAudioContext;
+                if (!AudioCtxClass) return;
+                if (!labAudioCtx) labAudioCtx = new AudioCtxClass();
+                if (labAudioCtx.state === 'suspended') {
+                    labAudioCtx.resume().catch(() => {});
+                }
+                const osc = labAudioCtx.createOscillator();
+                const gain = labAudioCtx.createGain();
+                osc.type = type;
+                osc.frequency.setValueAtTime(freq, labAudioCtx.currentTime);
+                gain.gain.setValueAtTime(0.15, labAudioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, labAudioCtx.currentTime + (durationMs / 1000));
+                osc.connect(gain);
+                gain.connect(labAudioCtx.destination);
+                osc.start();
+                osc.stop(labAudioCtx.currentTime + (durationMs / 1000));
+            } catch (e) {
+                // Headless/unsupported audio fallback
+            }
+        }
+
+        let activeLabTab = 'letter';
+
+        function openActivityLabModal(initialTab = 'letter') {
+            const modal = document.getElementById('activity-lab-modal');
+            if (modal) {
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+                switchLabTab(initialTab);
+            }
+        }
+
+        function closeActivityLabModal() {
+            stopAllLabGames();
+            const modal = document.getElementById('activity-lab-modal');
+            if (modal) {
+                modal.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        }
+
+        function handleLabModalOverlayClick(e) {
+            if (e.target && e.target.id === 'activity-lab-modal') {
+                closeActivityLabModal();
+            }
+        }
+
+        function switchLabTab(tabName) {
+            stopAllLabGames();
+            activeLabTab = tabName;
+            ['letter', 'focus', 'memory'].forEach(t => {
+                const btn = document.getElementById(`tab-btn-${t}`);
+                const pane = document.getElementById(`lab-pane-${t}`);
+                if (btn) btn.classList.toggle('active', t === tabName);
+                if (pane) pane.classList.toggle('active', t === tabName);
+            });
+        }
+
+        function stopAllLabGames() {
+            stopLetterMirrorGame();
+            stopGoNoGoGame();
+            stopMemoryEchoGame();
+        }
+
+        // --- Game 1: Letter Mirror Detective ---
+        let letterGameActive = false;
+        let letterTimerInterval = null;
+        let letterTimeLeft = 30;
+        let letterHits = 0;
+        let letterMisses = 0;
+        let letterTarget = 'b';
+        const letterPool = ['b', 'd', 'p', 'q'];
+
+        function startLetterMirrorGame() {
+            stopAllLabGames();
+            letterGameActive = true;
+            letterTimeLeft = 30;
+            letterHits = 0;
+            letterMisses = 0;
+
+            const startBtn = document.getElementById('btn-letter-toggle');
+            if (startBtn) {
+                startBtn.innerText = i18n[currentLang].labStop || 'Stop Drill';
+                startBtn.className = 'btn btn-secondary';
+                startBtn.onclick = stopLetterMirrorGame;
+            }
+
+            updateLetterStats();
+            const summaryEl = document.getElementById('letter-summary');
+            if (summaryEl) summaryEl.style.display = 'none';
+            generateLetterRound();
+
+            letterTimerInterval = setInterval(() => {
+                letterTimeLeft--;
+                updateLetterStats();
+                if (letterTimeLeft <= 0) {
+                    endLetterMirrorGame();
+                }
+            }, 1000);
+        }
+
+        function stopLetterMirrorGame() {
+            letterGameActive = false;
+            if (letterTimerInterval) {
+                clearInterval(letterTimerInterval);
+                letterTimerInterval = null;
+            }
+            const startBtn = document.getElementById('btn-letter-toggle');
+            if (startBtn) {
+                startBtn.innerText = i18n[currentLang].labStart || 'Start Drill';
+                startBtn.className = 'btn';
+                startBtn.onclick = startLetterMirrorGame;
+            }
+            const grid = document.getElementById('letter-grid');
+            if (grid) grid.innerHTML = '';
+        }
+
+        function endLetterMirrorGame() {
+            stopLetterMirrorGame();
+            playLabTone(600, 200);
+            setTimeout(() => playLabTone(800, 300), 220);
+
+            const summaryEl = document.getElementById('letter-summary');
+            if (summaryEl) {
+                const total = letterHits + letterMisses;
+                const accuracy = total > 0 ? Math.round((letterHits / total) * 100) : 0;
+                const t = i18n[currentLang];
+                summaryEl.style.display = 'block';
+                summaryEl.innerHTML = `
+                    <div style="background: var(--card-bg); border: 1.5px solid var(--primary); border-radius: 8px; padding: 14px; text-align: center;">
+                        <h4 style="margin: 0 0 6px; color: var(--primary);">⏱ ${currentLang === 'hi' ? 'ड्रिल पूर्ण!' : 'Drill Complete!'}</h4>
+                        <p style="margin: 4px 0; font-size: 0.95rem;">
+                            <strong>${t.labHits || 'Hits'}:</strong> ${letterHits} &nbsp;|&nbsp; 
+                            <strong>${t.labMisses || 'Misses'}:</strong> ${letterMisses} &nbsp;|&nbsp; 
+                            <strong>${currentLang === 'hi' ? 'सटीकता' : 'Accuracy'}:</strong> ${accuracy}%
+                        </p>
+                    </div>
+                `;
+            }
+        }
+
+        function updateLetterStats() {
+            const timeEl = document.getElementById('letter-stat-time');
+            const hitsEl = document.getElementById('letter-stat-hits');
+            const missesEl = document.getElementById('letter-stat-misses');
+            if (timeEl) timeEl.innerText = `${letterTimeLeft}s`;
+            if (hitsEl) hitsEl.innerText = letterHits;
+            if (missesEl) missesEl.innerText = letterMisses;
+        }
+
+        function generateLetterRound() {
+            if (!letterGameActive) return;
+            const availableTargets = letterPool.filter(l => l !== letterTarget);
+            letterTarget = availableTargets[Math.floor(Math.random() * availableTargets.length)];
+
+            const targetDisplay = document.getElementById('letter-target-display');
+            if (targetDisplay) {
+                targetDisplay.innerText = letterTarget;
+            }
+
+            const grid = document.getElementById('letter-grid');
+            if (!grid) return;
+            grid.innerHTML = '';
+
+            const tiles = [];
+            const targetCount = 5;
+            for (let i = 0; i < targetCount; i++) tiles.push(letterTarget);
+            const foils = letterPool.filter(l => l !== letterTarget);
+            for (let i = targetCount; i < 16; i++) {
+                tiles.push(foils[Math.floor(Math.random() * foils.length)]);
+            }
+
+            for (let i = tiles.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [tiles[i], tiles[j]] = [tiles[j], tiles[i]];
+            }
+
+            let remainingInRound = targetCount;
+
+            tiles.forEach((letter) => {
+                const tile = document.createElement('button');
+                tile.className = 'letter-tile';
+                tile.innerText = letter;
+                tile.setAttribute('aria-label', `Letter ${letter}`);
+                tile.onclick = () => {
+                    if (!letterGameActive || tile.disabled) return;
+                    if (letter === letterTarget) {
+                        tile.classList.add('correct');
+                        tile.disabled = true;
+                        letterHits++;
+                        remainingInRound--;
+                        playLabTone(523, 90);
+                        updateLetterStats();
+                        if (remainingInRound <= 0) {
+                            playLabTone(659, 120);
+                            setTimeout(() => {
+                                generateLetterRound();
+                            }, 300);
+                        }
+                    } else {
+                        tile.classList.add('incorrect');
+                        tile.disabled = true;
+                        letterMisses++;
+                        playLabTone(220, 150, 'sawtooth');
+                        updateLetterStats();
+                    }
+                };
+                grid.appendChild(tile);
+            });
+        }
+
+        // --- Game 2: Go / No-Go Sustained Focus Drill ---
+        let focusGameActive = false;
+        let focusTimerInterval = null;
+        let focusTrialTimeout = null;
+        let focusTimeLeft = 30;
+        let focusHits = 0;
+        let focusFalseAlarms = 0;
+        let focusLatencies = [];
+        let focusCurrentStimulus = null;
+        let focusStimulusStartTime = 0;
+        let focusTrialActive = false;
+
+        function startGoNoGoGame() {
+            stopAllLabGames();
+            focusGameActive = true;
+            focusTimeLeft = 30;
+            focusHits = 0;
+            focusFalseAlarms = 0;
+            focusLatencies = [];
+            focusCurrentStimulus = null;
+            focusTrialActive = false;
+
+            const startBtn = document.getElementById('btn-focus-toggle');
+            if (startBtn) {
+                startBtn.innerText = i18n[currentLang].labStop || 'Stop Drill';
+                startBtn.className = 'btn btn-secondary';
+                startBtn.onclick = stopGoNoGoGame;
+            }
+
+            updateFocusStats();
+            const summaryEl = document.getElementById('focus-summary');
+            if (summaryEl) summaryEl.style.display = 'none';
+            resetFocusStimulusBox();
+
+            focusTimerInterval = setInterval(() => {
+                focusTimeLeft--;
+                updateFocusStats();
+                if (focusTimeLeft <= 0) {
+                    endGoNoGoGame();
+                }
+            }, 1000);
+
+            scheduleNextFocusTrial(800);
+        }
+
+        function stopGoNoGoGame() {
+            focusGameActive = false;
+            focusTrialActive = false;
+            focusCurrentStimulus = null;
+            if (focusTimerInterval) {
+                clearInterval(focusTimerInterval);
+                focusTimerInterval = null;
+            }
+            if (focusTrialTimeout) {
+                clearTimeout(focusTrialTimeout);
+                focusTrialTimeout = null;
+            }
+            const startBtn = document.getElementById('btn-focus-toggle');
+            if (startBtn) {
+                startBtn.innerText = i18n[currentLang].labStart || 'Start Drill';
+                startBtn.className = 'btn';
+                startBtn.onclick = startGoNoGoGame;
+            }
+            resetFocusStimulusBox();
+        }
+
+        function resetFocusStimulusBox() {
+            const box = document.getElementById('focus-stimulus-box');
+            if (box) {
+                box.innerHTML = `<span style="font-size: 1.1rem; color: var(--text-muted);">${currentLang === 'hi' ? 'तैयार रहें...' : 'Get ready...'}</span>`;
+                box.className = 'focus-stimulus-box';
+            }
+        }
+
+        function scheduleNextFocusTrial(delayMs) {
+            if (!focusGameActive) return;
+            focusTrialTimeout = setTimeout(() => {
+                if (!focusGameActive) return;
+                runFocusTrial();
+            }, delayMs || (700 + Math.random() * 1100));
+        }
+
+        function runFocusTrial() {
+            if (!focusGameActive) return;
+            const box = document.getElementById('focus-stimulus-box');
+            if (!box) return;
+
+            const isGo = Math.random() < 0.75;
+            focusCurrentStimulus = isGo ? 'go' : 'nogo';
+            focusTrialActive = true;
+            focusStimulusStartTime = (typeof performance !== 'undefined' && performance.now) ? performance.now() : Date.now();
+
+            if (isGo) {
+                box.innerHTML = `<div style="width: 72px; height: 72px; border-radius: 50%; background: #10b981; box-shadow: 0 0 16px rgba(16,185,129,0.5); display: flex; align-items: center; justify-content: center; color: #fff; font-weight: bold; font-size: 1.1rem;">GO!</div>`;
+                box.className = 'focus-stimulus-box go-active';
+                playLabTone(440, 60);
+            } else {
+                box.innerHTML = `<div style="width: 72px; height: 72px; border-radius: 8px; background: #ef4444; box-shadow: 0 0 16px rgba(239,68,68,0.5); display: flex; align-items: center; justify-content: center; color: #fff; font-weight: bold; font-size: 1.05rem;">WAIT</div>`;
+                box.className = 'focus-stimulus-box nogo-active';
+                playLabTone(260, 60);
+            }
+
+            focusTrialTimeout = setTimeout(() => {
+                if (!focusGameActive || !focusTrialActive) return;
+                focusTrialActive = false;
+                focusCurrentStimulus = null;
+                resetFocusStimulusBox();
+                scheduleNextFocusTrial();
+            }, 950);
+        }
+
+        function handleFocusStimulusClick() {
+            if (!focusGameActive) return;
+            const now = (typeof performance !== 'undefined' && performance.now) ? performance.now() : Date.now();
+            const box = document.getElementById('focus-stimulus-box');
+
+            if (focusTrialActive && focusCurrentStimulus === 'go') {
+                const latency = Math.round(now - focusStimulusStartTime);
+                focusLatencies.push(latency);
+                focusHits++;
+                focusTrialActive = false;
+                focusCurrentStimulus = null;
+                if (focusTrialTimeout) clearTimeout(focusTrialTimeout);
+                playLabTone(587, 80);
+                if (box) {
+                    box.innerHTML = `<span style="color: #10b981; font-weight: bold; font-size: 1.2rem;">✔ ${latency} ms</span>`;
+                    box.className = 'focus-stimulus-box';
+                }
+                updateFocusStats();
+                scheduleNextFocusTrial(500 + Math.random() * 800);
+            } else if (focusTrialActive && focusCurrentStimulus === 'nogo') {
+                focusFalseAlarms++;
+                focusTrialActive = false;
+                focusCurrentStimulus = null;
+                if (focusTrialTimeout) clearTimeout(focusTrialTimeout);
+                playLabTone(180, 160, 'sawtooth');
+                if (box) {
+                    box.innerHTML = `<span style="color: #ef4444; font-weight: bold; font-size: 1.1rem;">❌ ${currentLang === 'hi' ? 'जल्दबाज़ी!' : 'False Alarm!'}</span>`;
+                    box.className = 'focus-stimulus-box';
+                }
+                updateFocusStats();
+                scheduleNextFocusTrial(800 + Math.random() * 800);
+            } else {
+                playLabTone(200, 100, 'sawtooth');
+            }
+        }
+
+        function updateFocusStats() {
+            const timeEl = document.getElementById('focus-stat-time');
+            const hitsEl = document.getElementById('focus-stat-hits');
+            const faEl = document.getElementById('focus-stat-fa');
+            const latencyEl = document.getElementById('focus-stat-latency');
+
+            if (timeEl) timeEl.innerText = `${focusTimeLeft}s`;
+            if (hitsEl) hitsEl.innerText = focusHits;
+            if (faEl) faEl.innerText = focusFalseAlarms;
+
+            const avgLatency = focusLatencies.length > 0 
+                ? Math.round(focusLatencies.reduce((a, b) => a + b, 0) / focusLatencies.length) 
+                : 0;
+            if (latencyEl) latencyEl.innerText = avgLatency > 0 ? `${avgLatency} ms` : '--';
+        }
+
+        function endGoNoGoGame() {
+            stopGoNoGoGame();
+            playLabTone(523, 180);
+            setTimeout(() => playLabTone(659, 250), 200);
+
+            const summaryEl = document.getElementById('focus-summary');
+            if (summaryEl) {
+                const avgLatency = focusLatencies.length > 0 
+                    ? Math.round(focusLatencies.reduce((a, b) => a + b, 0) / focusLatencies.length) 
+                    : 0;
+                const t = i18n[currentLang];
+                summaryEl.style.display = 'block';
+                summaryEl.innerHTML = `
+                    <div style="background: var(--card-bg); border: 1.5px solid var(--primary); border-radius: 8px; padding: 14px; text-align: center;">
+                        <h4 style="margin: 0 0 6px; color: var(--primary);">⏱ ${currentLang === 'hi' ? 'ड्रिल पूर्ण!' : 'Drill Complete!'}</h4>
+                        <p style="margin: 4px 0; font-size: 0.95rem;">
+                            <strong>${t.labHits || 'Hits'}:</strong> ${focusHits} &nbsp;|&nbsp; 
+                            <strong>${t.labFalseAlarms || 'False Alarms'}:</strong> ${focusFalseAlarms} &nbsp;|&nbsp; 
+                            <strong>${t.labLatency || 'Avg Latency'}:</strong> ${avgLatency > 0 ? avgLatency + ' ms' : '--'}
+                        </p>
+                    </div>
+                `;
+            }
+        }
+
+        // --- Game 3: Memory Echo Sequence ---
+        let memoryGameActive = false;
+        let memorySequence = [];
+        let memoryPlayerStep = 0;
+        let memoryPlayerTurn = false;
+        let memoryMaxSpan = 0;
+        let memoryCurrentRound = 1;
+        const memoryPadFreqs = [261.63, 329.63, 392.00, 523.25];
+
+        function startMemoryEchoGame() {
+            stopAllLabGames();
+            memoryGameActive = true;
+            memorySequence = [];
+            memoryPlayerStep = 0;
+            memoryPlayerTurn = false;
+            memoryMaxSpan = 0;
+            memoryCurrentRound = 1;
+
+            const startBtn = document.getElementById('btn-memory-toggle');
+            if (startBtn) {
+                startBtn.innerText = i18n[currentLang].labStop || 'Stop Drill';
+                startBtn.className = 'btn btn-secondary';
+                startBtn.onclick = stopMemoryEchoGame;
+            }
+
+            const summaryEl = document.getElementById('memory-summary');
+            if (summaryEl) summaryEl.style.display = 'none';
+            updateMemoryStats();
+            startMemoryRound(2);
+        }
+
+        function stopMemoryEchoGame() {
+            memoryGameActive = false;
+            memoryPlayerTurn = false;
+            const startBtn = document.getElementById('btn-memory-toggle');
+            if (startBtn) {
+                startBtn.innerText = i18n[currentLang].labStart || 'Start Drill';
+                startBtn.className = 'btn';
+                startBtn.onclick = startMemoryEchoGame;
+            }
+            const promptEl = document.getElementById('memory-prompt');
+            if (promptEl) promptEl.innerText = currentLang === 'hi' ? 'तैयार होने पर ड्रिल शुरू करें' : 'Press Start Drill to begin';
+        }
+
+        function updateMemoryStats() {
+            const roundEl = document.getElementById('memory-stat-round');
+            const spanEl = document.getElementById('memory-stat-span');
+            if (roundEl) roundEl.innerText = memoryCurrentRound;
+            if (spanEl) spanEl.innerText = memoryMaxSpan;
+        }
+
+        function startMemoryRound(len) {
+            if (!memoryGameActive) return;
+            memoryPlayerTurn = false;
+            memoryPlayerStep = 0;
+            memorySequence = [];
+            for (let i = 0; i < len; i++) {
+                memorySequence.push(Math.floor(Math.random() * 4));
+            }
+
+            const promptEl = document.getElementById('memory-prompt');
+            if (promptEl) promptEl.innerText = currentLang === 'hi' ? '👀 ध्यान से देखें और सुनें...' : '👀 Watch & Listen...';
+
+            playSequence(0);
+        }
+
+        function playSequence(index) {
+            if (!memoryGameActive) return;
+            if (index >= memorySequence.length) {
+                setTimeout(() => {
+                    if (!memoryGameActive) return;
+                    memoryPlayerTurn = true;
+                    const promptEl = document.getElementById('memory-prompt');
+                    if (promptEl) promptEl.innerText = currentLang === 'hi' ? '👉 अब आपकी बारी!' : '👉 Your Turn!';
+                }, 300);
+                return;
+            }
+
+            const padIndex = memorySequence[index];
+            flashMemoryPad(padIndex, 400);
+
+            setTimeout(() => {
+                if (memoryGameActive) playSequence(index + 1);
+            }, 600);
+        }
+
+        function flashMemoryPad(padIndex, durationMs = 300) {
+            const pad = document.getElementById(`memory-pad-${padIndex}`);
+            if (pad) {
+                pad.classList.add('flash');
+                playLabTone(memoryPadFreqs[padIndex], durationMs);
+                setTimeout(() => {
+                    pad.classList.remove('flash');
+                }, durationMs);
+            }
+        }
+
+        function handleMemoryPadClick(padIndex) {
+            if (!memoryGameActive || !memoryPlayerTurn) return;
+
+            flashMemoryPad(padIndex, 250);
+
+            if (padIndex === memorySequence[memoryPlayerStep]) {
+                memoryPlayerStep++;
+                if (memoryPlayerStep === memorySequence.length) {
+                    memoryPlayerTurn = false;
+                    memoryMaxSpan = Math.max(memoryMaxSpan, memorySequence.length);
+                    memoryCurrentRound++;
+                    updateMemoryStats();
+
+                    const promptEl = document.getElementById('memory-prompt');
+                    if (promptEl) promptEl.innerText = currentLang === 'hi' ? '🎉 शाबाश! अगला स्तर...' : '🎉 Great! Next level...';
+
+                    playLabTone(659, 120);
+                    setTimeout(() => playLabTone(880, 200), 140);
+
+                    setTimeout(() => {
+                        if (memoryGameActive) {
+                            startMemoryRound(memorySequence.length + 1);
+                        }
+                    }, 1000);
+                }
+            } else {
+                memoryPlayerTurn = false;
+                playLabTone(160, 250, 'sawtooth');
+                endMemoryEchoGame();
+            }
+        }
+
+        function endMemoryEchoGame() {
+            stopMemoryEchoGame();
+            const summaryEl = document.getElementById('memory-summary');
+            if (summaryEl) {
+                const t = i18n[currentLang];
+                summaryEl.style.display = 'block';
+                summaryEl.innerHTML = `
+                    <div style="background: var(--card-bg); border: 1.5px solid var(--primary); border-radius: 8px; padding: 14px; text-align: center;">
+                        <h4 style="margin: 0 0 6px; color: var(--primary);">🧠 ${currentLang === 'hi' ? 'मेमोरी ड्रिल समाप्त!' : 'Memory Drill Complete!'}</h4>
+                        <p style="margin: 4px 0; font-size: 0.95rem;">
+                            <strong>${t.labSpan || 'Max Span'}:</strong> ${memoryMaxSpan} &nbsp;|&nbsp; 
+                            <strong>${t.labRound || 'Rounds'}:</strong> ${memoryCurrentRound - 1}
+                        </p>
+                    </div>
+                `;
+            }
+        }
+
+        // --- Targeted Drills UI in Clinical Report ---
+        function updateTargetedDrillsUI(flaggedCategories = []) {
+            const listEl = document.getElementById('targeted-drills-list');
+            if (!listEl) return;
+            listEl.innerHTML = '';
+
+            const isHi = currentLang === 'hi';
+            const flaggedKeys = flaggedCategories.map(f => f.cat || f);
+
+            const drillConfigs = [
+                {
+                    id: 'letter',
+                    tab: 'letter',
+                    title: isHi ? '🔤 लेटर मिरर डिटेक्टिव' : '🔤 Letter Mirror Detective',
+                    badge: isHi ? 'डिस्लेक्सिया / लेखन फोकस' : 'Targeted: Dyslexia / Writing',
+                    match: ['dyslexia', 'dysgraphia', 'communication'],
+                    desc: isHi ? 'b-d-p-q अक्षर पहचान गति ड्रिल' : '30s b-d-p-q discrimination drill'
+                },
+                {
+                    id: 'focus',
+                    tab: 'focus',
+                    title: isHi ? '🎯 गो / नो-गो एकाग्रता' : '🎯 Go / No-Go Sustained Focus',
+                    badge: isHi ? 'अटेंशन / सेंसरी फोकस' : 'Targeted: Attention / Executive',
+                    match: ['attention', 'executive', 'sensory', 'learning_anxiety'],
+                    desc: isHi ? 'प्रतिक्रिया गति और नियंत्रण परीक्षण' : 'Impulse control & latency drill'
+                },
+                {
+                    id: 'memory',
+                    tab: 'memory',
+                    title: isHi ? '🔢 मेमोरी इको सीक्वेंस' : '🔢 Memory Echo Sequence',
+                    badge: isHi ? 'कार्यकारी स्मृति / रिकॉल' : 'Targeted: Memory / Recall',
+                    match: ['working_memory', 'recall', 'processing'],
+                    desc: isHi ? 'ध्वनि व प्रकाश अनुक्रम स्मरण' : 'Audio-visual forward span drill'
+                }
+            ];
+
+            drillConfigs.forEach(drill => {
+                const isMatched = drill.match.some(m => flaggedKeys.includes(m));
+                const btn = document.createElement('button');
+                btn.className = 'drill-badge ' + (isMatched ? 'highlight' : '');
+                btn.innerHTML = `
+                    <div>
+                        <strong>${drill.title}</strong>
+                        <span style="display: block; font-size: 0.78rem; opacity: 0.85;">${isMatched ? drill.badge : (isHi ? 'वार्म-अप ड्रिल' : 'General Warm-up')}</span>
+                    </div>
+                    <span style="font-size: 1.1rem; margin-left: 8px;">➡</span>
+                `;
+                btn.onclick = () => openActivityLabModal(drill.tab);
+                listEl.appendChild(btn);
+            });
+        }
     </script>
 
     <!-- Scientific Framework, References & Legal Safe Harbor Modal -->
@@ -2556,6 +3431,99 @@
             </div>
             <div style="padding: 12px 24px; border-top: 1px solid var(--border-color); background: var(--bg-color); display: flex; justify-content: flex-end;">
                 <button class="btn btn-secondary" onclick="closeReferencesModal()" style="padding: 8px 16px; font-size: 0.9rem;" id="modal-close-bottom-btn">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cognitive Activity Lab Modal -->
+    <div id="activity-lab-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-lab-title" onclick="handleLabModalOverlayClick(event)">
+        <div class="modal-container" role="document">
+            <div class="modal-header">
+                <h3 id="modal-lab-title">🎮 Cognitive Activity Lab — 30-Second Brain Drills</h3>
+                <button class="modal-close-btn" onclick="closeActivityLabModal()" aria-label="Close activity lab modal">✕</button>
+            </div>
+            
+            <div class="lab-tabs" role="tablist">
+                <button class="btn tab-btn active" id="tab-btn-letter" onclick="switchLabTab('letter')" role="tab">🔤 Letter Mirror</button>
+                <button class="btn tab-btn" id="tab-btn-focus" onclick="switchLabTab('focus')" role="tab">🎯 Go / No-Go Focus</button>
+                <button class="btn tab-btn" id="tab-btn-memory" onclick="switchLabTab('memory')" role="tab">🔢 Memory Echo</button>
+            </div>
+
+            <div class="modal-body" style="padding-top: 14px;">
+                <!-- Pane 1: Letter Mirror Detective -->
+                <div id="lab-pane-letter" class="lab-game-pane active">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 8px;">
+                        <div>
+                            <strong style="font-size: 1.05rem;" id="txt-letter-prompt">Find all instances of:</strong>
+                            <span id="letter-target-display" style="display: inline-block; font-size: 1.4rem; font-weight: bold; color: var(--primary); padding: 2px 14px; background: var(--primary-light); border-radius: 6px; margin-left: 8px;">b</span>
+                        </div>
+                        <div style="display: flex; gap: 14px; font-size: 0.9rem;">
+                            <span>⏱ <strong id="letter-stat-time">30s</strong></span>
+                            <span>✔ <strong id="letter-stat-hits" style="color: #10b981;">0</strong></span>
+                            <span>❌ <strong id="letter-stat-misses" style="color: #ef4444;">0</strong></span>
+                        </div>
+                    </div>
+
+                    <div id="letter-grid" class="letter-grid" aria-label="Letter selection grid"></div>
+
+                    <div id="letter-summary" style="margin-top: 14px; display: none;"></div>
+
+                    <div style="text-align: center; margin-top: 16px;">
+                        <button class="btn" id="btn-letter-toggle" onclick="startLetterMirrorGame()" style="width: auto; padding: 10px 24px; font-size: 1rem;">Start Drill</button>
+                    </div>
+                </div>
+
+                <!-- Pane 2: Go / No-Go Sustained Focus Drill -->
+                <div id="lab-pane-focus" class="lab-game-pane">
+                    <p style="margin: 0 0 10px; font-size: 0.9rem; color: var(--text-muted); text-align: center;" id="txt-focus-rule">
+                        Tap IMMEDIATELY when <strong>GREEN circle</strong> appears! Do NOT tap when <strong>RED square</strong> appears!
+                    </p>
+
+                    <div style="display: flex; justify-content: space-around; margin-bottom: 12px; font-size: 0.9rem;">
+                        <span>⏱ <strong id="focus-stat-time">30s</strong></span>
+                        <span>✔ <strong id="focus-stat-hits" style="color: #10b981;">0</strong></span>
+                        <span>❌ <strong id="focus-stat-fa" style="color: #ef4444;">0</strong></span>
+                        <span>⚡ <strong id="focus-stat-latency">--</strong></span>
+                    </div>
+
+                    <div id="focus-stimulus-box" class="focus-stimulus-box" onclick="handleFocusStimulusClick()" role="button" tabindex="0" aria-label="Focus reaction target">
+                        <span style="font-size: 1.1rem; color: var(--text-muted);">Get ready...</span>
+                    </div>
+
+                    <div id="focus-summary" style="margin-top: 14px; display: none;"></div>
+
+                    <div style="text-align: center; margin-top: 16px;">
+                        <button class="btn" id="btn-focus-toggle" onclick="startGoNoGoGame()" style="width: auto; padding: 10px 24px; font-size: 1rem;">Start Drill</button>
+                    </div>
+                </div>
+
+                <!-- Pane 3: Memory Echo Sequence -->
+                <div id="lab-pane-memory" class="lab-game-pane">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                        <span id="memory-prompt" style="font-size: 0.95rem; font-weight: 600; color: var(--text-main);">Press Start Drill to begin</span>
+                        <div style="display: flex; gap: 14px; font-size: 0.9rem;">
+                            <span>Round: <strong id="memory-stat-round">1</strong></span>
+                            <span>Max Span: <strong id="memory-stat-span" style="color: var(--primary);">0</strong></span>
+                        </div>
+                    </div>
+
+                    <div class="memory-pads-grid">
+                        <button id="memory-pad-0" class="memory-pad pad-blue" onclick="handleMemoryPadClick(0)" aria-label="Pad 1"></button>
+                        <button id="memory-pad-1" class="memory-pad pad-green" onclick="handleMemoryPadClick(1)" aria-label="Pad 2"></button>
+                        <button id="memory-pad-2" class="memory-pad pad-amber" onclick="handleMemoryPadClick(2)" aria-label="Pad 3"></button>
+                        <button id="memory-pad-3" class="memory-pad pad-purple" onclick="handleMemoryPadClick(3)" aria-label="Pad 4"></button>
+                    </div>
+
+                    <div id="memory-summary" style="margin-top: 14px; display: none;"></div>
+
+                    <div style="text-align: center; margin-top: 16px;">
+                        <button class="btn" id="btn-memory-toggle" onclick="startMemoryEchoGame()" style="width: auto; padding: 10px 24px; font-size: 1rem;">Start Drill</button>
+                    </div>
+                </div>
+            </div>
+
+            <div style="padding: 12px 24px; border-top: 1px solid var(--border-color); background: var(--bg-color); display: flex; justify-content: flex-end;">
+                <button class="btn btn-secondary" onclick="closeActivityLabModal()" style="padding: 8px 16px; font-size: 0.9rem;" id="modal-lab-close-btn">Close</button>
             </div>
         </div>
     </div>

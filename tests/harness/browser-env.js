@@ -455,6 +455,33 @@ class SpeechSynthesisMock {
     resume() { this.paused = false; }
 }
 
+class AudioContextMock {
+    constructor() {
+        this.currentTime = 0;
+        this.state = 'running';
+        this.destination = {};
+    }
+    resume() { return Promise.resolve(); }
+    createOscillator() {
+        return {
+            type: 'sine',
+            frequency: { setValueAtTime: () => {} },
+            connect: () => {},
+            start: () => {},
+            stop: () => {}
+        };
+    }
+    createGain() {
+        return {
+            gain: {
+                setValueAtTime: () => {},
+                exponentialRampToValueAtTime: () => {}
+            },
+            connect: () => {}
+        };
+    }
+}
+
 function parseHTMLToElements(htmlContent, document) {
     const elementsById = Object.create(null);
     const allElements = [];
@@ -697,6 +724,8 @@ function createBrowserEnvironment(options = {}) {
         devicePixelRatio: options.dpr || 1,
         innerWidth: options.innerWidth || 1024,
         innerHeight: options.innerHeight || 768,
+        AudioContext: AudioContextMock,
+        webkitAudioContext: AudioContextMock,
         alert: (msg) => { alertCalls.push(msg); },
         confirm: (msg) => {
             confirmCalls.push(msg);
@@ -830,6 +859,69 @@ function createBrowserEnvironment(options = {}) {
         Object.defineProperty(globalThis, 'closeReferencesModal', {
             get: () => _capturedCloseReferencesModal
         });
+
+        const _capturedOpenActivityLabModal = typeof openActivityLabModal !== 'undefined' ? openActivityLabModal : () => {};
+        const _capturedCloseActivityLabModal = typeof closeActivityLabModal !== 'undefined' ? closeActivityLabModal : () => {};
+        const _capturedSwitchLabTab = typeof switchLabTab !== 'undefined' ? switchLabTab : () => {};
+        const _capturedStartLetterMirrorGame = typeof startLetterMirrorGame !== 'undefined' ? startLetterMirrorGame : () => {};
+        const _capturedStopLetterMirrorGame = typeof stopLetterMirrorGame !== 'undefined' ? stopLetterMirrorGame : () => {};
+        const _capturedEndLetterMirrorGame = typeof endLetterMirrorGame !== 'undefined' ? endLetterMirrorGame : () => {};
+        const _capturedStartGoNoGoGame = typeof startGoNoGoGame !== 'undefined' ? startGoNoGoGame : () => {};
+        const _capturedStopGoNoGoGame = typeof stopGoNoGoGame !== 'undefined' ? stopGoNoGoGame : () => {};
+        const _capturedEndGoNoGoGame = typeof endGoNoGoGame !== 'undefined' ? endGoNoGoGame : () => {};
+        const _capturedHandleFocusStimulusClick = typeof handleFocusStimulusClick !== 'undefined' ? handleFocusStimulusClick : () => {};
+        const _capturedStartMemoryEchoGame = typeof startMemoryEchoGame !== 'undefined' ? startMemoryEchoGame : () => {};
+        const _capturedStopMemoryEchoGame = typeof stopMemoryEchoGame !== 'undefined' ? stopMemoryEchoGame : () => {};
+        const _capturedEndMemoryEchoGame = typeof endMemoryEchoGame !== 'undefined' ? endMemoryEchoGame : () => {};
+        const _capturedHandleMemoryPadClick = typeof handleMemoryPadClick !== 'undefined' ? handleMemoryPadClick : () => {};
+        const _capturedUpdateTargetedDrillsUI = typeof updateTargetedDrillsUI !== 'undefined' ? updateTargetedDrillsUI : () => {};
+        const _capturedPlayLabTone = typeof playLabTone !== 'undefined' ? playLabTone : () => {};
+
+        Object.defineProperty(globalThis, 'openActivityLabModal', { get: () => _capturedOpenActivityLabModal });
+        Object.defineProperty(globalThis, 'closeActivityLabModal', { get: () => _capturedCloseActivityLabModal });
+        Object.defineProperty(globalThis, 'switchLabTab', { get: () => _capturedSwitchLabTab });
+        Object.defineProperty(globalThis, 'startLetterMirrorGame', { get: () => _capturedStartLetterMirrorGame });
+        Object.defineProperty(globalThis, 'stopLetterMirrorGame', { get: () => _capturedStopLetterMirrorGame });
+        Object.defineProperty(globalThis, 'endLetterMirrorGame', { get: () => _capturedEndLetterMirrorGame });
+        Object.defineProperty(globalThis, 'startGoNoGoGame', { get: () => _capturedStartGoNoGoGame });
+        Object.defineProperty(globalThis, 'stopGoNoGoGame', { get: () => _capturedStopGoNoGoGame });
+        Object.defineProperty(globalThis, 'endGoNoGoGame', { get: () => _capturedEndGoNoGoGame });
+        Object.defineProperty(globalThis, 'handleFocusStimulusClick', { get: () => _capturedHandleFocusStimulusClick });
+        Object.defineProperty(globalThis, 'startMemoryEchoGame', { get: () => _capturedStartMemoryEchoGame });
+        Object.defineProperty(globalThis, 'stopMemoryEchoGame', { get: () => _capturedStopMemoryEchoGame });
+        Object.defineProperty(globalThis, 'endMemoryEchoGame', { get: () => _capturedEndMemoryEchoGame });
+        Object.defineProperty(globalThis, 'handleMemoryPadClick', { get: () => _capturedHandleMemoryPadClick });
+        Object.defineProperty(globalThis, 'updateTargetedDrillsUI', { get: () => _capturedUpdateTargetedDrillsUI });
+        Object.defineProperty(globalThis, 'playLabTone', { get: () => _capturedPlayLabTone });
+
+        Object.defineProperty(globalThis, 'focusTrialActive', {
+            get: () => focusTrialActive,
+            set: (v) => { focusTrialActive = v; }
+        });
+        Object.defineProperty(globalThis, 'focusCurrentStimulus', {
+            get: () => focusCurrentStimulus,
+            set: (v) => { focusCurrentStimulus = v; }
+        });
+        Object.defineProperty(globalThis, 'focusStimulusStartTime', {
+            get: () => focusStimulusStartTime,
+            set: (v) => { focusStimulusStartTime = v; }
+        });
+        Object.defineProperty(globalThis, 'memoryPlayerTurn', {
+            get: () => memoryPlayerTurn,
+            set: (v) => { memoryPlayerTurn = v; }
+        });
+        Object.defineProperty(globalThis, 'memorySequence', {
+            get: () => memorySequence,
+            set: (v) => { memorySequence = v; }
+        });
+        Object.defineProperty(globalThis, 'memoryPlayerStep', {
+            get: () => memoryPlayerStep,
+            set: (v) => { memoryPlayerStep = v; }
+        });
+        const _capturedApplyLanguage = typeof applyLanguage !== 'undefined' ? applyLanguage : () => {};
+        const _capturedToggleLanguage = typeof toggleLanguage !== 'undefined' ? toggleLanguage : () => {};
+        Object.defineProperty(globalThis, 'applyLanguage', { get: () => _capturedApplyLanguage });
+        Object.defineProperty(globalThis, 'toggleLanguage', { get: () => _capturedToggleLanguage });
     `;
 
     vm.createContext(sandbox);

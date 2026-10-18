@@ -1,0 +1,11 @@
+EduScreen is an ethical, open-source educational awareness screening survey and interactive cognitive drill lab designed for parents and teachers to observe learning patterns in students.
+
+Key Features:
+- 15 Cognitive Domains (Dyslexia, Dyscalculia, Attention, Working Memory, Processing Speed, etc.)
+- 30-Second Cognitive Activity Lab (Letter Mirror Detective, Go/No-Go Focus Drill, Memory Echo)
+- Instant Demo Profile and Rapid Screener modes
+- Web Speech API text-to-speech narration in English & Hindi
+- 100% Client-Side Privacy: all data processed locally on device with zero external server tracking
+- Statutory Safe Harbor & Academic Grounding under NMC Act 2019, Mental Healthcare Act 2017, and DPDP Act 2023
+- Multi-format clinical exports (Print/PDF, JSON, CSV)
+- Completely free and open source under the MIT License
