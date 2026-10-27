@@ -2462,12 +2462,14 @@
         function exportJSON() {
             const payload = {
                 app: "EduScreen",
-                version: "1.2.0",
+                version: "2.0.0",
                 date: new Date().toISOString(),
                 student: studentData,
                 mode: currentMode,
                 scores: answers,
                 categoryPercentages: {},
+                cognitiveScores: (typeof cognitiveScores !== 'undefined') ? cognitiveScores : {},
+                gameTelemetry: (typeof gameTelemetry !== 'undefined') ? gameTelemetry : {},
                 detailedResponses: answerLog
             };
 
@@ -2496,11 +2498,22 @@
                 csv += `"${categories[k].en}",${score},${max},${pct}%,"${risk}"\n`;
             });
 
-            csv += "\nQuestionIndex,Domain,Prompt,SelectedValue,ResponseLabel\n";
-            answerLog.forEach(log => {
-                const cleanPrompt = log.prompt.replace(/"/g, '""');
-                csv += `${log.index + 1},"${categories[log.cat].en}","${cleanPrompt}",${log.val},"${log.responseLabel}"\n`;
-            });
+            if (typeof gameTelemetry !== 'undefined') {
+                csv += "\n--- Objective Behavioral Telemetry ---\n";
+                csv += "Game,Pillar,Metrics,Latency/Span,RiskClassification\n";
+                csv += `"Letter Mirror Detective","Visual-Spatial / Orthographic","Hits: ${gameTelemetry.letter.hits}, Inversions: ${gameTelemetry.letter.misses}","--","${gameTelemetry.letter.misses <= 2 ? 'Optimal' : 'Needs Support'}"\n`;
+                csv += `"Go / No-Go Sustained Focus","Inhibitory Control & Focus","Hits: ${gameTelemetry.focus.hits}, False Alarms: ${gameTelemetry.focus.falseAlarms}","${gameTelemetry.focus.avgLatency} ms","${gameTelemetry.focus.falseAlarms <= 2 ? 'Optimal' : 'Needs Support'}"\n`;
+                csv += `"Memory Echo Sequence","Audio-Visual Working Memory","Rounds: ${gameTelemetry.memory.rounds}","Max Span: ${gameTelemetry.memory.maxSpan}","${gameTelemetry.memory.maxSpan >= 5 ? 'Optimal' : 'Needs Support'}"\n`;
+                csv += `"Rapid Number Dash","Approximate Number System (ANS)","Hits: ${gameTelemetry.number.hits}, Errors: ${gameTelemetry.number.errors}","${gameTelemetry.number.avgLatency} ms","${gameTelemetry.number.errors <= 3 ? 'Optimal' : 'Needs Support'}"\n`;
+            }
+
+            if (answerLog && answerLog.length > 0) {
+                csv += "\nQuestionIndex,Domain,Prompt,SelectedValue,ResponseLabel\n";
+                answerLog.forEach(log => {
+                    const cleanPrompt = log.prompt.replace(/"/g, '""');
+                    csv += `${log.index + 1},"${categories[log.cat].en}","${cleanPrompt}",${log.val},"${log.responseLabel}"\n`;
+                });
+            }
 
             const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
             const url = URL.createObjectURL(blob);

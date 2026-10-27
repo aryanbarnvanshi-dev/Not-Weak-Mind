@@ -1,5 +1,5 @@
-// EduScreen Service Worker v1.2.0 - Optimized Offline-First PWA
-const CACHE_NAME = 'eduscreen-v1.2.0';
+// EduScreen Service Worker v2.0.0 - Optimized Offline-First PWA
+const CACHE_NAME = 'eduscreen-v2.0.0';
 const STATIC_ASSETS = [
     './',
     './index.html',

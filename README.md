@@ -16,6 +16,7 @@
 
 | Platform | Action | Details |
 | :--- | :--- | :--- |
+| 🎮 **3-Minute Game Circuit** | [**Play Cognitive Games**](https://aryanbarnvanshi-dev.github.io/Not-Weak-Mind/) | **100% Pure Game-Based Screening (v2.0.0)**. Zero text questions! 4 mini-games measure reaction time, focus, memory, and number sense. |
 | 🌐 **Web Browser** | [**Launch Live Web App**](https://aryanbarnvanshi-dev.github.io/Not-Weak-Mind/) | Zero installation required. Runs locally in Chrome, Safari, Firefox, or Edge. |
 | 📱 **Android Phone** | [**Download Android APK**](https://github.com/aryanbarnvanshi-dev/Not-Weak-Mind/releases) | Free offline `.apk` for Android 7.0+ (API 24+). Works without an internet connection. |
 | ⚡ **Rapid Screener** | **15 Questions (~2 Mins)** | 1 curated question per domain for quick cognitive triage. |
@@ -40,10 +41,26 @@ Just as a thermometer doesn't cure an illness but alerts parents that a child ha
 
 ## 🌟 Key Features
 
-### 1. 🌐 Bilingual by Design (English & हिन्दी)
-Instant 1-click toggle between English and Devanagari Hindi. Translates all 80 questions, 15 domain explanations, risk badges, and recommendations to bridge language barriers.
+### 1. 🎮 100% Pure Game-Based Cognitive Assessment Lab (v2.0.0)
+Skip text-heavy questionnaires entirely! EduScreen includes an interactive **3-Minute Cognitive Game Circuit** providing objective, gamified assessment across 4 core mini-games:
+- **🔤 Letter Mirror Detective:** 16-tile glyph discrimination identifying mirror reversals (`b/d/p/q`) for orthographic dyslexia screening.
+- **🎯 Go / No-Go Sustained Focus Drill:** 75/25 GO/WAIT stimulus testing millisecond response latency, commission errors (false alarms), and inhibitory vigilance (ADHD).
+- **🔢 Memory Echo Sequence:** Audio-visual musical pad sequence tracking multi-component working memory span.
+- **🎲 Rapid Number Dash:** Dynamic SVG Weber-ratio dot subitizing testing Approximate Number System (ANS) acuity for dyscalculia detection.
 
-### 2. 🔊 Integrated Audio Narration (Web Speech API)
+### 2. ⏱️ Objective Behavioral Telemetry & 5-Pillar Synthesis
+Replaces subjective self-reports with real-time empirical measurements (reaction latency, false alarms, memory spans, subitizing accuracy). Derives mathematical percentiles for the **5 Cognitive Pillars**: *Attention, Visual-Spatial, Working Memory, Numerical ANS, and Processing Speed*.
+
+### 3. 📜 Statutory Accommodations & CBSE Examination Provisions
+Automatically maps identified cognitive flags to official government accommodations under **CBSE Examination Guidelines** and the **RPwD Act 2016**:
+- **CBSE Rule 24.1:** Basic Mathematics track (Code 241) and simple calculator allowance for dyscalculia profiles.
+- **CBSE Compensatory Time:** 20 minutes compensatory extra time per hour and exemption from spelling deductions for dyslexia profiles.
+- **Classroom Accommodations:** Supervised movement breaks and teacher-proximity seating for executive function profiles.
+
+### 4. 🌐 Bilingual by Design (English & हिन्दी)
+Instant 1-click toggle between English and Devanagari Hindi. Translates all game interfaces, 80 questions, 15 domain explanations, risk badges, telemetry tables, and CBSE recommendations.
+
+### 5. 🔊 Integrated Audio Narration (Web Speech API)
 Testing a dyslexic child with dense blocks of text is a clinical paradox. EduScreen includes a built-in **`🔊 Read Aloud`** button that reads questions out loud in natural English (`en-US`) or Hindi (`hi-IN`) with measured pacing.
 
 ### 3. 📊 Dual Multidimensional Visualizations
@@ -113,7 +130,7 @@ All 15 domains assessed by EduScreen map directly to established, public-domain 
   * Reading ruler tracking guide.
   * Contrast ratios exceeding 7:1 across all risk badges and disclaimers.
   * High-visibility `:focus-visible` indicators and WAI-ARIA `radiogroup`/`radio` attributes.
-* **Automated CI Test Suite:** 37 integration tests running on native Node.js 24 test runner (`node --test tests/tier1-features/*.test.js`) executed automatically on every push via GitHub Actions.
+* **Automated CI Test Suite:** 55 comprehensive integration tests running on native Node.js 24 test runner (`node --test tests/tier1-features/*.test.js`) executed automatically on every push via GitHub Actions in ~1.28 seconds.
 
 ---
 
