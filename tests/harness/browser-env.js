@@ -733,6 +733,8 @@ function createBrowserEnvironment(options = {}) {
         },
         prompt: (msg, def) => def,
         print: () => { printCalls++; },
+        scrollTo: () => {},
+        scrollBy: () => {},
         addEventListener: (event, fn, opts) => {
             if (!windowListeners[event]) windowListeners[event] = [];
             windowListeners[event].push(fn);
@@ -922,6 +924,47 @@ function createBrowserEnvironment(options = {}) {
         const _capturedToggleLanguage = typeof toggleLanguage !== 'undefined' ? toggleLanguage : () => {};
         Object.defineProperty(globalThis, 'applyLanguage', { get: () => _capturedApplyLanguage });
         Object.defineProperty(globalThis, 'toggleLanguage', { get: () => _capturedToggleLanguage });
+
+        const _capturedStartRapidNumberGame = typeof startRapidNumberGame !== 'undefined' ? startRapidNumberGame : () => {};
+        const _capturedStopRapidNumberGame = typeof stopRapidNumberGame !== 'undefined' ? stopRapidNumberGame : () => {};
+        const _capturedEndRapidNumberGame = typeof endRapidNumberGame !== 'undefined' ? endRapidNumberGame : () => {};
+        const _capturedHandleNumberCardClick = typeof handleNumberCardClick !== 'undefined' ? handleNumberCardClick : () => {};
+        const _capturedGenerateDotSvg = typeof generateDotSvg !== 'undefined' ? generateDotSvg : () => '';
+        const _capturedStartCognitiveCircuit = typeof startCognitiveCircuit !== 'undefined' ? startCognitiveCircuit : () => {};
+        const _capturedCalculateCognitiveScores = typeof calculateCognitiveScores !== 'undefined' ? calculateCognitiveScores : () => {};
+        const _capturedOnCircuitStageEnd = typeof onCircuitStageEnd !== 'undefined' ? onCircuitStageEnd : () => {};
+        const _capturedAdvanceCircuitStage = typeof advanceCircuitStage !== 'undefined' ? advanceCircuitStage : () => {};
+        const _capturedPopulateTelemetryTable = typeof populateTelemetryTable !== 'undefined' ? populateTelemetryTable : () => {};
+        const _capturedPopulateCBSEAccommodations = typeof populateCBSEAccommodations !== 'undefined' ? populateCBSEAccommodations : () => {};
+
+        Object.defineProperty(globalThis, 'startRapidNumberGame', { get: () => _capturedStartRapidNumberGame });
+        Object.defineProperty(globalThis, 'stopRapidNumberGame', { get: () => _capturedStopRapidNumberGame });
+        Object.defineProperty(globalThis, 'endRapidNumberGame', { get: () => _capturedEndRapidNumberGame });
+        Object.defineProperty(globalThis, 'handleNumberCardClick', { get: () => _capturedHandleNumberCardClick });
+        Object.defineProperty(globalThis, 'generateDotSvg', { get: () => _capturedGenerateDotSvg });
+        Object.defineProperty(globalThis, 'startCognitiveCircuit', { get: () => _capturedStartCognitiveCircuit });
+        Object.defineProperty(globalThis, 'calculateCognitiveScores', { get: () => _capturedCalculateCognitiveScores });
+        Object.defineProperty(globalThis, 'onCircuitStageEnd', { get: () => _capturedOnCircuitStageEnd });
+        Object.defineProperty(globalThis, 'advanceCircuitStage', { get: () => _capturedAdvanceCircuitStage });
+        Object.defineProperty(globalThis, 'populateTelemetryTable', { get: () => _capturedPopulateTelemetryTable });
+        Object.defineProperty(globalThis, 'populateCBSEAccommodations', { get: () => _capturedPopulateCBSEAccommodations });
+
+        Object.defineProperty(globalThis, 'isCircuitActive', {
+            get: () => typeof isCircuitActive !== 'undefined' ? isCircuitActive : false,
+            set: (v) => { if (typeof isCircuitActive !== 'undefined') isCircuitActive = v; }
+        });
+        Object.defineProperty(globalThis, 'gameTelemetry', {
+            get: () => typeof gameTelemetry !== 'undefined' ? gameTelemetry : {},
+            set: (v) => { if (typeof gameTelemetry !== 'undefined') gameTelemetry = v; }
+        });
+        Object.defineProperty(globalThis, 'cognitiveScores', {
+            get: () => typeof cognitiveScores !== 'undefined' ? cognitiveScores : {},
+            set: (v) => { if (typeof cognitiveScores !== 'undefined') cognitiveScores = v; }
+        });
+        Object.defineProperty(globalThis, 'activeCircuitStage', {
+            get: () => typeof activeCircuitStage !== 'undefined' ? activeCircuitStage : 0,
+            set: (v) => { if (typeof activeCircuitStage !== 'undefined') activeCircuitStage = v; }
+        });
     `;
 
     vm.createContext(sandbox);
